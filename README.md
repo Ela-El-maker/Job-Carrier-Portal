@@ -28,7 +28,7 @@ Git
 Installation Steps
 1. Clone the Repository:
     ```bash
-    git clone git@github.com:Ela-El-maker/Job-Carrier-System.git
+    git clone git@github.com:Ela-El-maker/Job-Carrier-Portal.git
     ```
 2. Install Dependencies: Install the PHP dependencies using Composer:
     ```bash
