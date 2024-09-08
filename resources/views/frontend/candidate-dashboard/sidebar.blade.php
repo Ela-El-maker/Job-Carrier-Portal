@@ -1,5 +1,5 @@
 <!-- ===== Start of Candidate Sidebar ===== -->
-<div class="col-md-4 col-xs-12 dashboard-sidebar">
+<div class="col-md-4 col-xs-12 dashboard-sidebar" style="width: 25%">
     <!-- Sidebar Navigation -->
     <div class="sidebar-navigation card">
         <div class="card-header">

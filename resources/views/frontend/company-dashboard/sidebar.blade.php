@@ -1,5 +1,5 @@
 <!-- ===== Start of Candidate Sidebar ===== -->
-<div class="col-md-4 col-xs-12 dashboard-sidebar">
+<div class="col-md-4 col-xs-12 dashboard-sidebar" style="width: 25%">
     <!-- Sidebar Navigation -->
     <div class="sidebar-navigation card">
         <div class="card-header">
@@ -14,7 +14,7 @@
                 <a class="nav-link btn btn-link active" href="{{ route('company.dashboard') }}">Dashboard</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link btn btn-link" href="candidate-profile.html">My Profile</a>
+                <a class="nav-link btn btn-link" href="{{ route('company.profile') }}">My Profile</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link btn btn-link" href="candidate-profile-jobs.html">My Jobs</a>
