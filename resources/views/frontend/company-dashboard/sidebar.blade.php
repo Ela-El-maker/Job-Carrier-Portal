@@ -3,7 +3,13 @@
     <!-- Sidebar Navigation -->
     <div class="sidebar-navigation card">
         <div class="card-header">
-            <h4 class="sidebar-title">Company Dashboard</h4>
+            <div class="card-header">
+                @if (auth()->user()->role === 'company')
+                    <h4 class="sidebar-title">Company Dashboard</h4>
+                @elseif (auth()->user()->role === 'candidate')
+                    <h4 class="sidebar-title">Candidate Dashboard</h4>
+                @endif
+            </div>
         </div>
         <ul class="nav flex-column">
             <li class="nav-item">
@@ -23,9 +29,11 @@
         <div class="mt-20">
             <!-- Authentication -->
             <form method="POST" action="{{ route('logout') }}">
-                <input type="hidden" name="_token" value="lvbxzN8fpElP2sExqIkRipNBWzTDLeFQ6wheZZwT" autocomplete="off">
+                @csrf
+
                 <!-- Logout Button -->
-                <a class="nav-link btn btn-danger mt-3" onclick="event.preventDefault(); this.closest('form').submit();" href="http://job-carrier-portal.test/logout">Logout Account</a>
+                <a class="nav-link btn btn-danger mt-3" onclick="event.preventDefault(); this.closest('form').submit();"
+                    href="{{ route('logout') }}">Logout Account</a>
             </form>
         </div>
     </div>
