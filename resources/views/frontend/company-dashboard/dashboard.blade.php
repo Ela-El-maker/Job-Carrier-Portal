@@ -36,7 +36,8 @@
                 @include('frontend.company-dashboard.sidebar')
                 <!-- ===== Start of Job Post Main ===== -->
                 <div class="col-md-8 col-xs-12 job-post-main">
-                    <h4>Welcome John Doe!</h4>
+                    <h4>Welcome {{ auth()->user()->name }}!</h4>
+
 
                     <!-- Start of Job Post Wrapper -->
                     <div class="job-post-wrapper mt20">

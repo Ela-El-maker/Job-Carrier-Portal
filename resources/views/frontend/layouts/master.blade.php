@@ -22,14 +22,19 @@
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,400i,700,800|Varela+Round" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- CSS links -->
+    @notifyCss
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/font-awesome.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/responsive.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.10.0/dist/css/bootstrap-datepicker3.min.css">
+
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.10.0/dist/css/bootstrap-datepicker3.min.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -63,16 +68,6 @@
         <i class="fa fa-chevron-up"></i>
     </a>
     <!-- ===== End of Back to Top Button ===== -->
-
-
-
-
-
-
-
-
-
-
     <!-- ===== All Javascript at the bottom of the page for faster page loading ===== -->
     <script src="{{ asset('frontend/assets/js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/bootstrap.min.js') }}"></script>
@@ -89,9 +84,16 @@
     <script src="{{ asset('frontend/assets/js/countdown.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/isotope.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/custom.js') }}"></script>
+    <!---Notify Start-->
+    <x-notify::notify />
+    <!---Notify End-->
+
+    @notifyJs
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.10.0/dist/js/bootstrap-datepicker.min.js"></script>
     <script>
-        $('.datepicker').datepicker();
+        $('.datepicker').datepicker({
+            format: 'yyyy-m-d',
+        });
     </script>
 </body>
 

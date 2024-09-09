@@ -3,11 +3,16 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Frontend\CompanyFoundingInfoUpdateRequest;
 use App\Http\Requests\Frontend\CompanyInfoUpdateRequest;
 use App\Models\Company;
 use App\Traits\FileUploadTrait;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Validation\Rules;
+
 
 class CompanyProfileController extends Controller
 {
@@ -36,6 +41,58 @@ class CompanyProfileController extends Controller
             ['user_id' => auth()->user()->id],
             $data
         );
+
+        notify()->success('Company Info Updated Successfully ⚡️', 'Success');
+
+        return redirect()->back();
+    }
+
+    function updateFoundingInfo(CompanyFoundingInfoUpdateRequest $request): RedirectResponse
+    {
+        Company::updateOrCreate(
+            ['user_id' => auth()->user()->id],
+            [
+                'industry_type_id' => $request->industry_type,
+                'organization_type_id' => $request->organization_type,
+                'team_size_id' => $request->team_size,
+                'establishment_date' => $request->establishment_date,
+                'website' => $request->website,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'country' => $request->country,
+                'state' => $request->state,
+                'city' => $request->city,
+                'address' => $request->address,
+                'map_link' => $request->map_link,
+            ]
+        );
+        notify()->success('Founding Info Updated Successfully⚡️', 'Success');
+        return redirect()->back();
+    }
+
+    function updateAccountInfo(Request $request): RedirectResponse
+    {
+        // dd($request->all());
+        $validatedData = $request->validate([
+            'name' => ['required', 'string', 'max:100'],
+            'email' => ['required', 'email'],
+        ]);
+
+        Auth::user()->update($validatedData);
+
+        notify()->success('Account Info Updated Successfully⚡️', 'Success');
+        return redirect()->back();
+    }
+
+    function updatePassword(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+        Auth::user()->update(['password' => bcrypt($request->password)]);
+
+        notify()->success('Password Changed Successfully⚡️', 'Success');
+
         return redirect()->back();
     }
 }
