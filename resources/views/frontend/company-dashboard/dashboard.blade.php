@@ -1,5 +1,56 @@
 @extends('frontend.layouts.master')
 @section('contents')
+@php
+    $completionPercentage = getCompanyProfileCompletion();
+@endphp
+
+    <!-- CSS for styling the layout -->
+    <style>
+        .card__profile-image {
+            text-align: center;
+        }
+
+        .profile-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .edit-profile-btn {
+            display: block;
+            margin: 10px auto;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .edit-profile-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Styling for the warning card */
+        .warning-card {
+            flex-grow: 1;
+            background-color: #ffcc00;
+            color: #333;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .warning-content {
+            font-size: 16px;
+        }
+
+        .warning-content strong {
+            font-size: 18px;
+        }
+    </style>
     <!-- =============== Start of Page Header 1 Section =============== -->
     <section class="page-header">
         <div class="container">
@@ -73,18 +124,33 @@
                                         <div class="card__texture"></div>
                                     </div>
                                     <!-- Card 3: Profile Completeness -->
-                                    <div class="card">
-                                        <div class="card__info">
-                                            <div class="card__logo"><i class="fas fa-briefcase"></i>Profile Completeness
+                                    @if ($completionPercentage < 100)
+                                        <div class="card">
+                                            <div class="card__info" style="display: flex; align-items: center; gap: 20px;">
+                                                <!-- Profile Image Section -->
+                                                <div class="card__profile-image">
+                                                    <img src="{{ asset(auth()->user()->image) }}" alt="Profile Image"
+                                                        class="profile-image">
+                                                    <a href="{{ route('company.profile') }}"
+                                                    class="edit-profile-btn">Edit Profile</a>
+
+                                                </div>
+
+                                                <!-- Warning Card Section -->
+                                                <div class="warning-card">
+                                                    <div class="warning-content">
+                                                        <strong>Incomplete Profile</strong>
+                                                        <p>Your profile details are only <strong>{{ $completionPercentage }}%</strong> complete.
+                                                            Please
+                                                            update your profile to 100% for better visibility.</p>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="card__number">
-                                                <span class="card__digit-group">85%</span>
-                                            </div>
-                                            <div class="card__valid-thru">Last Updated:</div>
-                                            <div class="card__exp-date">August 20, 2024</div>
+                                            <div class="card__texture"></div>
                                         </div>
-                                        <div class="card__texture"></div>
-                                    </div>
+                                        @else
+                                        <!-- Content to display if the profile is complete -->
+                                    @endif
                                 </div>
                                 <!-- End of Card Container -->
                             </div>

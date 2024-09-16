@@ -24,15 +24,25 @@ class CompanyProfileController extends Controller
 {
     //
     use FileUploadTrait;
-    function index() : View
+
+
+    function index(): View
     {
         $companyInfo = Company::where('user_id', auth()->user()->id)->first();
+
+        // Use null-safe access for country and state properties
         $industryTypes = IndustryType::all();
         $organizationTypes = OrganizationType::all();
         $teamSizes = TeamSize::all();
         $countries = Country::all();
-        $states = State::select(['id', 'name', 'country_id'])->where('country_id', $companyInfo->country)->get();
-        $cities = City::select(['id', 'name', 'state_id', 'country_id'])->where('state_id', $companyInfo->state)->get();
+
+        $states = State::select(['id', 'name', 'country_id'])
+            ->where('country_id', optional($companyInfo)->country) // Null-safe access
+            ->get();
+
+        $cities = City::select(['id', 'name', 'state_id', 'country_id'])
+            ->where('state_id', optional($companyInfo)->state) // Null-safe access
+            ->get();
 
         return view(
             'frontend.company-dashboard.profile.index',
@@ -47,32 +57,8 @@ class CompanyProfileController extends Controller
             )
         );
     }
-    // function index(): View
-    // {
-    //     $companyInfo = Company::where('user_id', auth()->user()->id)->first();
 
-    //     $industryTypes = IndustryType::all();
-    //     $organizationTypes = OrganizationType::all();
-    //     $teamSizes = TeamSize::all();
-    //     $countries = Country::all();
 
-    //     // Check if $companyInfo is null before attempting to access country and state
-    //     $states = $companyInfo ? State::select(['id', 'name', 'country_id'])->where('country_id', $companyInfo->country)->get() : [];
-    //     $cities = $companyInfo ? City::select(['id', 'name', 'state_id', 'country_id'])->where('state_id', $companyInfo->state)->get() : [];
-
-    //     return view(
-    //         'frontend.company-dashboard.profile.index',
-    //         compact(
-    //             'companyInfo',
-    //             'industryTypes',
-    //             'organizationTypes',
-    //             'teamSizes',
-    //             'countries',
-    //             'states',
-    //             'cities'
-    //         )
-    //     );
-    // }
 
 
     function updateCompanyInfo(CompanyInfoUpdateRequest $request)
@@ -87,16 +73,32 @@ class CompanyProfileController extends Controller
         $data['bio'] = $request->bio;
         $data['vision'] = $request->vision;
 
-        Company::updateOrCreate(
+        // Update or create the company profile
+        $companyProfile = Company::updateOrCreate(
             ['user_id' => auth()->user()->id],
             $data
         );
 
-        notify()->success('Company Info Updated Successfully ⚡️', 'Success');
+        // Calculate profile completion percentage
+        $profileCompletionPercentage = getCompanyProfileCompletion();
 
-        return redirect()->back();
+        // Update the profile completion status
+        $companyProfile->profile_completion = $profileCompletionPercentage;
+
+        // Set visibility based on profile completion (100%)
+        if ($profileCompletionPercentage == 100) {
+            $companyProfile->visibility = 1;  // Profile is visible when 100% complete
+        } else {
+            $companyProfile->visibility = 0;  // Profile is hidden if not 100% complete
+        }
+
+        $companyProfile->save();
+
+        // Notify the user of a successful update
+        notify()->success('Company Info Updated Successfully⚡️', 'Success');
+
+        return redirect()->back()->with('profileCompletion', $profileCompletionPercentage);
     }
-
     function updateFoundingInfo(CompanyFoundingInfoUpdateRequest $request): RedirectResponse
     {
         Company::updateOrCreate(
