@@ -23,16 +23,16 @@ class CompanyFoundingInfoUpdateRequest extends FormRequest
     {
         return [
             //
-            'industry_type' => ['required','integer'],
-            'organization_type' => ['required','integer'],
-            'team_size' => ['required','integer'],
-            'establishment_date' => ['required','date'],
-            'website' => ['required','active_url'],
-            'email' => ['required','email'],
+            'industry_type' => ['required', 'integer'],
+            'organization_type' => ['required', 'integer'],
+            'team_size' => ['required', 'integer'],
+            'establishment_date' => ['required', 'date'],
+            'website' => ['required', 'active_url'],
+            'email' => ['required', 'email'],
             'phone' => ['required'],
-            'country' => ['string'],
-            'state' => ['string'],
-            'city' => ['string'],
+            'country' => ['nullable', 'integer'],
+            'state' => ['nullable', 'integer'],
+            'city' => ['nullable', 'integer'],
             'address' => ['string', 'max:255'],
             'map_link' => ['nullable'],
         ];

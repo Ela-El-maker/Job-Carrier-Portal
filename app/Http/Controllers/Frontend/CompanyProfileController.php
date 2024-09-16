@@ -5,7 +5,13 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\CompanyFoundingInfoUpdateRequest;
 use App\Http\Requests\Frontend\CompanyInfoUpdateRequest;
+use App\Models\City;
 use App\Models\Company;
+use App\Models\Country;
+use App\Models\IndustryType;
+use App\Models\OrganizationType;
+use App\Models\State;
+use App\Models\TeamSize;
 use App\Traits\FileUploadTrait;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -21,9 +27,53 @@ class CompanyProfileController extends Controller
     function index() : View
     {
         $companyInfo = Company::where('user_id', auth()->user()->id)->first();
+        $industryTypes = IndustryType::all();
+        $organizationTypes = OrganizationType::all();
+        $teamSizes = TeamSize::all();
+        $countries = Country::all();
+        $states = State::select(['id', 'name', 'country_id'])->where('country_id', $companyInfo->country)->get();
+        $cities = City::select(['id', 'name', 'state_id', 'country_id'])->where('state_id', $companyInfo->state)->get();
 
-        return view('frontend.company-dashboard.profile.index', compact('companyInfo'));
+        return view(
+            'frontend.company-dashboard.profile.index',
+            compact(
+                'companyInfo',
+                'industryTypes',
+                'organizationTypes',
+                'teamSizes',
+                'countries',
+                'states',
+                'cities'
+            )
+        );
     }
+    // function index(): View
+    // {
+    //     $companyInfo = Company::where('user_id', auth()->user()->id)->first();
+
+    //     $industryTypes = IndustryType::all();
+    //     $organizationTypes = OrganizationType::all();
+    //     $teamSizes = TeamSize::all();
+    //     $countries = Country::all();
+
+    //     // Check if $companyInfo is null before attempting to access country and state
+    //     $states = $companyInfo ? State::select(['id', 'name', 'country_id'])->where('country_id', $companyInfo->country)->get() : [];
+    //     $cities = $companyInfo ? City::select(['id', 'name', 'state_id', 'country_id'])->where('state_id', $companyInfo->state)->get() : [];
+
+    //     return view(
+    //         'frontend.company-dashboard.profile.index',
+    //         compact(
+    //             'companyInfo',
+    //             'industryTypes',
+    //             'organizationTypes',
+    //             'teamSizes',
+    //             'countries',
+    //             'states',
+    //             'cities'
+    //         )
+    //     );
+    // }
+
 
     function updateCompanyInfo(CompanyInfoUpdateRequest $request)
     {
@@ -31,8 +81,8 @@ class CompanyProfileController extends Controller
         $bannerPath = $this->uploadFile($request, 'banner');
 
         $data = [];
-        if(!empty($logoPath)) $data['logo'] = $logoPath;
-        if(!empty($bannerPath)) $data['banner'] = $bannerPath;
+        if (!empty($logoPath)) $data['logo'] = $logoPath;
+        if (!empty($bannerPath)) $data['banner'] = $bannerPath;
         $data['name'] = $request->name;
         $data['bio'] = $request->bio;
         $data['vision'] = $request->vision;

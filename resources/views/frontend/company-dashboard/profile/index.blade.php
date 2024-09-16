@@ -167,18 +167,28 @@
                                                     <div class="col-md-4">
 
                                                         <!-- Form Group -->
+                                                        <!-- Form Group -->
                                                         <div class="form-group">
-                                                            <label>Industry Type *</label>
-                                                            <select
-                                                                class="selectpicker  {{ $errors->has('industry_type') ? 'is-invalid' : '' }} "
-                                                                data-size="5" name="industry_type" data-container="body"
-                                                                required>
-                                                                <option value="">Choose Type</option>
-                                                                <option value="0">Full Time</option>
+                                                            <label for="industry_type">Industry Type *</label>
 
+                                                            <!-- Industry Type Dropdown with Error Handling -->
+                                                            <select name="industry_type"
+                                                                class="form-control form-icons selectpicker {{ $errors->has('industry_type') ? 'is-invalid' : '' }}"
+                                                                data-live-search="true" data-size="5" data-container="body"
+                                                                value="{{ $companyInfo?->industry_type }}" id="">
+                                                                <option value="">Select</option>
+                                                                @foreach ($industryTypes as $industryType)
+                                                                    <option value="{{ $industryType->id }}"
+                                                                        @selected($industryType->id === $companyInfo?->industry_type_id)>
+                                                                        {{ $industryType->name }}
+                                                                    </option>
+                                                                @endforeach
                                                             </select>
+
+                                                            <!-- Error Message -->
                                                             <x-input-error :messages="$errors->get('industry_type')" class="mt-2" />
                                                         </div>
+
                                                     </div>
 
 
@@ -186,13 +196,20 @@
                                                         <!-- Form Group -->
                                                         <div class="form-group">
                                                             <label>Organization Type *</label>
-                                                            <select
-                                                                class="selectpicker {{ $errors->has('organization_type') ? 'is-invalid' : '' }}"
-                                                                data-size="5" name="organization_type"
-                                                                data-container="body" required>
-                                                                <option value="">Choose Type</option>
-                                                                <option value="1">Full Time</option>
 
+                                                            <select name="organization_type"
+                                                                class="form-control form-icons selectpicker {{ $errors->has('organization_type') ? 'is-invalid' : '' }}"
+                                                                data-live-search="true" data-size="5"
+                                                                data-container="body"
+                                                                value="{{ $companyInfo?->organization_type }}"
+                                                                id="">
+                                                                <option value="">Select</option>
+                                                                @foreach ($organizationTypes as $organizationType)
+                                                                    <option value="{{ $organizationType->id }}"
+                                                                        @selected($organizationType->id === $companyInfo?->organization_type_id)>
+                                                                        {{ $organizationType->name }}
+                                                                    </option>
+                                                                @endforeach
                                                             </select>
                                                             <x-input-error :messages="$errors->get('organization_type')" class="mt-2" />
 
@@ -202,13 +219,20 @@
                                                         <!-- Form Group -->
                                                         <div class="form-group">
                                                             <label>Team Size *</label>
-                                                            <select name="team_size"
-                                                                class="selectpicker {{ $errors->has('team_size') ? 'is-invalid' : '' }}"
-                                                                data-size="5" data-container="body" required>
-                                                                <option value="">Choose Type</option>
-                                                                <option value="0">Full Time</option>
 
+                                                            <select name="team_size"
+                                                                class="form-control form-icons selectpicker {{ $errors->has('team_size') ? 'is-invalid' : '' }}"
+                                                                data-live-search="true" data-size="5"
+                                                                data-container="body"
+                                                                value="{{ $companyInfo?->team_size }}">
+                                                                <option value="">Select</option>
+                                                                @foreach ($teamSizes as $teamSize)
+                                                                    <option @selected($teamSize->id === $companyInfo?->team_size_id)
+                                                                        value="{{ $teamSize->id }}">
+                                                                        {{ $teamSize->name }}</option>
+                                                                @endforeach
                                                             </select>
+
                                                             <x-input-error :messages="$errors->get('team_size')" class="mt-2" />
 
                                                         </div>
@@ -265,28 +289,35 @@
                                                         <!-- Form Group -->
                                                         <div class="form-group">
                                                             <label>Country</label>
-                                                            <select
-                                                                class="selectpicker {{ $errors->has('country') ? 'is-invalid' : '' }}"
-                                                                value="{{ $companyInfo?->country }}" data-size="5"
-                                                                name="country" data-container="body" required>
-                                                                <option value="">Choose Type</option>
-                                                                <option value="1">Full Time</option>
-
+                                                            <select name="country"
+                                                                class="form-control selectpicker country {{ $errors->has('country') ? 'is-invalid' : '' }}"
+                                                                data-live-search="true" data-size="5"
+                                                                data-container="body"
+                                                                value="{{ $companyInfo?->country }}">
+                                                                <option value="">Select</option>
+                                                                @foreach ($countries as $country)
+                                                                    <option @selected($country->id === $companyInfo?->country)
+                                                                        value="{{ $country->id }}">
+                                                                        {{ $country->name }}</option>
+                                                                @endforeach
                                                             </select>
                                                             <x-input-error :messages="$errors->get('country')" class="mt-2" />
-
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <!-- Form Group -->
                                                         <div class="form-group">
                                                             <label>State </label>
-                                                            <select
-                                                                class="selectpicker {{ $errors->has('state') ? 'is-invalid' : '' }}"
-                                                                value="{{ $companyInfo?->state }}" data-size="5"
-                                                                name="state" data-container="body" required>
-                                                                <option value="">Choose Type</option>
-                                                                <option value="1">Full Time</option>
+                                                            <select name="state"
+                                                                class="form-control form-icons state {{ $errors->has('state') ? 'is-invalid' : '' }}"
+                                                                data-live-search="true" data-size="5"
+                                                                data-container="body" value="{{ $companyInfo?->state }}">
+                                                                <option value="">Select</option>
+                                                                @foreach ($states as $state)
+                                                                    <option @selected($state->id === $companyInfo?->state)
+                                                                        value="{{ $state->id }}">
+                                                                        {{ $state->name }}</option>
+                                                                @endforeach
                                                             </select>
                                                             <x-input-error :messages="$errors->get('state')" class="mt-2" />
 
@@ -297,17 +328,19 @@
                                                         <div class="form-group">
                                                             <label>City</label>
                                                             <select name="city"
-                                                                class="selectpicker {{ $errors->has('city') ? 'is-invalid' : '' }}"
-                                                                value="{{ $companyInfo?->city }}" data-size="5"
-                                                                data-container="body" required>
-                                                                <option value="">Choose Type</option>
-                                                                <option value="1">Full Time</option>
-
+                                                                class="form-control form-icons city {{ $errors->has('city') ? 'is-invalid' : '' }}"
+                                                                value="{{ $companyInfo?->city }}" id="">
+                                                                @foreach ($cities as $city)
+                                                                    <option @selected($city->id === $companyInfo?->city)
+                                                                        value="{{ $city->id }}">
+                                                                        {{ $city->name }}</option>
+                                                                @endforeach
                                                             </select>
                                                             <x-input-error :messages="$errors->get('city')" class="mt-2" />
 
                                                         </div>
                                                     </div>
+
                                                     <div class="col-md-12">
                                                         <!-- Form Group -->
                                                         <div class="form-group">
@@ -392,7 +425,9 @@
                                                         <!-- Form Group for Password -->
                                                         <div class="form-group">
                                                             <label>Password *</label>
-                                                            <input name="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" type="password">
+                                                            <input name="password"
+                                                                class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
+                                                                type="password">
                                                             <x-input-error :messages="$errors->get('password')" class="mt-2" />
 
                                                         </div>
@@ -401,7 +436,9 @@
                                                         <!-- Form Group for Confirm Password -->
                                                         <div class="form-group">
                                                             <label>Confirm Password *</label>
-                                                            <input name="password_confirmation" class="form-control {{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}" type="password">
+                                                            <input name="password_confirmation"
+                                                                class="form-control {{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}"
+                                                                type="password">
                                                             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
 
                                                         </div>
@@ -433,24 +470,120 @@
     <!-- ===== End of Main Wrapper Section ===== -->
 @endsection
 
-{{-- <div class="row">
-    <!-- Password -->
-    <div class="form-group col-md-6">
-        <label>Password</label>
-        <input type="password" name="password"
-            class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
-            placeholder="************">
-        <x-input-error :messages="$errors->get('password')" class="mt-2" />
+{{-- @push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.country').on('change', function() {
+                let country_id = $(this).val();
+                // remove all previous cities
+                $('.city').html("")
+                $.ajax({
+                    method: 'GET',
+                    url: '{{ route('get-states', ':id') }}'.replace(":id", country_id),
+                    data: {},
+                    success: function(response) {
+                        let html = '';
+                        $.each(response, function(index, value) {
+                            html +=
+                                `<option value = "${value.id}">${value.name}</option>`
+                        });
+                        $('.state').html(html);
+                    },
+                    error: function(xhr, status, error) {
 
-    </div>
+                    }
+                })
+            });
 
-    <!-- Confirm Password -->
-    <div class="form-group col-md-6">
-        <label>Confirm Password</label>
-        <input type="password"name="password_confirmation"
-            class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
-            placeholder="************">
-        <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+            // get cities
+            $('.state').on('change', function() {
+                let state_id = $(this).val();
 
-    </div>
-</div> --}}
+
+                $.ajax({
+                    method: 'GET',
+                    url: '{{ route('get-cities', ':id') }}'.replace(":id", state_id),
+                    data: {},
+                    success: function(response) {
+                        let html = '';
+                        $.each(response, function(index, value) {
+                            html +=
+                                `<option value = "${value.id}">${value.name}</option>`
+                        });
+                        $('.city').html(html);
+                    },
+                    error: function(xhr, status, error) {
+
+                    }
+                })
+            });
+        })
+    </script>
+@endpush --}}
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            // Handle country change event to load states
+            $('.country').on('change', function() {
+                let country_id = $(this).val();
+
+                // Clear state and city dropdowns before loading new data
+                $('.state').html('<option value="">Select</option>');
+                $('.city').html('<option value="">Select</option>');
+
+                if (country_id) {
+                    $.ajax({
+                        method: 'GET',
+                        url: '{{ route('get-states', ':id') }}'.replace(":id", country_id),
+                        success: function(response) {
+                            let html = '<option value="">Select</option>';
+                            if (response.length > 0) {
+                                $.each(response, function(index, value) {
+                                    html +=
+                                        `<option value="${value.id}">${value.name}</option>`;
+                                });
+                            } else {
+                                html = '<option value="">No states available</option>';
+                            }
+                            $('.state').html(html);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("An error occurred while fetching states.");
+                        }
+                    });
+                }
+            });
+
+            // Handle state change event to load cities
+            $('.state').on('change', function() {
+                let state_id = $(this).val();
+
+                // Clear city dropdown before loading new data
+                $('.city').html('<option value="">Select</option>');
+
+                if (state_id) {
+                    $.ajax({
+                        method: 'GET',
+                        url: '{{ route('get-cities', ':id') }}'.replace(":id", state_id),
+                        success: function(response) {
+                            let html = '<option value="">Select</option>';
+                            if (response.length > 0) {
+                                $.each(response, function(index, value) {
+                                    html +=
+                                        `<option value="${value.id}">${value.name}</option>`;
+                                });
+                            } else {
+                                html = '<option value="">No cities available</option>';
+                            }
+                            $('.city').html(html);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("An error occurred while fetching cities.");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+@endpush

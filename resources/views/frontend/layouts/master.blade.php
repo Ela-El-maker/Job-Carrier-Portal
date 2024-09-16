@@ -35,6 +35,7 @@
 
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.10.0/dist/css/bootstrap-datepicker3.min.css">
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -83,18 +84,37 @@
     <script src="{{ asset('frontend/assets/js/tinymce/tinymce.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/countdown.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/isotope.min.js') }}"></script>
-    <script src="{{ asset('frontend/assets/js/custom.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.10.0/dist/js/bootstrap-datepicker.min.js"></script>
+    <!-- jQuery and Popper.js for Bootstrap 4 -->
+    <script src="/node_modules/jquery/dist/jquery.slim.min.js"></script>
+    <script src="/node_modules/popper.js/dist/umd/popper.min.js"></script>
+
+    <!-- Bootstrap 4 JavaScript -->
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
     <!---Notify Start-->
     <x-notify::notify />
     <!---Notify End-->
 
     @notifyJs
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.10.0/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="{{ asset('frontend/assets/js/custom.js') }}"></script>
+
+    @stack('scripts')
     <script>
         $('.datepicker').datepicker({
             format: 'yyyy-m-d',
         });
+       
     </script>
+    <script>
+        $(document).ready(function() {
+    $('.selectpicker').selectpicker();
+});
+
+    </script>
+
 </body>
 
 </html>
