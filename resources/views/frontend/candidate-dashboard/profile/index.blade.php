@@ -2,35 +2,31 @@
 @section('contents')
     <style>
         .upload-file-btn {
-            position: relative;
-            overflow: hidden;
-            background: #29b1fd;
-            color: #f6f6f6;
-            padding: 10px 20px;
-            font-size: 14px;
-            font-weight: 700;
-            border-radius: 5px;
-            text-align: center;
-            display: flex;
-            /* Flexbox layout */
-            align-items: center;
-            /* Vertical centering */
-            justify-content: center;
-            /* Horizontal centering */
-            cursor: pointer;
-            /* Adds pointer on hover */
-        }
+    position: relative;
+    overflow: hidden;
+    background: #29b1fd;
+    color: #f6f6f6;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 5px;
+    text-align: center;
+    display: flex;           /* Flexbox layout */
+    align-items: center;      /* Vertical centering */
+    justify-content: center;  /* Horizontal centering */
+    cursor: pointer;          /* Adds pointer on hover */
+}
 
-        .upload-file-btn input[type="file"] {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-            /* Ensures input behaves as clickable */
-        }
+.upload-file-btn input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;  /* Ensures input behaves as clickable */
+}
+
     </style>
     <!-- =============== Start of Page Header 1 Section =============== -->
     <section class="page-header">
@@ -49,7 +45,7 @@
                 <div class="col-md-12">
                     <ul class="breadcrumb">
                         <li><a href="{{ url('/') }}">home</a></li>
-                        <li class="active">Company Profile</li>
+                        <li class="active">Candidate Profile</li>
                     </ul>
                 </div>
             </div>
@@ -65,7 +61,7 @@
         <div class="container">
             <!-- Start of Row -->
             <div class="row">
-                @include('frontend.company-dashboard.sidebar')
+                @include('frontend.candidate-dashboard.sidebar')
                 <!-- ===== Start of Job Post Main ===== -->
                 <div class="col-md-8 col-xs-12 job-post-main">
                     <h4>Welcome {{ auth()->user()->name }}!</h4>
@@ -81,11 +77,15 @@
                                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                                         <li class="active">
                                             <a href="#home" data-toggle="tab" role="tab" aria-controls="home"
-                                                aria-selected="true">Company Info</a>
+                                                aria-selected="true">Basic</a>
                                         </li>
                                         <li>
                                             <a href="#profile" data-toggle="tab" role="tab" aria-controls="profile"
-                                                aria-selected="false">Founding Info</a>
+                                                aria-selected="false">Profile</a>
+                                        </li>
+                                        <li>
+                                            <a href="#profile" data-toggle="tab" role="tab" aria-controls="profile"
+                                                aria-selected="false">Experience & Education</a>
                                         </li>
                                         <li>
                                             <a href="#contact" data-toggle="tab" role="tab" aria-controls="contact"
@@ -94,85 +94,10 @@
                                     </ul>
 
                                     <div class="tab-content" id="myTabContent">
-                                        <div class="tab-pane fade in active" id="home" role="tabpanel"
-                                            aria-labelledby="home-tab">
-                                            <br>
-                                            <form action="{{ route('company.profile.company-info') }}" method="post"
-                                                enctype="multipart/form-data">
-                                                @csrf
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <x-image-preview :height="200" :width="200"
-                                                            :source="$companyInfo?->logo" />
 
-                                                        <!-- Form Group -->
-                                                        <label>Logo *</label>
+                                        @include('frontend.candidate-dashboard.profile.sections.basic-section')
 
-                                                        <div class="form-group">
-
-                                                            <!-- Upload Button -->
-                                                            <div class="upload-file-btn">
-                                                                <span><i class="fa fa-upload"></i> Upload</span>
-                                                                <input type="file"
-                                                                    class="{{ $errors->has('logo') ? 'is-invalid' : '' }}"
-                                                                    name="logo">
-                                                                <x-input-error :messages="$errors->get('logo')" class="mt-2" />
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6">
-                                                        <x-image-preview :height="200" :width="400"
-                                                            :source="$companyInfo?->banner" />
-
-                                                        <!-- Form Group -->
-                                                        <label>Banner *</label>
-
-                                                        <div class="form-group">
-
-                                                            <!-- Upload Button -->
-                                                            <div class="upload-file-btn">
-                                                                <span><i class="fa fa-upload"></i> Upload</span>
-                                                                <input type="file"
-                                                                    class="{{ $errors->has('banner') ? 'is-invalid' : '' }}"
-                                                                    name="banner">
-                                                                <x-input-error :messages="$errors->get('banner')" class="mt-2" />
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- Form Group -->
-                                                <div class="form-group">
-                                                    <label>Company Name *</label>
-                                                    <input
-                                                        class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                                        type="text" name="name" value="{{ $companyInfo?->name }}">
-                                                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
-
-                                                </div>
-                                                <!-- Form Group -->
-                                                <div class="form-group">
-                                                    <label>Company Bio *</label>
-                                                    <textarea name="bio" class="tinymce {{ $errors->has('bio') ? 'is-invalid' : '' }}">{{ $companyInfo?->bio }}</textarea>
-                                                    <x-input-error :messages="$errors->get('bio')" class="mt-2" />
-
-                                                </div>
-                                                <!-- Form Group -->
-                                                <div class="form-group">
-                                                    <label>Company Vision *</label>
-                                                    <textarea name="vision" class="tinymce {{ $errors->has('vision') ? 'is-invalid' : '' }}">{{ $companyInfo?->vision }}</textarea>
-                                                    <x-input-error :messages="$errors->get('vision')" class="mt-2" />
-
-                                                </div>
-
-                                                <div class="form-group pt30 nomargin" id="last">
-                                                    <button class="btn btn-blue btn-lg btn-block">Save All Changes</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="tab-pane fade" id="profile" role="tabpanel"
+                                        {{-- <div class="tab-pane fade" id="profile" role="tabpanel"
                                             aria-labelledby="profile-tab">
                                             <br>
 
@@ -470,7 +395,7 @@
 
                                                 </div>
                                             </form>
-                                        </div>
+                                        </div> --}}
 
                                     </div>
                                 </div>
