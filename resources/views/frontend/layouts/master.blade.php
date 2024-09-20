@@ -92,6 +92,7 @@
 
     <!-- Bootstrap 4 JavaScript -->
     <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 
 
     <!---Notify Start-->
@@ -106,13 +107,18 @@
         $('.datepicker').datepicker({
             format: 'yyyy-m-d',
         });
-       
+
+        ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+
     </script>
     <script>
         $(document).ready(function() {
-    $('.selectpicker').selectpicker();
-});
-
+            $('.selectpicker').selectpicker();
+        });
     </script>
 
 </body>
