@@ -64,7 +64,7 @@
 
                             <select
                                 class="form-control form-icons selectpicker {{ $errors->has('experience_level') ? 'is-invalid' : '' }}"
-                                name="experience_level" value="">
+                                name="experience_level" value="" data-live-search="true">
                                 <option value="">Select One</option>
                                 @foreach ($experiences as $experience)
                                     <option @selected($experience->id === $candidate?->experience_id) value="{{ $experience->id }}">
