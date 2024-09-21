@@ -51,7 +51,7 @@ namespace App\Models{
  * @property int $id
  * @property int $user_id
  * @property int|null $experience_id
- * @property int|null $profession
+ * @property int|null $profession_id
  * @property string|null $title
  * @property string|null $image
  * @property string|null $full_name
@@ -73,6 +73,10 @@ namespace App\Models{
  * @property int $visibility
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\CandidateLanguage> $languages
+ * @property-read int|null $languages_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\CandidateSkill> $skills
+ * @property-read int|null $skills_count
  * @method static \Illuminate\Database\Eloquent\Builder|Candidate newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Candidate newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Candidate query()
@@ -91,7 +95,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Candidate whereMaritalStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Candidate wherePhoneOne($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Candidate wherePhoneTwo($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Candidate whereProfession($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Candidate whereProfessionId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Candidate whereProfileComplete($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Candidate whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Candidate whereState($value)
@@ -103,6 +107,28 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Candidate whereWebsite($value)
  */
 	class Candidate extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidateLanguage newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidateLanguage newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidateLanguage query()
+ */
+	class CandidateLanguage extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidateSkill newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidateSkill newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidateSkill query()
+ */
+	class CandidateSkill extends \Eloquent {}
 }
 
 namespace App\Models{
