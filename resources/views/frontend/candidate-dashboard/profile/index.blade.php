@@ -2,31 +2,42 @@
 @section('contents')
     <style>
         .upload-file-btn {
-    position: relative;
-    overflow: hidden;
-    background: #29b1fd;
-    color: #f6f6f6;
-    padding: 10px 20px;
-    font-size: 14px;
-    font-weight: 700;
-    border-radius: 5px;
-    text-align: center;
-    display: flex;           /* Flexbox layout */
-    align-items: center;      /* Vertical centering */
-    justify-content: center;  /* Horizontal centering */
-    cursor: pointer;          /* Adds pointer on hover */
-}
+            position: relative;
+            overflow: hidden;
+            background: #29b1fd;
+            color: #f6f6f6;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 5px;
+            text-align: center;
+            display: flex;
+            /* Flexbox layout */
+            align-items: center;
+            /* Vertical centering */
+            justify-content: center;
+            /* Horizontal centering */
+            cursor: pointer;
+            /* Adds pointer on hover */
+        }
 
-.upload-file-btn input[type="file"] {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;  /* Ensures input behaves as clickable */
-}
+        .upload-file-btn input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            /* Ensures input behaves as clickable */
+        }
 
+        .modal-dialog {
+            display: flex;
+            align-items: center;
+            min-height: calc(100% - 1rem);
+            margin: auto;
+        }
     </style>
     <!-- =============== Start of Page Header 1 Section =============== -->
     <section class="page-header">
@@ -84,8 +95,8 @@
                                                 aria-selected="false">Profile</a>
                                         </li>
                                         <li>
-                                            <a href="#profile" data-toggle="tab" role="tab" aria-controls="profile"
-                                                aria-selected="false">Experience & Education</a>
+                                            <a href="#experience" data-toggle="tab" role="tab"
+                                                aria-controls="experience" aria-selected="false">Experience & Education</a>
                                         </li>
                                         <li>
                                             <a href="#contact" data-toggle="tab" role="tab" aria-controls="contact"
@@ -98,7 +109,9 @@
                                         @include('frontend.candidate-dashboard.profile.sections.basic-section')
 
                                         @include('frontend.candidate-dashboard.profile.sections.profile-section')
-                                        
+
+                                        @include('frontend.candidate-dashboard.profile.sections.experience-section')
+
                                         {{-- <div class="tab-pane fade" id="contact" role="tabpanel"
                                             aria-labelledby="contact-tab">
                                             <br>
@@ -191,124 +204,104 @@
             </div>
         </div>
     </section>
-    <!-- ===== End of Main Wrapper Section ===== -->
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
 
-    <!-- ===== End of Main Wrapper Section ===== -->
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Experience</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="POST" id = "ExperienceForm">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="">Company *</label>
+                                    <input type="text" class="form-control" required name="company" id="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Department *</label>
+                                    <input type="text" class="form-control" required name="department" id="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Designation *</label>
+                                    <input type="text" class="form-control" required name="designation" id="">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Start Date *</label>
+                                    <input type="text" required class="form-control datepicker" name="start"
+                                        id="">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">End Date *</label>
+                                    <input type="text" required class="form-control datepicker" name="end"
+                                        id="">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" name="currently_working"
+                                        id="currently-working">
+                                    <label class="form-check-label" for="currently-working">I am Currently Working</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 form-group mb30">
+                                <textarea class="form-control textarea-box" rows="8" name="responsibilities" placeholder="..."></textarea>
+                            </div>
+
+
+                        </div>
+                        <div class="text-right">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                            <button type="submit" class="btn btn-primary">Add
+                                Experience</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- ===== End of Login Pop Up div ===== -->
 @endsection
-
-{{-- @push('scripts')
-    <script>
-        $(document).ready(function() {
-            $('.country').on('change', function() {
-                let country_id = $(this).val();
-                // remove all previous cities
-                $('.city').html("")
-                $.ajax({
-                    method: 'GET',
-                    url: '{{ route('get-states', ':id') }}'.replace(":id", country_id),
-                    data: {},
-                    success: function(response) {
-                        let html = '';
-                        $.each(response, function(index, value) {
-                            html +=
-                                `<option value = "${value.id}">${value.name}</option>`
-                        });
-                        $('.state').html(html);
-                    },
-                    error: function(xhr, status, error) {
-
-                    }
-                })
-            });
-
-            // get cities
-            $('.state').on('change', function() {
-                let state_id = $(this).val();
-
-
-                $.ajax({
-                    method: 'GET',
-                    url: '{{ route('get-cities', ':id') }}'.replace(":id", state_id),
-                    data: {},
-                    success: function(response) {
-                        let html = '';
-                        $.each(response, function(index, value) {
-                            html +=
-                                `<option value = "${value.id}">${value.name}</option>`
-                        });
-                        $('.city').html(html);
-                    },
-                    error: function(xhr, status, error) {
-
-                    }
-                })
-            });
-        })
-    </script>
-@endpush --}}
 
 @push('scripts')
     <script>
         $(document).ready(function() {
-            // Handle country change event to load states
-            $('.country').on('change', function() {
-                let country_id = $(this).val();
+            $('#ExperienceForm').on('submit', function(event) {
+                event.preventDefault();
+                const formData = $(this).serialize();
+                console.log(formData);
+                $.ajax({
+                    method: 'POST',
+                    url: "{{ route('candidate.experience.store') }}",
+                    data: formData,
+                    success: function(response) {
 
-                // Clear state and city dropdowns before loading new data
-                $('.state').html('<option value="">Select</option>');
-                $('.city').html('<option value="">Select</option>');
+                    },
+                    error: function(xhr, status, error) {
 
-                if (country_id) {
-                    $.ajax({
-                        method: 'GET',
-                        url: '{{ route('get-states', ':id') }}'.replace(":id", country_id),
-                        success: function(response) {
-                            let html = '<option value="">Select</option>';
-                            if (response.length > 0) {
-                                $.each(response, function(index, value) {
-                                    html +=
-                                        `<option value="${value.id}">${value.name}</option>`;
-                                });
-                            } else {
-                                html = '<option value="">No states available</option>';
-                            }
-                            $('.state').html(html);
-                        },
-                        error: function(xhr, status, error) {
-                            console.error("An error occurred while fetching states.");
-                        }
-                    });
-                }
-            });
-
-            // Handle state change event to load cities
-            $('.state').on('change', function() {
-                let state_id = $(this).val();
-
-                // Clear city dropdown before loading new data
-                $('.city').html('<option value="">Select</option>');
-
-                if (state_id) {
-                    $.ajax({
-                        method: 'GET',
-                        url: '{{ route('get-cities', ':id') }}'.replace(":id", state_id),
-                        success: function(response) {
-                            let html = '<option value="">Select</option>';
-                            if (response.length > 0) {
-                                $.each(response, function(index, value) {
-                                    html +=
-                                        `<option value="${value.id}">${value.name}</option>`;
-                                });
-                            } else {
-                                html = '<option value="">No cities available</option>';
-                            }
-                            $('.city').html(html);
-                        },
-                        error: function(xhr, status, error) {
-                            console.error("An error occurred while fetching cities.");
-                        }
-                    });
-                }
+                    }
+                });
             });
         });
     </script>
