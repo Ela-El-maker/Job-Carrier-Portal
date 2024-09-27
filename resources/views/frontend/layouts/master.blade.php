@@ -35,6 +35,8 @@
 
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.10.0/dist/css/bootstrap-datepicker3.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -45,6 +47,19 @@
 </head>
 
 <body>
+    {{-- <div class="preloader_demo d-none">
+        <div class="img">
+            <img src="{{ asset('frontend/assets/images/loading.gif') }}" alt="cariera">
+        </div>
+    </div> --}}
+    {{-- <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="text-center"><img src="{{ asset('frontend/assets/images/loading.gif') }}"
+                        alt="joblist"></div>
+            </div>
+        </div>
+    </div> --}}
 
     <!-- =============== Start of Header 1 Navigation =============== -->
     @include('frontend.layouts.header')
@@ -92,26 +107,14 @@
     <!-- Bootstrap 4 JavaScript -->
     <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('frontend/assets/js/custom.js') }}"></script>
 
     @stack('scripts')
-    <script>
-        $('.datepicker').datepicker({
-            format: 'yyyy-m-d',
-        });
+    @include('frontend.layouts.scripts')
 
-        ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .catch( error => {
-            console.error( error );
-        } );
 
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('.selectpicker').selectpicker();
-        });
-    </script>
 
 </body>
 

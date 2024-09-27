@@ -12,7 +12,9 @@
 
         <!-- Column -->
         <div class="col-md-2 col-sm-3 col-xs-12">
-            <a href="#" class="btn btn-blue btn-effect" data-toggle="modal" data-target="#myModal">Add Experience</a>
+            <a href="#" class="btn btn-blue btn-effect"
+                onclick="$('#ExperienceForm').trigger('reset'); editId = ''; editMode = false" data-toggle="modal"
+                data-target="#myModal">Add Experience</a>
         </div>
 
     </div>
@@ -20,52 +22,39 @@
 
     <div class="table-responsive">
         <table class="table table-striped table-sm">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th style="width:25%">Action</th>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Company</th>
+                    <th>Department</th>
+                    <th>Designation</th>
+                    <th>Period</th>
+                    <th style="width:30%">Action</th>
 
-            </tr>
-          </thead>
-          <tbody>
+                </tr>
+            </thead>
+            <tbody class="experience-tbody">
+                @foreach ($candidateExperiences as $experience)
+                    <tr>
+                        <td>#</td>
+                        <td>{{ $experience?->company }}</td>
+                        <td>{{ $experience?->department }}</td>
+                        <td>{{ $experience?->designation }}</td>
+                        <td>{{ $experience?->start }} -
+                            {{ $experience?->currently_working === 1 ? 'Current' : $experience?->end }}</td>
 
-            <tr>
-              <td>1,014</td>
-              <td>per</td>
-              <td>inceptos</td>
-              <td>himenaeos</td>
-              <td>Curabitur</td>
-              <td>
-                <a href="" class="btn-small btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#experienceModal">
-                    <i class="fas fa-edit"></i>
-                </a>
-                <a href="" class="btn-small btn btn-danger delete-item">
-                    <i class="fas fa-trash-alt"></i>
-                </a>
-            </td>
-            </tr>
-            <tr>
-              <td>1,015</td>
-              <td>sodales</td>
-              <td>ligula</td>
-              <td>in</td>
-              <td>libero</td>
-              <td>
-                <a href="" class="btn-small btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#experienceModal">
-                    <i class="fas fa-edit"></i>
-                </a>
-                <a href="" class="btn-small btn btn-danger delete-item">
-                    <i class="fas fa-trash-alt"></i>
-                </a>
-            </td>
-            </tr>
-          </tbody>
+                        <td>
+                            <a href="{{ route('candidate.experience.edit',$experience->id) }}" class="btn-small btn btn-primary edit-experience" data-bs-toggle="modal"
+                                data-bs-target="#myModal">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{{ route('candidate.experience.destroy',$experience->id) }}" class="btn-small btn btn-danger delete-experience">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
         </table>
-      </div>
+    </div>
 </div>

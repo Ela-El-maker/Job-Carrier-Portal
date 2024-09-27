@@ -12,13 +12,9 @@
             border-radius: 5px;
             text-align: center;
             display: flex;
-            /* Flexbox layout */
             align-items: center;
-            /* Vertical centering */
             justify-content: center;
-            /* Horizontal centering */
             cursor: pointer;
-            /* Adds pointer on hover */
         }
 
         .upload-file-btn input[type="file"] {
@@ -29,7 +25,6 @@
             height: 100%;
             opacity: 0;
             cursor: pointer;
-            /* Ensures input behaves as clickable */
         }
 
         .modal-dialog {
@@ -81,7 +76,6 @@
                     <div class="job-post-wrapper mt20">
                         <!-- Start of Row -->
                         <div class="row candidate-profile">
-                            <!-- Start of Profile Description and Dashboard Cards -->
                             <div class="col-md-12 col-xs-12">
                                 <!-- Card Container for Candidate Details -->
                                 <div class="card-container">
@@ -112,89 +106,6 @@
 
                                         @include('frontend.candidate-dashboard.profile.sections.experience-section')
 
-                                        {{-- <div class="tab-pane fade" id="contact" role="tabpanel"
-                                            aria-labelledby="contact-tab">
-                                            <br>
-
-                                            <form action="{{ route('company.profile.account-info') }}" method="post">
-                                                @csrf
-                                                <div class="row">
-                                                    <!-- Username and Email fields -->
-                                                    <div class="col-md-6">
-                                                        <!-- Form Group for Username -->
-                                                        <div class="form-group">
-                                                            <label>Username *</label>
-                                                            <input name="name"
-                                                                class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                                                value="{{ auth()->user()->name }}" type="text">
-                                                            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <!-- Form Group for Email -->
-                                                        <div class="form-group">
-                                                            <label>Email Address *</label>
-                                                            <input name="email"
-                                                                class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
-                                                                value="{{ auth()->user()->email }}" type="email">
-                                                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-
-                                                        </div>
-                                                    </div>
-                                                    <!-- Save Button below Password fields -->
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <button type="submit"
-                                                                class="btn btn-primary btn-shadow">Save</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                            <!-- Divider -->
-                                            <div class="col-md-12">
-                                                <br>
-                                                <hr>
-                                            </div>
-
-                                            <form action="{{ route('company.profile.password-update') }}" method="post">
-                                                @csrf
-                                                <div class="row">
-                                                    <!-- Password and Confirm Password on the same row -->
-                                                    <div class="col-md-6">
-                                                        <!-- Form Group for Password -->
-                                                        <div class="form-group">
-                                                            <label>Password *</label>
-                                                            <input name="password"
-                                                                class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
-                                                                type="password">
-                                                            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <!-- Form Group for Confirm Password -->
-                                                        <div class="form-group">
-                                                            <label>Confirm Password *</label>
-                                                            <input name="password_confirmation"
-                                                                class="form-control {{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}"
-                                                                type="password">
-                                                            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Save Button below Password fields -->
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <button type="submit"
-                                                                class="btn btn-primary btn-shadow">Save</button>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </form>
-                                        </div> --}}
-
                                     </div>
                                 </div>
                             </div>
@@ -215,7 +126,7 @@
                     <h4 class="modal-title">Add Experience</h4>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="POST" id = "ExperienceForm">
+                    <form action="" method="POST" id="ExperienceForm">
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
@@ -265,44 +176,322 @@
                                 <textarea class="form-control textarea-box" rows="8" name="responsibilities" placeholder="..."></textarea>
                             </div>
 
-
                         </div>
                         <div class="text-right">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-                            <button type="submit" class="btn btn-primary">Add
-                                Experience</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Add Experience</button>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                 </div>
             </div>
-
         </div>
     </div>
-    <!-- ===== End of Login Pop Up div ===== -->
 @endsection
+{{-- @push('scripts')
+    <script>
+        $(document).ready(function() {
+            var editId = "";
+            var editMode = false;
+
+            // Function to fetch all experiences and update the table
+            function fetchExperience() {
+                $.ajax({
+                    method: 'GET',
+                    url: "{{ route('candidate.experience.index') }}",
+                    success: function(response) {
+                        $('.experience-tbody').html(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('Error fetching experiences:', error);
+                    }
+                });
+            }
+
+            // Function to show the loader (Optional)
+            function showLoader() {
+                // Your loader show logic
+            }
+
+            // Function to hide the loader (Optional)
+            function hideLoader() {
+                // Your loader hide logic
+            }
+
+            // Handle form submission for adding or editing experience
+            $('#ExperienceForm').on('submit', function(event) {
+                event.preventDefault();
+
+                const formData = $(this).serialize();
+                let method = editMode ? 'PUT' : 'POST';
+                let url = editMode
+                    ? "{{ route('candidate.experience.update', ':id') }}".replace(':id', editId)
+                    : "{{ route('candidate.experience.store') }}";
+
+                $.ajax({
+                    method: method,
+                    url: url,
+                    data: formData,
+                    beforeSend: function() {
+                        showLoader();
+                    },
+                    success: function(response) {
+                        fetchExperience(); // Refresh the experience list
+                        $('#ExperienceForm').trigger('reset'); // Clear the form
+                        $('#myModal').modal('hide'); // Hide the modal
+                        hideLoader();
+                        notyf.success(response.message); // Show success message
+                        editId = ""; // Reset the editId
+                        editMode = false; // Switch off edit mode
+                    },
+                    error: function(xhr, status, error) {
+                        hideLoader();
+                        console.log('Error saving experience:', error);
+                    }
+                });
+            });
+
+            // Handle edit button click to populate modal with experience data
+            $('body').on('click', '.edit-experience', function(e) {
+                e.preventDefault(); // Prevent default link behavior
+
+                let url = $(this).attr('href'); // Get the edit URL
+
+                $.ajax({
+                    method: 'GET',
+                    url: url,
+                    beforeSend: function() {
+                        showLoader();
+                    },
+                    success: function(response) {
+                        // Populate modal fields with the experience data
+                        $('#ExperienceForm input[name="company"]').val(response.company);
+                        $('#ExperienceForm input[name="department"]').val(response.department);
+                        $('#ExperienceForm input[name="designation"]').val(response.designation);
+                        $('#ExperienceForm input[name="start"]').val(response.start);
+                        $('#ExperienceForm input[name="end"]').val(response.end);
+                        $('#ExperienceForm textarea[name="responsibilities"]').val(response.responsibilities);
+
+                        // Set the checkbox for currently working
+                        if (response.currently_working === 1) {
+                            $('#ExperienceForm input[name="currently_working"]').prop('checked', true);
+                        } else {
+                            $('#ExperienceForm input[name="currently_working"]').prop('checked', false);
+                        }
+
+                        $('#myModal').modal('show'); // Open the modal
+                        hideLoader();
+
+                        editId = response.id; // Set the ID for updating
+                        editMode = true; // Enable edit mode
+                    },
+                    error: function(xhr, status, error) {
+                        hideLoader();
+                        console.log('Error loading experience:', error);
+                    }
+                });
+            });
+
+            // Handle delete button click
+            $('body').on('click', '.delete-experience', function(e) {
+                e.preventDefault(); // Prevent default link behavior
+
+                let url = $(this).attr('href'); // Get the delete URL
+                if (confirm('Are you sure you want to delete this experience?')) {
+                    $.ajax({
+                        method: 'DELETE',
+                        url: url,
+                        beforeSend: function() {
+                            showLoader();
+                        },
+                        success: function(response) {
+                            fetchExperience(); // Refresh the experience list
+                            hideLoader();
+                            notyf.success(response.message); // Show success message
+                        },
+                        error: function(xhr, status, error) {
+                            hideLoader();
+                            console.log('Error deleting experience:', error);
+                        }
+                    });
+                }
+            });
+
+            // Fetch experiences on page load
+            fetchExperience();
+        });
+    </script>
+@endpush --}}
 
 @push('scripts')
     <script>
         $(document).ready(function() {
-            $('#ExperienceForm').on('submit', function(event) {
-                event.preventDefault();
-                const formData = $(this).serialize();
-                console.log(formData);
-                $.ajax({
-                    method: 'POST',
-                    url: "{{ route('candidate.experience.store') }}",
-                    data: formData,
-                    success: function(response) {
+            var editId = "";
+            var editMode = false;
 
+            // Function to fetch all experiences and update the table
+            function fetchExperience() {
+                $.ajax({
+                    method: 'GET',
+                    url: "{{ route('candidate.experience.index') }}",
+                    success: function(response) {
+                        $('.experience-tbody').html(response);
                     },
                     error: function(xhr, status, error) {
+                        console.log('Error fetching experiences:', error);
+                    }
+                });
+            }
 
+            // Function to show the loader (Optional)
+            function showLoader() {
+                // Your loader show logic
+            }
+
+            // Function to hide the loader (Optional)
+            function hideLoader() {
+                // Your loader hide logic
+            }
+
+            // Handle form submission for adding or editing experience
+            $('#ExperienceForm').on('submit', function(event) {
+                event.preventDefault();
+
+                const formData = $(this).serialize();
+                let method = editMode ? 'PUT' : 'POST';
+                let url = editMode
+                    ? "{{ route('candidate.experience.update', ':id') }}".replace(':id', editId)
+                    : "{{ route('candidate.experience.store') }}";
+
+                $.ajax({
+                    method: method,
+                    url: url,
+                    data: formData,
+                    beforeSend: function() {
+                        showLoader();
+                    },
+                    success: function(response) {
+                        fetchExperience(); // Refresh the experience list
+                        $('#ExperienceForm').trigger('reset'); // Clear the form
+                        $('#myModal').modal('hide'); // Hide the modal
+                        hideLoader();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        notyf.success(response.message);
+                        editId = ""; // Reset the editId
+                        editMode = false; // Switch off edit mode
+                    },
+                    error: function(xhr, status, error) {
+                        hideLoader();
+                        console.log('Error saving experience:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: 'There was an error saving the experience.',
+                        });
                     }
                 });
             });
+
+            // Handle edit button click to populate modal with experience data
+            $('body').on('click', '.edit-experience', function(e) {
+                e.preventDefault(); // Prevent default link behavior
+
+                let url = $(this).attr('href'); // Get the edit URL
+
+                $.ajax({
+                    method: 'GET',
+                    url: url,
+                    beforeSend: function() {
+                        showLoader();
+                    },
+                    success: function(response) {
+                        // Populate modal fields with the experience data
+                        $('#ExperienceForm input[name="company"]').val(response.company);
+                        $('#ExperienceForm input[name="department"]').val(response.department);
+                        $('#ExperienceForm input[name="designation"]').val(response.designation);
+                        $('#ExperienceForm input[name="start"]').val(response.start);
+                        $('#ExperienceForm input[name="end"]').val(response.end);
+                        $('#ExperienceForm textarea[name="responsibilities"]').val(response.responsibilities);
+
+                        // Set the checkbox for currently working
+                        if (response.currently_working === 1) {
+                            $('#ExperienceForm input[name="currently_working"]').prop('checked', true);
+                        } else {
+                            $('#ExperienceForm input[name="currently_working"]').prop('checked', false);
+                        }
+
+                        $('#myModal').modal('show'); // Open the modal
+                        hideLoader();
+
+                        editId = response.id; // Set the ID for updating
+                        editMode = true; // Enable edit mode
+                    },
+                    error: function(xhr, status, error) {
+                        hideLoader();
+                        console.log('Error loading experience:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: 'Failed to load experience data.',
+                        });
+                    }
+                });
+            });
+
+             // Delete Item
+             $("body").on('click', '.delete-experience', function(e) {
+                e.preventDefault();
+                let url = $(this).attr('href')
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // console.log(url);
+                        $.ajax({
+                            method: 'DELETE',
+                            url: url,
+                            data: {
+                                _token: "{{ csrf_token() }}"
+                            },
+                            beforeSend: function() {
+                                showLoader();
+                            },
+                            success: function(response) {
+                                fetchExperience();
+                                hideLoader();
+                                // window.location.reload();
+                                notyf.success(response.message);
+
+                            },
+                            error: function(xhr, status, error) {
+                                console.log(xhr);
+                                swal(xhr.responseJSON.message, {
+                                    icon: 'error',
+                                });
+                                hideLoader();
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Fetch experiences on page load
+            fetchExperience();
         });
     </script>
 @endpush
+
