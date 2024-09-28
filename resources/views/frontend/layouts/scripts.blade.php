@@ -13,8 +13,18 @@
 
 
 
+    // date picker
+
     $('.datepicker').datepicker({
         format: 'yyyy-m-d',
+    });
+
+    // year picker
+
+    $('.yearpicker').datepicker({
+        format: 'yyyy',
+        viewMode: 'years',
+        minViewMode: 'years'
     });
 
 
@@ -24,7 +34,7 @@
             console.error(error);
         });
 
-    
+
     $(document).ready(function() {
         $('.selectpicker').selectpicker();
     });

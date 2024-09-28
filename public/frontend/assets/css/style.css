@@ -7095,8 +7095,6 @@ section.shop .panel-group .panel .panel-heading h4 a {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-
-
 /* Sidebar Styles */
 .dashboard-sidebar {
     padding: 0;
@@ -7236,11 +7234,9 @@ section.shop .panel-group .panel .panel-heading h4 a {
     margin-right: 7px !important;
 }
 
-
 .ck-editor__editable {
     min-height: 250px;
 }
-
 
 .preloader_demo {
     position: fixed;
@@ -7253,9 +7249,9 @@ section.shop .panel-group .panel .panel-heading h4 a {
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+}
 
-  .preloader_demo .img {
+.preloader_demo .img {
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -7263,12 +7259,57 @@ section.shop .panel-group .panel .panel-heading h4 a {
     -moz-border-radius: 50%;
     -ms-border-radius: 50%;
     -o-border-radius: 50%;
-  }
+}
 
-  .preloader_demo .img img {
+.preloader_demo .img img {
     border-radius: 50%;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     -ms-border-radius: 50%;
     -o-border-radius: 50%;
-  }
+}
+
+
+/* Mobile-specific adjustments */
+@media (max-width: 767px) {
+    /* Ensure buttons look consistent on mobile */
+    .btn {
+        width: 100%; /* Make buttons full-width on small screens */
+        margin-bottom: 0.5rem; /* Add spacing between buttons */
+    }
+
+    .table-responsive table {
+        border-collapse: separate;
+        border-spacing: 0 0.5rem; /* Space between rows */
+    }
+
+    .table thead {
+        display: none; /* Hide table headers on mobile */
+    }
+
+    .table tbody tr {
+        display: block; /* Each row becomes a block */
+        margin-bottom: 1rem; /* Space between rows */
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 1rem;
+    }
+
+    .table tbody tr td {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem;
+        border-bottom: 1px solid #f1f1f1;
+    }
+
+    .table tbody tr td:last-child {
+        border-bottom: none;
+    }
+
+    .table tbody tr td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        min-width: 100px;
+        display: inline-block;
+    }
+}
