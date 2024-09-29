@@ -1,8 +1,8 @@
 @extends('frontend.layouts.master')
 @section('contents')
-@php
-    $completionPercentage = getCompanyProfileCompletion();
-@endphp
+    @php
+        $completionPercentage = getCompanyProfileCompletion();
+    @endphp
 
     <!-- CSS for styling the layout -->
     <style>
@@ -131,8 +131,8 @@
                                                 <div class="card__profile-image">
                                                     <img src="{{ asset(auth()->user()->image) }}" alt="Profile Image"
                                                         class="profile-image">
-                                                    <a href="{{ route('company.profile') }}"
-                                                    class="edit-profile-btn">Edit Profile</a>
+                                                    <a href="{{ route('company.profile') }}" class="edit-profile-btn">Edit
+                                                        Profile</a>
 
                                                 </div>
 
@@ -140,7 +140,8 @@
                                                 <div class="warning-card">
                                                     <div class="warning-content">
                                                         <strong>Incomplete Profile</strong>
-                                                        <p>Your profile details are only <strong>{{ $completionPercentage }}%</strong> complete.
+                                                        <p>Your profile details are only
+                                                            <strong>{{ $completionPercentage }}%</strong> complete.
                                                             Please
                                                             update your profile to 100% for better visibility.</p>
                                                     </div>
@@ -148,7 +149,7 @@
                                             </div>
                                             <div class="card__texture"></div>
                                         </div>
-                                        @else
+                                    @else
                                         <!-- Content to display if the profile is complete -->
                                     @endif
                                 </div>

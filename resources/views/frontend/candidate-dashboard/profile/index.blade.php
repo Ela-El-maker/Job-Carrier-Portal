@@ -93,7 +93,7 @@
                                                 aria-controls="experience" aria-selected="false">Experience & Education</a>
                                         </li>
                                         <li>
-                                            <a href="#contact" data-toggle="tab" role="tab" aria-controls="contact"
+                                            <a href="#account" data-toggle="tab" role="tab" aria-controls="account"
                                                 aria-selected="false">Account Setting</a>
                                         </li>
                                     </ul>
@@ -105,6 +105,8 @@
                                         @include('frontend.candidate-dashboard.profile.sections.profile-section')
 
                                         @include('frontend.candidate-dashboard.profile.sections.experience-section')
+
+                                        @include('frontend.candidate-dashboard.profile.sections.account-section')
 
                                     </div>
                                 </div>

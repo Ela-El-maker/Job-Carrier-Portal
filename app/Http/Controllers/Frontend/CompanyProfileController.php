@@ -36,14 +36,9 @@ class CompanyProfileController extends Controller
         $organizationTypes = OrganizationType::all();
         $teamSizes = TeamSize::all();
         $countries = Country::all();
+        $states = State::select(['id', 'name', 'country_id'])->where('country_id', $companyInfo?->country)->get();
+        $cities = City::select(['id', 'name', 'state_id', 'country_id'])->where('state_id', $companyInfo?->state)->get();
 
-        $states = State::select(['id', 'name', 'country_id'])
-            ->where('country_id', optional($companyInfo)->country) // Null-safe access
-            ->get();
-
-        $cities = City::select(['id', 'name', 'state_id', 'country_id'])
-            ->where('state_id', optional($companyInfo)->state) // Null-safe access
-            ->get();
 
         return view(
             'frontend.company-dashboard.profile.index',
@@ -119,8 +114,20 @@ class CompanyProfileController extends Controller
                 'map_link' => $request->map_link,
             ]
         );
+        // Calculate profile completion percentage
+        $profileCompletion = getCompanyProfileCompletion(); // Assuming this function is available
+
+        if ($profileCompletion == 100) {
+            $companyProfile = Company::where('user_id', auth()->user()->id)->first();
+            $companyProfile->profile_completion = 1; // Mark as complete
+            $companyProfile->visibility = 1; // Make the profile visible
+            $companyProfile->save();
+        }
+
         Notify::updatedNotification();
-        return redirect()->back();
+
+        // Pass profile completion percentage to the view
+        return redirect()->back()->with('profileCompletion', $profileCompletion);
     }
 
     function updateAccountInfo(Request $request): RedirectResponse
@@ -133,8 +140,20 @@ class CompanyProfileController extends Controller
 
         Auth::user()->update($validatedData);
 
+        // Calculate profile completion percentage
+        $profileCompletion = getCompanyProfileCompletion(); // Assuming this function is available
+
+        if ($profileCompletion == 100) {
+            $companyProfile = Company::where('user_id', auth()->user()->id)->first();
+            $companyProfile->profile_completion = 1; // Mark as complete
+            $companyProfile->visibility = 1; // Make the profile visible
+            $companyProfile->save();
+        }
+
         Notify::updatedNotification();
-        return redirect()->back();
+
+        // Pass profile completion percentage to the view
+        return redirect()->back()->with('profileCompletion', $profileCompletion);
     }
 
     function updatePassword(Request $request): RedirectResponse

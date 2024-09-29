@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Candidate extends Model
 {
+    use Sluggable;
     use HasFactory;
     protected $fillable = [
         'user_id',
@@ -23,7 +25,28 @@ class Candidate extends Model
         'profession_id',
         'status',
         'bio',
+        'country',
+        'state',
+        'city',
+        'address',
+        'phone_one',
+        'phone_two',
+        'email',
     ];
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'full_name'
+            ]
+        ];
+    }
 
 
     function skills() : HasMany

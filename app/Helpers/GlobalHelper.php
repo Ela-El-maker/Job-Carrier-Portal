@@ -6,6 +6,7 @@
  *
  */
 
+use App\Models\Candidate;
 use App\Models\Company;
 
 if (!function_exists('hasError')) {
@@ -18,12 +19,10 @@ if (!function_exists('hasError')) {
 /*** Set sidebar active */
 
 if (!function_exists('setSidebarActive')) {
-    function setSidebarActive(array $routes) : ?String
+    function setSidebarActive(array $routes): ?String
     {
-        foreach($routes as $route)
-        {
-            if(request()->routeIs($route))
-            {
+        foreach ($routes as $route) {
+            if (request()->routeIs($route)) {
                 return 'active';
             }
         }
@@ -31,7 +30,7 @@ if (!function_exists('setSidebarActive')) {
     }
 }
 
-/*** Profile Completion Percentage */
+/*** Company Profile Completion Percentage */
 /*** Check profile completion and calculate percentage */
 
 if (!function_exists('getCompanyProfileCompletion')) {
@@ -71,5 +70,54 @@ if (!function_exists('getCompanyProfileCompletion')) {
         $completionPercentage = ($completedFields / $totalFields) * 100;
 
         return (int) $completionPercentage; // Return as an integer (rounded down)
+    }
+
+
+
+    /*** Candidate Profile Completion Percentage */
+    /*** Check profile completion and calculate percentage */
+
+    if (!function_exists('getCandidateProfileCompletion')) {
+        function getCandidateProfileCompletion(): int
+        {
+            $requiredFields = [
+                'experience_id',
+                'profession_id',
+                'title',
+                'image',
+                'cv',
+                'full_name',
+                'birth_date',
+                'gender',
+                'status',
+                'marital_status',
+                'bio',
+                'country',
+                'state',
+                'city',
+                'address',
+                'phone_one',
+                'phone_two',
+                'email',
+            ];
+
+            $candidateProfile = Candidate::where('user_id', auth()->user()->id)->first();
+
+            // Initialize counters
+            $totalFields = count($requiredFields);
+            $completedFields = 0;
+
+            // Count how many fields are completed
+            foreach ($requiredFields as $field) {
+                if (!empty($candidateProfile->{$field})) {
+                    $completedFields++;
+                }
+            }
+
+            // Calculate percentage
+            $completionPercentage = ($completedFields / $totalFields) * 100;
+
+            return (int) $completionPercentage; // Return as an integer (rounded down)
+        }
     }
 }
