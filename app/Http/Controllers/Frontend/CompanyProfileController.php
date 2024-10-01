@@ -79,7 +79,9 @@ class CompanyProfileController extends Controller
         $profileCompletionPercentage = getCompanyProfileCompletion();
 
         // Update the profile completion status
-        $companyProfile->profile_completion = $profileCompletionPercentage;
+        // $companyProfile->profile_completion = $profileCompletionPercentage;
+        // Update the profile completion status
+        $companyProfile->profile_completion = $profileCompletionPercentage == 100 ? 1 : 0; // Use 1 for complete, 0 for incomplete
 
         // Set visibility based on profile completion (100%)
         if ($profileCompletionPercentage == 100) {
@@ -97,7 +99,8 @@ class CompanyProfileController extends Controller
     }
     function updateFoundingInfo(CompanyFoundingInfoUpdateRequest $request): RedirectResponse
     {
-        Company::updateOrCreate(
+        // Update or create the company profile
+        $companyProfile = Company::updateOrCreate(
             ['user_id' => auth()->user()->id],
             [
                 'industry_type_id' => $request->industry_type,
@@ -115,14 +118,12 @@ class CompanyProfileController extends Controller
             ]
         );
         // Calculate profile completion percentage
-        $profileCompletion = getCompanyProfileCompletion(); // Assuming this function is available
+        $profileCompletion = getCompanyProfileCompletion();
 
-        if ($profileCompletion == 100) {
-            $companyProfile = Company::where('user_id', auth()->user()->id)->first();
-            $companyProfile->profile_completion = 1; // Mark as complete
-            $companyProfile->visibility = 1; // Make the profile visible
-            $companyProfile->save();
-        }
+        // Update profile completion and visibility based on percentage
+        $companyProfile->profile_completion = $profileCompletion == 100 ? 1 : 0; // Use 1 for complete, 0 for incomplete
+        $companyProfile->visibility = $profileCompletion == 100 ? 1 : 0; // Set visibility based on completion
+        $companyProfile->save(); // Save the updates
 
         Notify::updatedNotification();
 
@@ -143,11 +144,12 @@ class CompanyProfileController extends Controller
         // Calculate profile completion percentage
         $profileCompletion = getCompanyProfileCompletion(); // Assuming this function is available
 
-        if ($profileCompletion == 100) {
-            $companyProfile = Company::where('user_id', auth()->user()->id)->first();
-            $companyProfile->profile_completion = 1; // Mark as complete
-            $companyProfile->visibility = 1; // Make the profile visible
-            $companyProfile->save();
+        // Update company profile completion and visibility based on percentage
+        $companyProfile = Company::where('user_id', auth()->user()->id)->first();
+        if ($companyProfile) {
+            $companyProfile->profile_completion = $profileCompletion == 100 ? 1 : 0; // Use 1 for complete, 0 for incomplete
+            $companyProfile->visibility = $profileCompletion == 100 ? 1 : 0; // Set visibility based on completion
+            $companyProfile->save(); // Save the updates
         }
 
         Notify::updatedNotification();

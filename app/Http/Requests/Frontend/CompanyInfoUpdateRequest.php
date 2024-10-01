@@ -25,8 +25,8 @@ class CompanyInfoUpdateRequest extends FormRequest
 
         $rules = [
             //
-            'logo' => ['image','max:1500'],
-            'banner' => ['image','max:1500'],
+            'logo' => ['image','max:3000'],
+            'banner' => ['image','max:3000'],
             'name' => ['required','string','max:100'],
             'bio' => ['required'],
             'vision' => ['required'],

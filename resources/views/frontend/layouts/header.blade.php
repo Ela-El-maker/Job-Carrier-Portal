@@ -1,4 +1,67 @@
-<header class="sticky">
+<!-- =============== Start of Header 3 Navigation =============== -->
+<header class="header3">
+
+    <!-- ===== Start of Top Bar ===== -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-6 col-xs-12">
+                    <span>Get in touch with us!</span>
+                </div>
+
+                <div class="col-md-6 col-xs-12">
+                    <!-- Start of Social Media Buttons -->
+                    <ul class="social-btns list-inline text-right">
+                        <!-- Social Media -->
+                        <li>
+                            <a href="#" class="social-btn-roll facebook transparent">
+                                <div class="social-btn-roll-icons">
+                                    <i class="social-btn-roll-icon fa fa-facebook"></i>
+                                    <i class="social-btn-roll-icon fa fa-facebook"></i>
+                                </div>
+                            </a>
+                        </li>
+
+                        <!-- Social Media -->
+                        <li>
+                            <a href="#" class="social-btn-roll twitter transparent">
+                                <div class="social-btn-roll-icons">
+                                    <i class="social-btn-roll-icon fa fa-twitter"></i>
+                                    <i class="social-btn-roll-icon fa fa-twitter"></i>
+                                </div>
+                            </a>
+                        </li>
+
+                        <!-- Social Media -->
+                        <li>
+                            <a href="#" class="social-btn-roll google-plus transparent">
+                                <div class="social-btn-roll-icons">
+                                    <i class="social-btn-roll-icon fa fa-google-plus"></i>
+                                    <i class="social-btn-roll-icon fa fa-google-plus"></i>
+                                </div>
+                            </a>
+                        </li>
+
+                        <!-- Social Media -->
+                        <li>
+                            <a href="#" class="social-btn-roll instagram transparent">
+                                <div class="social-btn-roll-icons">
+                                    <i class="social-btn-roll-icon fa fa-instagram"></i>
+                                    <i class="social-btn-roll-icon fa fa-instagram"></i>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- End of Social Media Buttons -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- ===== End of Top Bar ===== -->
+
+
     <nav class="navbar navbar-default navbar-static-top fluid_header centered">
         <div class="container">
 
@@ -90,3 +153,5 @@
         </div>
     </nav>
 </header>
+
+<!-- =============== End of Header 3 Navigation =============== -->

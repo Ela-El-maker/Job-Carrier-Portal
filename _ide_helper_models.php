@@ -64,6 +64,7 @@ namespace App\Models{
  * @property string|null $bio
  * @property string|null $marital_status
  * @property string|null $birth_date
+ * @property string|null $email
  * @property string|null $address
  * @property int|null $city
  * @property int|null $state
@@ -88,6 +89,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Candidate whereCountry($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Candidate whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Candidate whereCv($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Candidate whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Candidate whereExperienceId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Candidate whereFullName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Candidate whereGender($value)
@@ -269,6 +271,12 @@ namespace App\Models{
  * @property int $visibility
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\City|null $companyCity
+ * @property-read \App\Models\Country|null $companyCountry
+ * @property-read \App\Models\State|null $companyState
+ * @property-read \App\Models\IndustryType|null $industryType
+ * @property-read \App\Models\OrganizationType|null $organizationType
+ * @property-read \App\Models\TeamSize|null $teamSize
  * @method static \Illuminate\Database\Eloquent\Builder|Company findSimilarSlugs(string $attribute, array $config, string $slug)
  * @method static \Illuminate\Database\Eloquent\Builder|Company newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Company newQuery()
