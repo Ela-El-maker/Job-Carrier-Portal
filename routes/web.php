@@ -10,6 +10,7 @@ use App\Http\Controllers\Frontend\FrontendCandidatePageController;
 use App\Http\Controllers\Frontend\FrontendCompanyPageController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\LocationController;
+use App\Http\Controllers\Frontend\PricingPageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +43,8 @@ Route::get('get-cities/{state_id}', [LocationController::class, 'getCities'])->n
  */
 Route::get('companies', [FrontendCompanyPageController::class, 'index'])->name('companies.index');
 Route::get('companies/{slug}', [FrontendCompanyPageController::class, 'show'])->name('companies.show');
+
+Route::get('pricing', PricingPageController::class)->name('pricing.index');
 
 /**
  * Candidates Frontend Pages
