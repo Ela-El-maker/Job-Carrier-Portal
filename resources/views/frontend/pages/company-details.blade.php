@@ -122,7 +122,7 @@
                         <br>
                         <div>
                             <a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i>
-                                {{ $company->companyCity?->name ? ', ' . $company->companyCity?->name : ' ' }}
+                                {{ $company->companyCity?->name ? '  ' . $company->companyCity?->name : ' ' }}
                                 {{ $company->companyState?->name ? ', ' . $company->companyState?->name : '' }}
                                 {{ $company->companyCountry?->name ? ', ' . $company->companyCountry?->name : '' }}</a>
                         </div>
@@ -188,7 +188,7 @@
                             <li>
                                 <h5><i class="fa fa-map-marker"></i> Location:</h5>
                                 <span>{{ $company?->address }}
-                                    {{ $company->companyCity?->name ? ', ' . $company->companyCity?->name : ' ' }}
+                                    {{ $company->companyCity?->name ? '  ' . $company->companyCity?->name : ' ' }}
                                     {{ $company->companyState?->name ? ', ' . $company->companyState?->name : '' }}
                                     {{ $company->companyCountry?->name ? ', ' . $company->companyCountry?->name : '' }}
                                 </span>

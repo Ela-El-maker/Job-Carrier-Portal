@@ -35,8 +35,8 @@ class CandidateProfileController extends Controller
     function index(): View
     {
         $candidate = Candidate::with(['skills', 'languages'])->where('user_id', auth()->user()->id)->first();
-        $candidateExperiences = CandidateExperience::where('candidate_id', $candidate->id)->orderBy('id', 'DESC')->get();
-        $candidateEducations = CandidateEducation::where('candidate_id', $candidate->id)->orderBy('id', 'DESC')->get();
+        $candidateExperiences = CandidateExperience::where('candidate_id', $candidate?->id)->orderBy('id', 'DESC')->get();
+        $candidateEducations = CandidateEducation::where('candidate_id', $candidate?->id)->orderBy('id', 'DESC')->get();
         $experiences = Experience::all();
         $professions = Profession::all();
         $skills = Skill::all();
@@ -99,11 +99,12 @@ class CandidateProfileController extends Controller
         // Calculate profile completion percentage
         $profileCompletion = getCandidateProfileCompletion(); // Assuming this function is available
 
-        if ($profileCompletion == 100) {
-            $candidateProfile = Candidate::where('user_id', auth()->user()->id)->first();
-            $candidateProfile->profile_complete = 1; // Mark as complete
-            $candidateProfile->visibility = 1; // Make the profile visible
-            $candidateProfile->save();
+        // Update candidate profile completion and visibility based on percentage
+        $candidateProfile = Candidate::where('user_id', auth()->user()->id)->first();
+        if ($candidateProfile) {
+            $candidateProfile->profile_complete = $profileCompletion == 100 ? 1 : 0; // Use 1 for complete, 0 for incomplete
+            $candidateProfile->visibility = $profileCompletion == 100 ? 1 : 0; // Set visibility based on completion
+            $candidateProfile->save(); // Save the updates
         }
 
         Notify::updatedNotification();
@@ -153,11 +154,12 @@ class CandidateProfileController extends Controller
         // Calculate profile completion percentage
         $profileCompletion = getCandidateProfileCompletion(); // Assuming this function is available
 
-        if ($profileCompletion == 100) {
-            $candidateProfile = Candidate::where('user_id', auth()->user()->id)->first();
-            $candidateProfile->profile_complete = 1; // Mark as complete
-            $candidateProfile->visibility = 1; // Make the profile visible
-            $candidateProfile->save();
+        // Update candidate profile completion and visibility based on percentage
+        $candidateProfile = Candidate::where('user_id', auth()->user()->id)->first();
+        if ($candidateProfile) {
+            $candidateProfile->profile_complete = $profileCompletion == 100 ? 1 : 0; // Use 1 for complete, 0 for incomplete
+            $candidateProfile->visibility = $profileCompletion == 100 ? 1 : 0; // Set visibility based on completion
+            $candidateProfile->save(); // Save the updates
         }
 
         Notify::updatedNotification();
@@ -185,22 +187,22 @@ class CandidateProfileController extends Controller
             ]
         );
 
-       // Calculate profile completion percentage
-       $profileCompletion = getCandidateProfileCompletion(); // Assuming this function is available
+      // Calculate profile completion percentage
+      $profileCompletion = getCandidateProfileCompletion(); // Assuming this function is available
 
-       if ($profileCompletion == 100) {
-           $candidateProfile = Candidate::where('user_id', auth()->user()->id)->first();
-           $candidateProfile->profile_complete = 1; // Mark as complete
-           $candidateProfile->visibility = 1; // Make the profile visible
-           $candidateProfile->save();
+      // Update candidate profile completion and visibility based on percentage
+      $candidateProfile = Candidate::where('user_id', auth()->user()->id)->first();
+      if ($candidateProfile) {
+          $candidateProfile->profile_complete = $profileCompletion == 100 ? 1 : 0; // Use 1 for complete, 0 for incomplete
+          $candidateProfile->visibility = $profileCompletion == 100 ? 1 : 0; // Set visibility based on completion
+          $candidateProfile->save(); // Save the updates
+      }
 
-       }
+      Notify::updatedNotification();
 
-       Notify::updatedNotification();
-
-       // Pass profile completion percentage to the view
-       return redirect()->back()->with('profileCompletion', $profileCompletion);
-   }
+      // Pass profile completion percentage to the view
+      return redirect()->back()->with('profileCompletion', $profileCompletion);
+  }
 
 
 
