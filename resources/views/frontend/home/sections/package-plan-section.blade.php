@@ -42,16 +42,13 @@
 
                     <!-- Pricing Footer -->
                     <div class="pricing-footer">
-                        <a href="#" class="btn btn-blue btn-effect">get started</a>
+                        <a href="{{ route('checkout.index',$plan?->id) }}" class="btn btn-blue btn-effect">get started</a>
                     </div>
 
                 </div>
         </div>
         <!-- End of 2nd Pricing Table -->
         @endforeach
-
-
-
 
     </div>
     <!-- End Row -->
