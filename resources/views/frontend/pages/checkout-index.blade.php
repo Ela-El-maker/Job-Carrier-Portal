@@ -33,11 +33,13 @@
                     <br>
                     <br>
                     <h4>Choose Your Payment Method</h4>
+                    <br>
                     <div class="row pt-40">
                         <div class="col-md-6 col-xs-12 mb-4">
                             <a href="">
-                                <img class="img-fluid" style="border-radius: 5px; border: 3px solid #1ca774; max-width: 150px; height: auto;"
-                                     src="https://placehold.co/500x500" alt="Payment Method 1">
+                                <img class="img-fluid" style="border-radius: 5px; border: 3px solid #1ca774; max-width: 150px;  height:110px; object-fit: contain"
+
+                                src="{{ asset('default-uploads/avatar/paypal1.png') }}" alt="Payment Method 1">
                             </a>
                         </div>
                         <div class="col-md-6 col-xs-12 mb-4">
