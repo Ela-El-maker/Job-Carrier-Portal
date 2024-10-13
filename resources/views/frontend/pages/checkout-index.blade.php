@@ -36,7 +36,7 @@
                     <br>
                     <div class="row pt-40">
                         <div class="col-md-6 col-xs-12 mb-4">
-                            <a href="">
+                            <a href="{{ route('company.paypal.payment') }}">
                                 <img class="img-fluid" style="border-radius: 5px; border: 3px solid #1ca774; max-width: 150px;  height:110px; object-fit: contain"
 
                                 src="{{ asset('default-uploads/avatar/paypal1.png') }}" alt="Payment Method 1">
@@ -56,29 +56,33 @@
                 <div class="pricing-table shadow-hover">
                     <!-- Pricing Header -->
                     <div class="pricing-header">
-                        <h2>Premium Plan</h2>
+                        <h2>{{ $plan?->label }}</h2>
                     </div>
 
                     <!-- Pricing -->
                     <div class="pricing">
                         <span class="currency">$</span>
-                        <span class="amount">29</span>
+                        <span class="amount">{{ $plan?->price }}</span>
                         <span class="month">month</span>
                     </div>
 
                     <!-- Pricing Body -->
                     <div class="pricing-body">
                         <ul class="list">
-                            <li>10 Job Limits</li>
-                            <li>5 Featured Job Limits</li>
-                            <li>3 Highlight Job Limits</li>
+                            <li>{{ $plan?->job_limit }} Job Limits</li>
+                            <li>{{ $plan?->featured_job_limit }} Featured Job Limits</li>
+                            <li>{{ $plan?->highlight_job_limit }} Highlight Job Limits</li>
+                            @if ($plan?->profile_verified)
                             <li>Verified Profile</li>
+                        @else
+                            <strike>Verified Profile</strike>
+                        @endif
                         </ul>
                     </div>
 
                     <!-- Pricing Footer -->
                     <div class="pricing-footer">
-                        <a href="#" class="btn btn-blue btn-effect">Get Started</a>
+                        <a href="{{ route('checkout.index', $plan?->id) }}" class="btn btn-blue btn-effect">Get Started</a>
                     </div>
                 </div>
             </div>
