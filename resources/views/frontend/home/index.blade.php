@@ -38,6 +38,9 @@
     <!-- ===== Start of Partners ===== -->
     @include('frontend.home.sections.partners-section')
     <!-- ===== End of Partners ===== -->
+    
+    @include('frontend.home.sections.get-started-section')
+
     <!-- ===== Start of Login Pop Up div ===== -->
     @include('frontend.home.sections.login-pop-up-section')
     <!-- cd-user-modal -->

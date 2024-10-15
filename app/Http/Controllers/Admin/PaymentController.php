@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 // Import the class namespaces first, before using it directly
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
@@ -13,6 +14,15 @@ use Srmklive\PayPal\Services\PayPal as PayPalClient;
 class PaymentController extends Controller
 {
     //
+    function paymentSuccess(): View
+    {
+        return view('frontend.pages.payment-success');
+    }
+
+    function paymentError(): View
+    {
+        return view('frontend.pages.payment-error');
+    }
 
     function setPaypalConfig(): array
     {
@@ -100,14 +110,18 @@ class PaymentController extends Controller
             try {
                 //code...
                 OrderService::storeOrder($capture['id'], 'payPal', $capture['amount']['value'], $capture['amount']['currency_code'], 'paid');
+                OrderService::setUserPlan();
+
+                Session::forget('selected_plan');
+
+                return redirect()->route('company.payment.success');
             } catch (\Exception $th) {
-                throw $th;
+                logger('Payment ERROR >> '.$th);
             }
-
-            Session::forget('selected_plan');
-
-            return redirect()->route('home');
         }
+
+        return redirect()->route('company.payment.error')->withErrors(['error'=>$response['error']['message']]);
+
     }
     /**
      * Paypal Cancel
@@ -116,5 +130,7 @@ class PaymentController extends Controller
     function paypalCancel()
     {
         //handle payment redirect
+        return redirect()->route('company.payment.error')->withErrors(['error'=>'Something went wrong. Please Try Again.']);
+
     }
 }
