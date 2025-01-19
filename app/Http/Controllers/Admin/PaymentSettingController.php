@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\PaypalSettingUpdateRequest;
 use App\Models\Country;
+use App\Models\PaymentSetting;
 use App\Services\Notify;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -32,8 +34,8 @@ class PaymentSettingController extends Controller
             );
         }
 
-        $settingService = app(PaymentGatewaySettingService::class);
-        $settingService ->clearCacheSettings();
+        // $settingService = app(PaymentGatewaySettingService::class);
+        // $settingService ->clearCacheSettings();
 
         Notify::updatedNotification();
         return redirect()->back();
