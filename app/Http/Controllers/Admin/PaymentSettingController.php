@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Country;
 use App\Services\Notify;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -12,10 +14,12 @@ class PaymentSettingController extends Controller
     //
     function index() : View
     {
+
         return view('admin.payment-setting.index');
     }
 
-    function updatePaypalSetting(PaypalSettingUpdateRequest $request) : RedirectResponse {
+    function updatePaypalSetting(PaypalSettingUpdateRequest $request) : RedirectResponse
+    {
 
         // dd($request->all());
         $validatedData = $request -> validated();
