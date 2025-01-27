@@ -514,6 +514,17 @@ namespace App\Models{
 /**
  * 
  *
+ * @method static \Illuminate\Database\Eloquent\Builder|SiteSetting newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|SiteSetting newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|SiteSetting query()
+ */
+	class SiteSetting extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
  * @property int $id
  * @property string $name
  * @property string $slug
