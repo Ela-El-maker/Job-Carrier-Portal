@@ -23,7 +23,7 @@
                     <div class="pricing">
                         <span class="currency">$</span>
                         <span class="amount">{{ $plan?->price }}</span>
-                        <span class="month">month</span>
+                        <span class="month">per month</span>
                     </div>
 
                     <!-- Pricing Body -->

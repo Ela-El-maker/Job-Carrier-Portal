@@ -36,7 +36,7 @@
                     <br>
                     <div class="row pt-40">
                         <div class="col-md-6 col-xs-12 mb-4">
-                            <a href="">
+                            <a href="{{ route('company.paypal.payment') }}">
                                 <img class="img-fluid" style="border-radius: 5px; border: 3px solid #1ca774; max-width: 150px;  height:110px; object-fit: contain"
 
                                 src="{{ asset('default-uploads/payment/paypal1.png') }}" alt="Payment Method 1">
