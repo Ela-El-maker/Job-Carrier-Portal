@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
@@ -101,27 +102,28 @@ class PaymentController extends Controller
      function paypalSuccess(Request $request)
      {
          //handle payment redirect
-        //  $config = $this->setPaypalConfig();
-        //  $provider = new PayPalClient($config);
-        //  $provider->getAccessToken();
-        //  $response = $provider->capturePaymentOrder($request->token);
-        //  // dd($response);
-        //  if (isset($response['status']) && $response['status'] === 'COMPLETED') {
-        //      $capture = $response['purchase_units'][0]['payments']['captures'][0];
-        //      try {
-        //          //code...
-        //          OrderService::storeOrder($capture['id'], 'payPal', $capture['amount']['value'], $capture['amount']['currency_code'], 'paid');
-        //          OrderService::setUserPlan();
+         $config = $this->setPaypalConfig();
+         $provider = new PayPalClient($config);
+         $provider->getAccessToken();
+         $response = $provider->capturePaymentOrder($request->token);
+         // dd($response);
+         if (isset($response['status']) && $response['status'] === 'COMPLETED') {
+             $capture = $response['purchase_units'][0]['payments']['captures'][0];
+             try {
+                 //code...
+                 OrderService::storeOrder($capture['id'], 'payPal', $capture['amount']['value'], $capture['amount']['currency_code'], 'paid');
+                 OrderService::setUserPlan();
 
-        //          Session::forget('selected_plan');
+                 Session::forget('selected_plan');
 
-        //          return redirect()->route('company.payment.success');
-        //      } catch (\Exception $th) {
-        //          logger('Payment ERROR >> '.$th);
-        //      }
-        //  }
+                //  return redirect('/');
+                 return redirect()->route('company.payment.success');
+             } catch (\Exception $th) {
+                 logger('Payment ERROR >> '.$th);
+             }
+         }
 
-        //  return redirect()->route('company.payment.error')->withErrors(['error'=>$response['error']['message']]);
+         return redirect()->route('company.payment.error')->withErrors(['error'=>$response['error']['message']]);
 
      }
      /**

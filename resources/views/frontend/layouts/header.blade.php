@@ -67,7 +67,7 @@
 
             <!-- Logo -->
             <div class="col-md-2 col-sm-6 col-xs-8 nopadding">
-                <a class="navbar-brand nomargin" href="index.html"><img src="images/logo.svg" alt="logo"></a>
+                <a class="navbar-brand nomargin" href="{{ url('/') }}"><img src="images/logo.svg" alt="logo"></a>
                 <!-- INSERT YOUR LOGO HERE -->
             </div>
 

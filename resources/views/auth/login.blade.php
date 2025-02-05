@@ -77,11 +77,16 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-xs-6">
-
+                                    <div class="form-check form-check-inline">
                                     <input type="checkbox" id="remember_me" name="remember">
                                     <label for="remember-me2">Remember me?</label>
-
                                 </div>
+                                </div>
+                                {{-- <div class="form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input " style="margin-right: 10px"
+                                        name="remember">
+                                    <label for="remember_me" class="form-check-label">Remember Me</label>
+                                </div> --}}
 
 
 
