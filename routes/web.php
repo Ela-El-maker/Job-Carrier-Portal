@@ -8,6 +8,8 @@ use App\Http\Controllers\Frontend\CandidateProfileController;
 use App\Http\Controllers\Frontend\CheckoutPageController;
 use App\Http\Controllers\Frontend\CompanyDashboardController;
 use App\Http\Controllers\Frontend\CompanyProfileController;
+use App\Http\Controllers\Frontend\CompanyOrderController;
+use App\Http\Controllers\Frontend\CompanyOrdersController;
 use App\Http\Controllers\Frontend\FrontendCandidatePageController;
 use App\Http\Controllers\Frontend\FrontendCompanyPageController;
 use App\Http\Controllers\Frontend\HomeController;
@@ -77,7 +79,6 @@ Route::group(
         Route::post('/profile/account-info-update', [CandidateProfileController::class, 'accountInfoUpdate'])->name('profile.account-info.update');
         Route::post('/profile/account-email-update', [CandidateProfileController::class, 'accountEmailUpdate'])->name('profile.account-email.update');
         Route::post('/profile/account-password-update', [CandidateProfileController::class, 'accountPasswordUpdate'])->name('profile.account-password.update');
-
     }
 );
 
@@ -107,11 +108,21 @@ Route::group(
         /***
          * Payment Routes
          */
-        Route::get('payment/success', [PaymentController::class,'paymentSuccess'])->name('payment.success');
-        Route::get('payment/error', [PaymentController::class,'paymentError'])->name('payment.error');
-        Route::get('paypal/payment',[PaymentController::class,'payWithPaypal'])->name('paypal.payment');
-        Route::get('paypal/success',[PaymentController::class,'paypalSuccess'])->name('paypal.success');
-        Route::get('paypal/cancel',[PaymentController::class,'paypalCancel'])->name('paypal.cancel');
+        Route::get('payment/success', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
+        Route::get('payment/error', [PaymentController::class, 'paymentError'])->name('payment.error');
+        Route::get('paypal/payment', [PaymentController::class, 'payWithPaypal'])->name('paypal.payment');
+        Route::get('paypal/success', [PaymentController::class, 'paypalSuccess'])->name('paypal.success');
+        Route::get('paypal/cancel', [PaymentController::class, 'paypalCancel'])->name('paypal.cancel');
 
+        /**
+         *  Order Routes
+         */
+        // Route::get('orders', [CompanyOrderController::class, 'index'])->name('orders.index');
+        // Route::get('order/{order}', [CompanyOrderController::class, 'show'])->name('orders.show');
+        // Route::get('order/invoice/{id}', [CompanyOrderController::class, 'invoice'])->name('orders.invoice');
+        // Route::get('order', [CompanyOrderController::class, 'index']);
+        Route::get('orders', [CompanyOrdersController::class, 'index'])->name('orders.index');
+        Route::get('order/{order}', [CompanyOrdersController::class, 'show'])->name('orders.show');
+        Route::get('order/invoice/{id}', [CompanyOrdersController::class, 'invoice'])->name('orders.invoice');
     }
 );
