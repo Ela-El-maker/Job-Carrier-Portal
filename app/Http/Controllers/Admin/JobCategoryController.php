@@ -3,32 +3,28 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Language;
+use App\Models\JobCategory;
 use App\Services\Notify;
 use App\Traits\Searchable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\View\View;
 
-class LanguageController extends Controller
+class JobCategoryController extends Controller
 {
     use Searchable;
-
     /**
-     *
      * Display a listing of the resource.
      */
     public function index(): View
     {
         //
-        // dd($request->search);
-        $query = Language::query();
+        $query = JobCategory::query();
 
-        $this->search($query, ['name']);
+        $this->search($query, ['name', 'slug']);
 
-        $languages = $query->paginate(10);
-        return view('admin.language.index', compact('languages'));
+        $jobCategories = $query->paginate(10);
+        return view('admin.job.job-category.index', compact('jobCategories'));
     }
 
     /**
@@ -37,7 +33,7 @@ class LanguageController extends Controller
     public function create(): View
     {
         //
-        return view('admin.language.create');
+        return view('admin.job.job-category.create');
     }
 
     /**
@@ -46,16 +42,21 @@ class LanguageController extends Controller
     public function store(Request $request): RedirectResponse
     {
         //
-        // dd($request->all());
         $request->validate([
-            'name' => ['required', 'max:255', 'unique:languages,name'],
+            'icon' =>  ['required', 'max:255'],
+            'name' => ['required', 'max:255'],
         ]);
-        $language = new Language();
-        $language->name = $request->name;
-        $language->save();
+
+        $category = new JobCategory();
+        $category->icon = $request->icon;
+        $category->name = $request->name;
+        $category->save();
+
         Notify::createdNotification();
-        return to_route('admin.languages.index');
+
+        return to_route('admin.job-categories.index');
     }
+
     /**
      * Display the specified resource.
      */
@@ -70,8 +71,8 @@ class LanguageController extends Controller
     public function edit(string $id): View
     {
         //
-        $language = Language::findOrFail($id);
-        return view('admin.language.edit', compact('language'));
+        $jobCategory = JobCategory::findOrFail($id);
+        return view('admin.job.job-category.edit', compact('jobCategory'));
     }
 
     /**
@@ -80,26 +81,29 @@ class LanguageController extends Controller
     public function update(Request $request, string $id): RedirectResponse
     {
         //
-        // dd($request->all());
         $request->validate([
-            'name' => ['required', 'max:255', 'unique:languages,name,' . $id],
+            'icon' =>  ['nullable', 'max:255'],
+            'name' => ['required', 'max:255'],
         ]);
-        $language = Language::findOrFail($id);
-        $language->name = $request->name;
-        $language->save();
+
+        $category = JobCategory::findOrFail($id);
+        if ($request->filled('icon')) $category->icon = $request->icon;
+        $category->name = $request->name;
+        $category->save();
+
         Notify::updatedNotification();
-        return to_route('admin.languages.index');
+
+        return to_route('admin.job-categories.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): Response
+    public function destroy(string $id)
     {
         //
-        // dd($id);
         try {
-            Language::findorfail($id)->delete();
+            JobCategory::findorfail($id)->delete();
             Notify::deletedNotification();
             return response(['message' => 'success'], 200);
         } catch (\Exception $e) {
