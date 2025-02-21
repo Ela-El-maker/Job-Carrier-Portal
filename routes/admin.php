@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\EducationController;
 use App\Http\Controllers\Admin\IndustryTypeController;
 use App\Http\Controllers\Admin\JobCategoryController;
 use App\Http\Controllers\Admin\LanguageController;
@@ -89,6 +90,11 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin', 'as' => 'admi
      * Job Categories
      */
     Route::resource('job-categories', JobCategoryController::class);
+
+    /**
+     * Education Route
+     */
+    Route::resource('educations', EducationController::class);
 
 
     /**Payment Setting Route Section */
