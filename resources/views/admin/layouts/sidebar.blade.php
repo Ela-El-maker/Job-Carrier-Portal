@@ -124,6 +124,9 @@
             <li class="{{ setSidebarActive(['admin.salary-type.*']) }}"><a class="nav-link"
                     href="{{ route('admin.salary-type.index') }}"><i class="far fa-square"></i> <span>Salary
                         Type</span></a></li>
+
+            <li class="{{ setSidebarActive(['admin.tag.*']) }}"><a class="nav-link"
+                    href="{{ route('admin.tag.index') }}"><i class="far fa-square"></i> <span>Tags</span></a></li>
             <li class="{{ setSidebarActive(['admin.educations.*']) }}"><a class="nav-link"
                     href="{{ route('admin.educations.index') }}"><i class="far fa-square"></i>
                     <span>Educations</span></a></li>
