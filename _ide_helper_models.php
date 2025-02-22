@@ -437,6 +437,19 @@ namespace App\Models{
 /**
  * 
  *
+ * @method static \Illuminate\Database\Eloquent\Builder|JobExperience findSimilarSlugs(string $attribute, array $config, string $slug)
+ * @method static \Illuminate\Database\Eloquent\Builder|JobExperience newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|JobExperience newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|JobExperience query()
+ * @method static \Illuminate\Database\Eloquent\Builder|JobExperience withUniqueSlugConstraints(\Illuminate\Database\Eloquent\Model $model, string $attribute, array $config, string $slug)
+ */
+	class JobExperience extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
  * @property int $id
  * @property string $name
  * @property string $slug
