@@ -17,6 +17,8 @@
 
     <!-- CSS Libraies -->
     <link rel="stylesheet" href="{{ asset('admin/assets/css/bootstrap-iconpicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin/assets/modules/bootstrap-daterangepicker/daterangepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin/assets/modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}">
 
 
     <!-- Template CSS -->
@@ -60,6 +62,7 @@
 
     <!-- JS Libraies -->
     <script src="{{ asset('admin/assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 
     <script src="{{ asset('admin/assets/modules/summernote/summernote-bs4.js') }}"></script>
     <!-- JS Libraies -->
@@ -67,6 +70,8 @@
 
     <!-- Page Specific JS File -->
     <script src="{{ asset('admin/assets/js/bootstrap-iconpicker.bundle.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('admin/assets/modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') }}"></script>
 
 
     <!-- Template JS File -->
@@ -74,6 +79,12 @@
     <script src="{{ asset('admin/assets/js/custom.js') }}"></script>
     @stack('scripts')
     <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+
         $(".delete-item").on('click', function(e) {
             e.preventDefault();
 
