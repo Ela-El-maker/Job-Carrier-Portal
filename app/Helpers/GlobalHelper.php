@@ -94,8 +94,6 @@ if (!function_exists('getCandidateProfileCompletion')) {
             'marital_status',
             'bio',
             'country',
-            'state',
-            'city',
             'address',
             'phone_one',
             'phone_two',
@@ -128,10 +126,8 @@ if (!function_exists('getCandidateProfileCompletion')) {
 if (!function_exists('formatDate')) {
     function formatDate(?string $date): ?String
     {
-        if($date)
-        {
+        if ($date) {
             return date('d M Y', strtotime($date));
-
         }
         return null;
     }
