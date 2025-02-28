@@ -84,11 +84,11 @@
                                     </td>
 
                                     <td>
-                                        <a href="{{ route('admin.tag.edit', $job?->id) }}"
+                                        <a href="{{ route('admin.jobs.edit', $job?->id) }}"
                                             class="btn-small btn btn-primary">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <a href="{{ route('admin.tag.destroy', $job?->id) }}"
+                                        <a href="{{ route('admin.jobs.destroy', $job?->id) }}"
                                             class="btn-small btn btn-danger delete-item">
                                             <i class="fas fa-trash-alt"></i>
                                         </a>
