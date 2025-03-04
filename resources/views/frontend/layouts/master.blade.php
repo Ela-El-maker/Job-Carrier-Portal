@@ -84,7 +84,8 @@
     </a>
     <!-- ===== End of Back to Top Button ===== -->
     <!-- ===== All Javascript at the bottom of the page for faster page loading ===== -->
-    <script src="{{ asset('frontend/assets/js/jquery-3.1.1.min.js') }}"></script>
+    {{-- <script src="{{ asset('frontend/assets/js/jquery-3.1.1.min.js') }}"></script> --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('frontend/assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/bootstrap-select.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/swiper.min.js') }}"></script>

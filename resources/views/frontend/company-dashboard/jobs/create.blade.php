@@ -1,6 +1,10 @@
 @extends('frontend.layouts.master')
 @section('contents')
     <style>
+        .d-none {
+            display: none !important;
+        }
+
         .upload-file-btn {
             position: relative;
             overflow: hidden;
@@ -231,7 +235,9 @@
                                                                                 name="salary_mode" value="range"
                                                                                 {{ old('salary_mode') == 'salary_range' ? 'checked' : '' }}
                                                                                 checked>
-                                                                            <label for="salary_range">Salary Range</label>
+                                                                            <label
+                                                                                style="margin-left: 25px; margin-top: -23px;"
+                                                                                for="salary_range">Salary Range</label>
                                                                             <x-input-error :messages="$errors->get('salary_mode')"
                                                                                 class="mt-2" />
                                                                         </div>
@@ -245,15 +251,15 @@
                                                                                 class="{{ hasError($errors, 'salary_mode') }}"
                                                                                 name="salary_mode" value="custom"
                                                                                 {{ old('salary_mode') == 'custom_salary' ? 'checked' : '' }}>
-                                                                            <label for="custom_salary">Custom Range</label>
+                                                                            <label
+                                                                                style="margin-left: 25px; margin-top: -23px;"
+                                                                                for="custom_salary">Custom Range</label>
                                                                             <x-input-error :messages="$errors->get('salary_mode')"
                                                                                 class="mt-2" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
-
                                                             </div>
-
 
                                                             <div class="col-md-12 salary_range_part">
                                                                 <div class="row">
@@ -270,7 +276,6 @@
                                                                         </div>
                                                                     </div>
 
-
                                                                     <div class="col-md-6">
                                                                         <div class="form-group">
                                                                             <label for="">Maximum Salary (MAX)<span
@@ -281,12 +286,10 @@
                                                                                 value="{{ old('max_salary') }}">
                                                                             <x-input-error :messages="$errors->get('max_salary')"
                                                                                 class="mt-2" />
-
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-
 
                                                             <div class="col-md-12 custom_salary_part d-none">
                                                                 <div class="form-group">
@@ -296,12 +299,8 @@
                                                                         class="form-control {{ hasError($errors, 'custom_salary') }}"
                                                                         name="custom_salary"
                                                                         value="{{ old('custom_salary') }}">
-
                                                                     <x-input-error :messages="$errors->get('custom_salary')" class="mt-2" />
                                                                 </div>
-
-
-
                                                             </div>
 
                                                             <div class="col-md-12">
@@ -314,18 +313,13 @@
                                                                         data-container="body">
                                                                         @foreach ($salaryTypes as $salaryType)
                                                                             <option value="{{ $salaryType?->id }}">
-                                                                                {{ $salaryType?->name }}
-                                                                            </option>
+                                                                                {{ $salaryType?->name }}</option>
                                                                         @endforeach
-
                                                                     </select>
-
                                                                     <x-input-error :messages="$errors->get('salary_type')" class="mt-2" />
                                                                 </div>
                                                             </div>
                                                         </div>
-
-
 
                                                     </div>
                                                 </div>
@@ -565,3 +559,106 @@
 
     <!-- ===== End of Main Wrapper Section ===== -->
 @endsection
+
+
+
+@push('scripts')
+    <script>
+        $(".inputtags").tagsinput('items');
+
+        // function salaryModeChange(mode) {
+        //     // alert(mode);
+        //     if (mode == 'salary_range') {
+
+        //         $('.salary_range_part').removeClass('d-none');
+        //         $('.custom_salary_part').addClass('d-none');
+        //     } else if (mode == 'custom_salary') {
+        //         $('.salary_range_part').addClass('d-none');
+        //         $('.custom_salary_part').removeClass('d-none');
+        //     }
+        // }
+        function salaryModeChange(mode) {
+            console.log("Mode changed to:", mode); // Debugging
+            if (mode == 'salary_range') {
+                $('.salary_range_part').removeClass('d-none');
+                $('.custom_salary_part').addClass('d-none');
+            } else if (mode == 'custom_salary') {
+                $('.salary_range_part').addClass('d-none');
+                $('.custom_salary_part').removeClass('d-none');
+            }
+        }
+
+
+
+
+        $(document).ready(function() {
+            // Handle country change event to load states
+            $('.country').on('change', function() {
+                let country_id = $(this).val();
+
+                // Clear state and city dropdowns before loading new data
+                $('.state').html('<option value="">Select</option>');
+                $('.city').html('<option value="">Select</option>');
+
+                // Refresh the selectpicker for state and city
+                $('.state').selectpicker('refresh');
+                $('.city').selectpicker('refresh');
+
+                if (country_id) {
+                    $.ajax({
+                        method: 'GET',
+                        url: '{{ route('get-states', ':id') }}'.replace(":id", country_id),
+                        success: function(response) {
+                            let html = '<option value="">Select</option>';
+                            if (response.length > 0) {
+                                $.each(response, function(index, value) {
+                                    html +=
+                                        `<option value="${value.id}">${value.name}</option>`;
+                                });
+                            } else {
+                                html = '<option value="">No states available</option>';
+                            }
+                            $('.state').html(html);
+                            $('.state').selectpicker('refresh'); // Refresh the selectpicker
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("An error occurred while fetching states.");
+                        }
+                    });
+                }
+            });
+
+            // Handle state change event to load cities
+            $('.state').on('change', function() {
+                let state_id = $(this).val();
+
+                // Clear city dropdown before loading new data
+                $('.city').html('<option value="">Select</option>');
+                $('.city').selectpicker('refresh'); // Refresh the selectpicker
+
+                if (state_id) {
+                    $.ajax({
+                        method: 'GET',
+                        url: '{{ route('get-cities', ':id') }}'.replace(":id", state_id),
+                        success: function(response) {
+                            let html = '<option value="">Select</option>';
+                            if (response.length > 0) {
+                                $.each(response, function(index, value) {
+                                    html +=
+                                        `<option value="${value.id}">${value.name}</option>`;
+                                });
+                            } else {
+                                html = '<option value="">No cities available</option>';
+                            }
+                            $('.city').html(html);
+                            $('.city').selectpicker('refresh'); // Refresh the selectpicker
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("An error occurred while fetching cities.");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+@endpush
