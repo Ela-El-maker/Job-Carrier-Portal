@@ -22,7 +22,7 @@
                 <a class="nav-link btn btn-link" href="{{ route('company.orders.index') }}">Orders</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link btn btn-link" href="candidate-profile-jobs.html">My Jobs</a>
+                <a class="nav-link btn btn-link" href="{{ route('company.jobs.index') }}">My Jobs</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link btn btn-link" href="candidate-profile-save-jobs.html">Saved Jobs</a>

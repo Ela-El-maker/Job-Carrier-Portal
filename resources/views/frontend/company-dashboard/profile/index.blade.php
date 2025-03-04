@@ -361,26 +361,21 @@
                                                         <!-- Form Group -->
                                                         <div class="form-group">
                                                             <label>Address</label>
-                                                            <input
-                                                                class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}"
-                                                                value="{{ $companyInfo?->address }}" name="address"
-                                                                type="text">
+                                                            <textarea class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}" name="address" rows="3">{{ old('address', $companyInfo?->address) }}</textarea>
                                                             <x-input-error :messages="$errors->get('address')" class="mt-2" />
-
                                                         </div>
                                                     </div>
+
                                                     <div class="col-md-12">
                                                         <!-- Form Group -->
                                                         <div class="form-group">
                                                             <label>Map Link</label>
-                                                            <input
-                                                                class="form-control {{ $errors->has('map_link') ? 'is-invalid' : '' }}"
-                                                                value="{{ $companyInfo?->map_link }}" name="map_link"
-                                                                type="text">
+                                                            <textarea class="form-control {{ $errors->has('map_link') ? 'is-invalid' : '' }}" name="map_link" rows="3">{{ old('map_link', $companyInfo?->map_link) }}</textarea>
                                                             <x-input-error :messages="$errors->get('map_link')" class="mt-2" />
-
                                                         </div>
                                                     </div>
+
+
                                                 </div>
 
 

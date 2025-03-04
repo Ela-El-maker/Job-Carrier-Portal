@@ -108,9 +108,9 @@
 
             <div class="card-footer text-right">
                 <nav class="d-inline-block">
-                    {{-- @if ($tagTypes->hasPages())
-                        {{ $tagTypes->withQueryString()->links() }}
-                    @endif --}}
+                    @if ($jobs->hasPages())
+                        {{ $jobs->withQueryString()->links() }}
+                    @endif
                 </nav>
 
             </div>

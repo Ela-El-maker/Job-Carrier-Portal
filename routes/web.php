@@ -13,6 +13,7 @@ use App\Http\Controllers\Frontend\CompanyOrdersController;
 use App\Http\Controllers\Frontend\FrontendCandidatePageController;
 use App\Http\Controllers\Frontend\FrontendCompanyPageController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\JobController;
 use App\Http\Controllers\Frontend\LocationController;
 use App\Http\Controllers\Frontend\PricingPageController;
 use App\Http\Controllers\ProfileController;
@@ -124,5 +125,11 @@ Route::group(
         Route::get('orders', [CompanyOrdersController::class, 'index'])->name('orders.index');
         Route::get('order/{order}', [CompanyOrdersController::class, 'show'])->name('orders.show');
         Route::get('order/invoice/{id}', [CompanyOrdersController::class, 'invoice'])->name('orders.invoice');
+
+
+        /**
+         * Jobs Routes
+         */
+        Route::resource('jobs', JobController::class);
     }
 );
