@@ -7269,7 +7269,6 @@ section.shop .panel-group .panel .panel-heading h4 a {
     -o-border-radius: 50%;
 }
 
-
 /* Mobile-specific adjustments */
 @media (max-width: 767px) {
     /* Ensure buttons look consistent on mobile */
@@ -7320,7 +7319,7 @@ ul.timeline {
 }
 
 ul.timeline:before {
-    content: ' ';
+    content: " ";
     background: #d4d9df;
     display: inline-block;
     position: absolute;
@@ -7340,7 +7339,7 @@ ul.timeline > li {
 }
 
 ul.timeline > li:before {
-    content: ' ';
+    content: " ";
     background: white;
     display: inline-block;
     position: absolute;

@@ -87,7 +87,7 @@
                                             <h4>Create Job </h4>
                                         </div>
                                         <div class="card-body ">
-                                            <form action="{{ route('admin.jobs.store') }}" method="post">
+                                            <form action="{{ route('company.jobs.store') }}" method="post">
                                                 @csrf
 
                                                 <div class="card">
@@ -162,45 +162,54 @@
                                                         <div class="row">
 
                                                             <div class="col-md-4">
+                                                                <!-- Form Group -->
                                                                 <div class="form-group">
-                                                                    <label for="">Country </label>
-                                                                    <select
-                                                                        class="form-control selectpicker country {{ hasError($errors, 'country') }} "
+                                                                    <label>Country</label>
+                                                                    <select name="country"
+                                                                        class="form-control selectpicker country {{ $errors->has('country') ? 'is-invalid' : '' }}"
                                                                         data-live-search="true" data-size="5"
-                                                                        data-container="body" name="country">
-                                                                        <option value="">Choose</option>
+                                                                        data-container="body" value="">
+                                                                        <option value="">Select</option>
                                                                         @foreach ($countries as $country)
-                                                                            <option value="{{ $country?->id }}">
-                                                                                {{ $country?->name }}</option>
+                                                                            <option value="{{ $country->id }}">
+                                                                                {{ $country->name }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                     <x-input-error :messages="$errors->get('country')" class="mt-2" />
                                                                 </div>
                                                             </div>
-
                                                             <div class="col-md-4">
+                                                                <!-- Form Group -->
                                                                 <div class="form-group">
-                                                                    <label for="">State </label>
-                                                                    <select
-                                                                        class="form-control selectpicker state {{ hasError($errors, 'state') }}"
+                                                                    <label>State </label>
+                                                                    <select name="state"
+                                                                        class="form-control form-icons state {{ $errors->has('state') ? 'is-invalid' : '' }}"
                                                                         data-live-search="true" data-size="5"
-                                                                        data-container="body" name="state">
-                                                                        <option value="">Choose</option>
+                                                                        data-container="body" value="">
+                                                                        <option value="">Select</option>
+                                                                        @foreach ($states as $state)
+                                                                            <option value="{{ $state->id }}">
+                                                                                {{ $state->name }}</option>
+                                                                        @endforeach
                                                                     </select>
                                                                     <x-input-error :messages="$errors->get('state')" class="mt-2" />
+
                                                                 </div>
                                                             </div>
-
                                                             <div class="col-md-4">
+                                                                <!-- Form Group -->
                                                                 <div class="form-group">
-                                                                    <label for="">City </label>
-                                                                    <select
-                                                                        class="form-control selectpicker city {{ hasError($errors, 'city') }} "
-                                                                        data-live-search="true" data-size="5"
-                                                                        data-container="body" name="city">
-                                                                        <option value="">Choose</option>
+                                                                    <label>City</label>
+                                                                    <select name="city"
+                                                                        class="form-control form-icons city {{ $errors->has('city') ? 'is-invalid' : '' }}"
+                                                                        value="" id="">
+                                                                        @foreach ($cities as $city)
+                                                                            <option value="{{ $city->id }}">
+                                                                                {{ $city->name }}</option>
+                                                                        @endforeach
                                                                     </select>
                                                                     <x-input-error :messages="$errors->get('city')" class="mt-2" />
+
                                                                 </div>
                                                             </div>
 
@@ -428,9 +437,13 @@
                                                             <div class="col-md-12">
                                                                 <div class="form-group">
                                                                     <label for="">Benefits </label>
-                                                                    <input type="text" name="benefits"
-                                                                        class="form-control  inputtags {{ hasError($errors, 'benefits') }}"
-                                                                        value="{{ old('benefits') }}">
+
+                                                                    <div class="">
+                                                                        <input type="text" name="benefits"
+                                                                            style="width: 100%;"
+                                                                            class="form-control  inputtags {{ hasError($errors, 'benefits') }}"
+                                                                            value="{{ old('benefits') }}">
+                                                                    </div>
 
                                                                     <x-input-error :messages="$errors->get('benefits')" class="mt-2" />
                                                                 </div>
@@ -600,10 +613,6 @@
                 $('.state').html('<option value="">Select</option>');
                 $('.city').html('<option value="">Select</option>');
 
-                // Refresh the selectpicker for state and city
-                $('.state').selectpicker('refresh');
-                $('.city').selectpicker('refresh');
-
                 if (country_id) {
                     $.ajax({
                         method: 'GET',
@@ -619,7 +628,6 @@
                                 html = '<option value="">No states available</option>';
                             }
                             $('.state').html(html);
-                            $('.state').selectpicker('refresh'); // Refresh the selectpicker
                         },
                         error: function(xhr, status, error) {
                             console.error("An error occurred while fetching states.");
@@ -634,7 +642,6 @@
 
                 // Clear city dropdown before loading new data
                 $('.city').html('<option value="">Select</option>');
-                $('.city').selectpicker('refresh'); // Refresh the selectpicker
 
                 if (state_id) {
                     $.ajax({
@@ -651,7 +658,6 @@
                                 html = '<option value="">No cities available</option>';
                             }
                             $('.city').html(html);
-                            $('.city').selectpicker('refresh'); // Refresh the selectpicker
                         },
                         error: function(xhr, status, error) {
                             console.error("An error occurred while fetching cities.");
