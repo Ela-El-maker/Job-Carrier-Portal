@@ -94,7 +94,7 @@ class JobController extends Controller
         // $job = new Job();
         $job = new Job();
         $job->title = $request->title;
-        $job->company_id = $request->company;
+        $job->company_id = auth()->user()->company->id;
         $job->job_category_id = $request->category;
         $job->vacancies = $request->vacancies;
         $job->deadline = $request->deadline;
