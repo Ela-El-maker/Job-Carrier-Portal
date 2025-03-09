@@ -19,4 +19,9 @@ class Notify
     {
         return notyf()->addSuccess('Deleted Successfully');
     }
+
+    static function errorNotification(string $error)
+    {
+        return notyf()->addError($error, 'Error!');
+    }
 }

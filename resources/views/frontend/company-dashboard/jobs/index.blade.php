@@ -39,7 +39,7 @@
             <!-- Start of Page Title -->
             <div class="row">
                 <div class="col-md-12">
-                    <h2>PROFILE</h2>
+                    <h2>JOBS</h2>
                 </div>
             </div>
             <!-- End of Page Title -->
@@ -49,7 +49,7 @@
                 <div class="col-md-12">
                     <ul class="breadcrumb">
                         <li><a href="{{ url('/') }}">home</a></li>
-                        <li class="active">Company Profile</li>
+                        <li class="active">Company Jobs</li>
                     </ul>
                 </div>
             </div>
@@ -81,10 +81,11 @@
                                     <div class="card">
                                         <div class="card-header">
                                             <h4>All Job Posts </h4>
+                                            <hr>
                                             <div class="row">
                                                 <div class="col-md-9">
                                                     <div class="card-header-form">
-                                                        <form action="{{ route('admin.jobs.index') }}" method="GET">
+                                                        <form action="{{ route('company.jobs.index') }}" method="GET">
                                                             <div class="input-group">
                                                                 <input type="text" name="search" class="form-control"
                                                                     placeholder="Search" value="{{ request('search') }}">
@@ -109,17 +110,18 @@
                                             <div class="table-responsive">
                                                 <table class="table table-striped">
                                                     <tr>
+                                                        <th style="width: 5%">#</th>
                                                         <th>Job</th>
                                                         <th>Category/Role</th>
                                                         <th>Salary</th>
                                                         <th>Deadline</th>
                                                         <th>Status</th>
-
                                                         <th style="width: 10%">Action</th>
                                                     </tr>
                                                     <tbody>
                                                         @forelse ($jobs as $job)
                                                             <tr>
+                                                                <td>{{ $loop->iteration }}</td> <!-- Add numbering here -->
                                                                 <td>
                                                                     <div class="d-flex">
 
@@ -152,21 +154,24 @@
                                                                 </td>
                                                                 <td>{{ formatDate($job?->deadline) }}</td>
                                                                 <td>
-                                                                    @if ($job?->deadline && \Carbon\Carbon::parse($job->deadline)->isFuture())
+                                                                    @if ($job?->status === 'pending')
                                                                         <span class="badge"
-                                                                            style="background-color: green; color: white;">Active</span>
+                                                                            style="background-color: #ffc107; ">Pending</span>
+                                                                    @elseif ($job?->deadline && \Carbon\Carbon::parse($job->deadline)->isFuture())
+                                                                        <span class="badge"
+                                                                            style="background-color: #28a745;">Active</span>
                                                                     @else
                                                                         <span class="badge"
-                                                                            style="background-color: red; color: white;">Expired</span>
+                                                                            style="background-color: #dc3545;">Expired</span>
                                                                     @endif
                                                                 </td>
                                                                 <td>
-                                                                    <a href="{{ route('admin.jobs.edit', $job?->id) }}"
+                                                                    <a href="{{ route('company.jobs.edit', $job?->id) }}"
                                                                         class="btn btn-primary btn-small btn-block"
                                                                         style="margin-bottom: 10px;">
                                                                         <i class="fas fa-edit"></i>
                                                                     </a>
-                                                                    <a href="{{ route('admin.jobs.destroy', $job?->id) }}"
+                                                                    <a href="{{ route('company.jobs.destroy', $job?->id) }}"
                                                                         class="btn btn-danger btn-small btn-block delete-item">
                                                                         <i class="fas fa-trash-alt"></i>
                                                                     </a>
