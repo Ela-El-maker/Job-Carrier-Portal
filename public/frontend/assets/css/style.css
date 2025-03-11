@@ -7362,3 +7362,167 @@ ul.timeline > li > span.date {
     text-align: right;
     flex-shrink: 0;
 }
+
+.bookmark-icon {
+    color: #666; /* Default color */
+    font-size: 30px; /* Icon size */
+    transition: color 0.3s ease; /* Smooth color transition */
+    text-decoration: none; /* Remove underline */
+}
+
+.bookmark-icon:hover {
+    color: #007bff; /* Change color on hover */
+}
+
+.bookmark-icon.active {
+    color: #007bff; /* Color when bookmarked */
+}
+
+/* Job Type Colors */
+.btn-full-time {
+    background-color: #28a745;
+    color: #fff;
+}
+.btn-part-time {
+    background-color: #ffc107;
+    color: #000;
+}
+.btn-contract {
+    background-color: #17a2b8;
+    color: #fff;
+}
+.btn-temporary {
+    background-color: #dc3545;
+    color: #fff;
+}
+.btn-remote {
+    background-color: #6c757d;
+    color: #fff;
+}
+.btn-freelance {
+    background-color: #6610f2;
+    color: #fff;
+}
+.btn-internship {
+    background-color: #fd7e14;
+    color: #fff;
+}
+.btn-entry-level {
+    background-color: #20c997;
+    color: #fff;
+}
+.btn-mid-level {
+    background-color: #0d6efd;
+    color: #fff;
+}
+.btn-senior-level {
+    background-color: #6f42c1;
+    color: #fff;
+}
+.btn-volunteer {
+    background-color: #d63384;
+    color: #fff;
+}
+.btn-apprenticeship {
+    background-color: #0dcaf0;
+    color: #fff;
+}
+.btn-commission-based {
+    background-color: #ff6b6b;
+    color: #fff;
+}
+.btn-seasonal {
+    background-color: #f06595;
+    color: #fff;
+}
+.btn-consulting {
+    background-color: #4dabf7;
+    color: #fff;
+}
+.btn-gig-work {
+    background-color: #ff922b;
+    color: #fff;
+}
+.btn-shift-based {
+    background-color: #94d82d;
+    color: #fff;
+}
+.btn-per-diem {
+    background-color: #fcc419;
+    color: #000;
+}
+.btn-self-employed {
+    background-color: #82c91e;
+    color: #fff;
+}
+.btn-casual {
+    background-color: #fab005;
+    color: #000;
+}
+.btn-on-call {
+    background-color: #74b816;
+    color: #fff;
+}
+.btn-hybrid {
+    background-color: #5c7cfa;
+    color: #fff;
+}
+.btn-rotational {
+    background-color: #339af0;
+    color: #fff;
+}
+.btn-fixed-term {
+    background-color: #228be6;
+    color: #fff;
+}
+.btn-probationary {
+    background-color: #1c7ed6;
+    color: #fff;
+}
+.btn-flexible-hours {
+    background-color: #15aabf;
+    color: #fff;
+}
+.btn-overtime {
+    background-color: #12b886;
+    color: #fff;
+}
+.btn-job-sharing {
+    background-color: #0ca678;
+    color: #fff;
+}
+.btn-night-shift {
+    background-color: #087f5b;
+    color: #fff;
+}
+.btn-weekend-shift {
+    background-color: #099268;
+    color: #fff;
+}
+
+/*
+Additional CSS for responsive design
+*/
+.featured {
+    background: #ae00ae !important;
+    color: white !important;
+}
+
+.featured:hover {
+    background: #fff !important; /* Darker shade on hover */
+    color: #ae00ae !important;
+    transform: translateY(-2px) !important; /* Slight lift on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important; /* Shadow on hover */
+}
+
+.highlighted {
+    background: #f05d04 !important;
+    color: white !important;
+}
+
+.highlighted:hover {
+    background: #fff !important; /* Darker shade on hover */
+    color: #f05d04 !important;
+    transform: translateY(-2px) !important; /* Slight lift on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important; /* Shadow on hover */
+}

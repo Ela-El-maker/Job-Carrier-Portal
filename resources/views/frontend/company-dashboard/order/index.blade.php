@@ -99,18 +99,22 @@
                                             <div class="table-responsive">
                                                 <table class="table table-striped">
                                                     <tr>
+                                                        <th>#</th>
                                                         <th>Order No.</th>
                                                         <th>Plan</th>
                                                         <th>Payment Method</th>
                                                         <th>Paid Amount</th>
                                                         <th>Payment Status</th>
-
                                                         <th>Transaction Date</th>
                                                         <th style="width: 20%">Action</th>
                                                     </tr>
                                                     <tbody>
                                                         @forelse ($orders as $order)
                                                             <tr>
+                                                                <td>
+                                                                    {{ ($orders->currentPage() - 1) * $orders->perPage() + $loop->iteration }}
+                                                                </td>
+
                                                                 <td>#{{ $order?->order_id }}
                                                                 </td>
 
@@ -145,7 +149,7 @@
                                                             </tr>
                                                         @empty
                                                             <tr>
-                                                                <td colspan="6" class="text-center"> No Results Found!
+                                                                <td colspan="8" class="text-center"> No Results Found!
                                                                 </td>
                                                             </tr>
                                                         @endforelse

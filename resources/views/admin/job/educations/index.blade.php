@@ -31,6 +31,7 @@
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <tr>
+                            <th>#</th>
                             <th>Name</th>
                             <th>Slug</th>
                             <th style="width: 20%">Action</th>
@@ -38,6 +39,7 @@
                         <tbody>
                             @forelse ($educations as $education)
                                 <tr>
+                                    {{ ($educations->currentPage() - 1) * $educations->perPage() + $loop->iteration }}
                                     <td>{{ $education->name }}</td>
                                     <td>{{ $education->slug }}</td>
                                     <td>
@@ -54,7 +56,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="3" class="text-center"> No Results Found! </td>
+                                    <td colspan="4" class="text-center"> No Results Found! </td>
                                 </tr>
                             @endforelse
                         </tbody>

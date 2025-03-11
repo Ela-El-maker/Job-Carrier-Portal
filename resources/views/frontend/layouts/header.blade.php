@@ -67,7 +67,8 @@
 
             <!-- Logo -->
             <div class="col-md-2 col-sm-6 col-xs-8 nopadding">
-                <a class="navbar-brand nomargin" href="{{ url('/') }}"><img src="images/logo.svg" alt="logo"></a>
+                <a class="navbar-brand nomargin" href="{{ url('/') }}"><img src="images/logo.svg"
+                        alt="logo"></a>
                 <!-- INSERT YOUR LOGO HERE -->
             </div>
 
@@ -100,13 +101,22 @@
 
                         <!-- Simple Menu Item -->
                         <li class="dropdown simple-menu">
-                            <a href="{{ url('/') }}" role="button" data-toggle="" class="">Candidates</a>
+                            <a href="{{ route('jobs.index') }}" role="button" data-toggle="" class="">Find a
+                                Job</a>
 
                         </li>
 
                         <!-- Simple Menu Item -->
                         <li class="dropdown simple-menu">
-                            <a href="{{ url('/') }}" role="button" data-toggle="" class="">Employers</a>
+                            <a href="{{ route('candidates.index') }}" role="button" data-toggle=""
+                                class="">Candidates</a>
+
+                        </li>
+
+                        <!-- Simple Menu Item -->
+                        <li class="dropdown simple-menu">
+                            <a href="{{ route('companies.index') }}" role="button" data-toggle=""
+                                class="">Employers</a>
 
                         </li>
 
@@ -128,11 +138,11 @@
                         <!-- Login Menu Item -->
                         <li class="menu-item login-btn">
                             @guest
-                            <a id="modal_trigger" href="{{ route('login') }}" role="button"><i class="fa fa-lock"></i>login</a>
+                                <a id="modal_trigger" href="{{ route('login') }}" role="button"><i
+                                        class="fa fa-lock"></i>login</a>
                             @endguest
                             @auth
                                 @if (auth()->user()->role === 'company')
-
                                     <a class="btn btn-default btn-shadow ml-40 hover-up" style="width: 250px;height: 50px;"
                                         href="{{ route('company.dashboard') }}">Company Dashboard</a>
                                 @elseif (auth()->user()->role === 'candidate')

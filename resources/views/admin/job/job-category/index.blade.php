@@ -31,6 +31,7 @@
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <tr>
+                            <th>#</th>
                             <th>Icon</th>
 
                             <th>Name</th>
@@ -39,7 +40,12 @@
                         <tbody>
                             @forelse ($jobCategories as $category)
                                 <tr>
-                                    <td><i style="font-size: 40px" class="{{ $category?->icon }}"></i></td>
+                                    <td>{{ ($jobCategories->currentPage() - 1) * $jobCategories->perPage() + $loop->iteration }}
+                                    </td> <!-- Add numbering here -->
+
+                                    <td>
+                                        <i style="font-size: 40px" class="{{ $category?->icon }}"></i>
+                                    </td>
 
                                     <td>{{ $category?->name }}</td>
                                     <td>

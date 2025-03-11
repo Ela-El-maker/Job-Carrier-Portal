@@ -23,7 +23,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <ul class="breadcrumb">
-                        <li><a href="#">home</a></li>
+                        <li><a href="{{ url('/') }}">home</a></li>
                         <li class="active">for employers</li>
                     </ul>
                 </div>

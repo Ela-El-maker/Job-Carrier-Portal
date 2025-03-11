@@ -146,3 +146,108 @@ if (!function_exists('storePlanInformation')) {
         ]);
     }
 }
+
+
+
+/**
+ * Format Location
+ */
+
+if (!function_exists('formatLocation')) {
+    function formatLocation($country = null, $state = null, $city = null, $address = null): ?String
+    {
+        $location = '';
+        if ($address) {
+            $location .= $address;
+        }
+        if ($city) {
+            $location .= $address ?  ', ' . $city : $city;
+        }
+        if ($state) {
+            $location .= $city ?  ', ' . $state : $state;
+        }
+        if ($country) {
+            $location .= $state ? ', ' . $country : $country;
+        }
+        return $location;
+    }
+}
+if (!function_exists('relativeTime')) {
+    /**
+     * Format a timestamp as a relative time string (e.g., "4 mins ago").
+     *
+     * @param string $timestamp The timestamp to format.
+     * @return string
+     */
+    function relativeTime($timestamp)
+    {
+        $now = new DateTime();
+        $then = new DateTime($timestamp);
+        $diff = $now->diff($then);
+
+        if ($diff->y > 0) {
+            return $diff->y . ' year' . ($diff->y > 1 ? 's' : '') . ' ago';
+        } elseif ($diff->m > 0) {
+            return $diff->m . ' month' . ($diff->m > 1 ? 's' : '') . ' ago';
+        } elseif ($diff->d > 0) {
+            return $diff->d . ' day' . ($diff->d > 1 ? 's' : '') . ' ago';
+        } elseif ($diff->h > 0) {
+            return $diff->h . ' hour' . ($diff->h > 1 ? 's' : '') . ' ago';
+        } elseif ($diff->i > 0) {
+            return $diff->i . ' min' . ($diff->i > 1 ? 's' : '') . ' ago';
+        } else {
+            return 'Just now';
+        }
+    }
+}
+
+if (!function_exists('getJobTypeClassAndLabel')) {
+    /**
+     * Get the CSS class and label for a job type.
+     *
+     * @param string $type The job type (e.g., "Full-time", "Part-time").
+     * @return array An array containing the CSS class and label.
+     */
+    function getJobTypeClassAndLabel($type)
+    {
+        // Map job types to their respective CSS classes and labels
+        $jobTypeMap = [
+            'Full-time' => ['class' => 'btn-full-time', 'label' => 'Full Time'],
+            'Part-time' => ['class' => 'btn-part-time', 'label' => 'Part Time'],
+            'Contract' => ['class' => 'btn-contract', 'label' => 'Contract'],
+            'Temporary' => ['class' => 'btn-temporary', 'label' => 'Temporary'],
+            'Remote' => ['class' => 'btn-remote', 'label' => 'Remote'],
+            'Freelance' => ['class' => 'btn-freelance', 'label' => 'Freelance'],
+            'Internship' => ['class' => 'btn-internship', 'label' => 'Internship'],
+            'Entry-level' => ['class' => 'btn-entry-level', 'label' => 'Entry Level'],
+            'Mid-level' => ['class' => 'btn-mid-level', 'label' => 'Mid Level'],
+            'Senior-level' => ['class' => 'btn-senior-level', 'label' => 'Senior Level'],
+            'Volunteer' => ['class' => 'btn-volunteer', 'label' => 'Volunteer'],
+            'Apprenticeship' => ['class' => 'btn-apprenticeship', 'label' => 'Apprenticeship'],
+            'Commission-based' => ['class' => 'btn-commission-based', 'label' => 'Commission Based'],
+            'Seasonal' => ['class' => 'btn-seasonal', 'label' => 'Seasonal'],
+            'Consulting' => ['class' => 'btn-consulting', 'label' => 'Consulting'],
+            'Gig Work' => ['class' => 'btn-gig-work', 'label' => 'Gig Work'],
+            'Shift-based' => ['class' => 'btn-shift-based', 'label' => 'Shift Based'],
+            'Per Diem' => ['class' => 'btn-per-diem', 'label' => 'Per Diem'],
+            'Self-employed' => ['class' => 'btn-self-employed', 'label' => 'Self Employed'],
+            'Casual' => ['class' => 'btn-casual', 'label' => 'Casual'],
+            'On-call' => ['class' => 'btn-on-call', 'label' => 'On Call'],
+            'Hybrid' => ['class' => 'btn-hybrid', 'label' => 'Hybrid'],
+            'Rotational' => ['class' => 'btn-rotational', 'label' => 'Rotational'],
+            'Fixed-term' => ['class' => 'btn-fixed-term', 'label' => 'Fixed Term'],
+            'Probationary' => ['class' => 'btn-probationary', 'label' => 'Probationary'],
+            'Flexible Hours' => ['class' => 'btn-flexible-hours', 'label' => 'Flexible Hours'],
+            'Overtime' => ['class' => 'btn-overtime', 'label' => 'Overtime'],
+            'Job Sharing' => ['class' => 'btn-job-sharing', 'label' => 'Job Sharing'],
+            'Night Shift' => ['class' => 'btn-night-shift', 'label' => 'Night Shift'],
+            'Weekend Shift' => ['class' => 'btn-weekend-shift', 'label' => 'Weekend Shift'],
+        ];
+
+        // Default class and label if the job type is not found
+        $default = ['class' => 'btn-full-time', 'label' => 'Full Time'];
+
+        // Return the mapped values or the default
+        return $jobTypeMap[$type] ?? $default;
+    }
+}
