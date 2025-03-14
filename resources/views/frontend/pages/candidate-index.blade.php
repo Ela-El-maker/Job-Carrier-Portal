@@ -109,8 +109,9 @@
                                         <div class="skills">
                                             @foreach ($candidate->skills as $candidateSkill)
                                                 @if ($loop->index <= 5)
-                                                    <span
-                                                        class="badge badge-secondary">{{ $candidateSkill->skill?->name }}</span>
+                                                    <span class="badge badge-secondary">
+                                                        {{ $candidateSkill->skill?->name }}
+                                                    </span>
                                                 @endif
                                             @endforeach
                                         </div>
@@ -120,13 +121,17 @@
                                     <div class="candidate-info mt5">
                                         <ul class="list-inline">
                                             <li>
-                                                <span><i class="fa fa-briefcase"></i>{{ $candidate?->title }}</span>
+                                                <span>
+                                                    <i class="fa fa-briefcase"></i>
+                                                    {{ $candidate?->title }}
+                                                </span>
                                             </li>
                                             <li>
-                                                <span><i class="fa fa-map-marker"></i>
-                                                    {{ $candidate->candidateCity?->name ? '' . $candidate->candidateCity?->name : ' ' }}
-                                                    {{ $candidate->candidateState?->name ? ', ' . $candidate->candidateState?->name : '' }}
-                                                    {{ $candidate->candidateCountry?->name ? ', ' . $candidate->candidateCountry?->name : '' }}
+                                                <span>
+                                                    <i class="fa fa-map-marker"></i>
+                                                    {{ $candidate?->candidateCity?->name ? '' . $candidate?->candidateCity?->name : ' ' }}
+                                                    {{ $candidate?->candidateState?->name ? ', ' . $candidate?->candidateState?->name : '' }}
+                                                    {{ $candidate?->candidateCountry?->name ? ', ' . $candidate?->candidateCountry?->name : '' }}
                                                 </span>
                                             </li>
 

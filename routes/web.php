@@ -54,7 +54,7 @@ Route::get('pricing', PricingPageController::class)->name('pricing.index');
 Route::get('checkout/{plan_id}', CheckoutPageController::class)->name('checkout.index');
 
 Route::get('jobs', [FrontendJobPageController::class, 'index'])->name('jobs.index');
-
+Route::get('job/{slug}', [FrontendJobPageController::class, 'show'])->name('jobs.show');
 /**
  * Candidates Frontend Pages
  */

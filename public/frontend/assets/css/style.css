@@ -7526,3 +7526,70 @@ Additional CSS for responsive design
     transform: translateY(-2px) !important; /* Slight lift on hover */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important; /* Shadow on hover */
 }
+
+.box-map {
+    display: inline-block;
+    width: 360px; /* Set fixed width */
+    height: 360px; /* Set fixed height */
+    margin-bottom: 15px;
+    overflow: hidden; /* Prevents overflow issues */
+}
+
+.box-map iframe {
+    width: 100%; /* Ensure iframe fits inside */
+    height: 100%; /* Ensure iframe fits inside */
+}
+
+.job-summary {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+.job-summary {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.job-summary h2 {
+    margin-top: 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.joblist {
+    margin-bottom: 20px;
+}
+
+.joblist strong {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.joblist strong i {
+    margin-right: 8px;
+    font-size: 16px;
+    color: #007bff; /* Icon color */
+}
+
+.joblist p {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+    padding-left: 24px; /* Align text with icon */
+}
+
+/* Deadline styling */
+.deadline-approaching {
+    color: #28a745; /* Green for approaching deadline */
+}
+
+.deadline-passed {
+    color: #dc3545; /* Red for passed deadline */
+}

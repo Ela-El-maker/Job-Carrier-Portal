@@ -154,24 +154,29 @@ if (!function_exists('storePlanInformation')) {
  */
 
 if (!function_exists('formatLocation')) {
-    function formatLocation($country = null, $state = null, $city = null, $address = null): ?String
+    function formatLocation($country = null, $state = null, $city = null, $address = null): ?string
     {
         $location = '';
+
         if ($address) {
-            $location .= $address;
+            $location .= $address . ', '; // Add a space after address
         }
         if ($city) {
-            $location .= $address ?  ', ' . $city : $city;
+            $location .= ($address ? ', ' : '') . $city;
         }
         if ($state) {
-            $location .= $city ?  ', ' . $state : $state;
+            $location .= ($city ? ', ' : '') . $state;
         }
         if ($country) {
-            $location .= $state ? ', ' . $country : $country;
+            $location .= ($state ? ', ' : '') . $country;
         }
-        return $location;
+
+        return trim($location); // Trim any trailing spaces
     }
 }
+
+
+
 if (!function_exists('relativeTime')) {
     /**
      * Format a timestamp as a relative time string (e.g., "4 mins ago").
@@ -249,5 +254,39 @@ if (!function_exists('getJobTypeClassAndLabel')) {
 
         // Return the mapped values or the default
         return $jobTypeMap[$type] ?? $default;
+    }
+}
+
+
+if (!function_exists('calculateDeadline')) {
+    /**
+     * Calculate the deadline status, styling class, and icon.
+     *
+     * @param string $deadline The deadline date (e.g., "2025-03-31").
+     * @return array An array containing the status message, class, and icon.
+     */
+    function calculateDeadline($deadline)
+    {
+        // Use Carbon to parse the deadline date
+        $deadlineDate = \Carbon\Carbon::parse($deadline);
+        $now = \Carbon\Carbon::now();
+
+        // Calculate the difference in days
+        $daysToDeadline = $now->diffInDays($deadlineDate, false);
+
+        // Determine the status, class, and icon
+        if ($daysToDeadline > 0) {
+            return [
+                'message' => $daysToDeadline . ' days to go',
+                'class' => 'deadline-approaching', // Green for approaching deadline
+                'icon' => 'fa fa-hourglass-half', // Icon for approaching deadline
+            ];
+        } else {
+            return [
+                'message' => 'Deadline passed',
+                'class' => 'deadline-passed', // Red for passed deadline
+                'icon' => 'fa fa-hourglass-end', // Icon for passed deadline
+            ];
+        }
     }
 }

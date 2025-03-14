@@ -96,11 +96,11 @@
                             <br>
                             <hr>
                             <!-- Div wrapper -->
-                            <h5>Our Location</h5>
+                            {{-- <h5>Our Location</h5>
                             <br>
                             <div class="embed-responsive embed-responsive-16by9">
                                 {!! $company?->map_link !!}
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <!-- End of Job Details -->
@@ -195,8 +195,7 @@
                             </li>
                             <hr>
                             <li>
-                                <h5><i class="fa fa-link"
-                                    aria-hidden="true"></i>Website:</h5>
+                                <h5><i class="fa fa-link" aria-hidden="true"></i>Website:</h5>
                                 <span><a href="{{ $company?->website }}">{{ $company?->website }}</a></span>
                             </li>
                             <li>
@@ -225,8 +224,11 @@
 
                     <!-- Start of Google Map -->
                     <div class="col-md-12 gmaps mt60">
-
+                        <div class="box-map">
+                            {!! $company?->map_link !!}
+                        </div>
                     </div>
+                    <!-- End of Google Map -->
                 </div>
             </div>
             <!-- Start of Row -->

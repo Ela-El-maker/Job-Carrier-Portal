@@ -396,14 +396,14 @@
                                     <img src="{{ asset($job?->company?->logo) }}" alt="">
                                 </a>
                                 <div>
-                                    <a href="job-page.html">
+                                    <a href="{{ route('jobs.show', $job?->slug) }}">
                                         <h4>{{ $job?->title }}</h4>
                                     </a>
                                     <h5><small>{{ $job?->company?->name }}</small></h5>
                                     @php
                                         $jobType = getJobTypeClassAndLabel($job?->jobType?->name);
                                     @endphp
-                                    <a href="#" class="btn btn-small btn-effect {{ $jobType['class'] }}"
+                                    <a href="javascript:;" class="btn btn-small btn-effect {{ $jobType['class'] }}"
                                         style="margin-top: 10px;">
                                         {{ $jobType['label'] }}
                                     </a>

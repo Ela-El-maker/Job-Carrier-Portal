@@ -102,9 +102,15 @@
                                                 @csrf
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <x-image-preview :height="200" :width="200"
+                                                        <x-image-preview :height="85" :width="200"
                                                             :source="$companyInfo?->logo" />
-
+                                                        <!-- Use % for height and px for width -->
+                                                        {{-- @if ($companyInfo?->logo)
+                                                            <div>
+                                                                <img style="height: 100%; width: 200px; object-fit: cover;"
+                                                                    src="{{ $companyInfo->logo }}" alt="">
+                                                            </div>
+                                                        @endif --}}
                                                         <!-- Form Group -->
                                                         <label>Logo *</label>
 
@@ -123,7 +129,7 @@
                                                     </div>
 
                                                     <div class="col-md-6">
-                                                        <x-image-preview :height="200" :width="400"
+                                                        <x-image-preview :height="85" :width="400"
                                                             :source="$companyInfo?->banner" />
 
                                                         <!-- Form Group -->
