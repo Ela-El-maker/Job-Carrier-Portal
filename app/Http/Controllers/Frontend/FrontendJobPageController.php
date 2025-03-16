@@ -27,6 +27,15 @@ class FrontendJobPageController extends Controller
             ->where('deadline', '>=', date('Y-m-d'))
             ->where('status', 'active')
             ->count();
-        return view('frontend.pages.job-show', compact('job', 'openJobs'));
+
+        // Fetch similar jobs (same category and active with future deadlines)
+        $similarJobs = Job::where('job_category_id', $job->job_category_id)
+            ->where('id', '!=', $job->id)
+            ->where('status', 'active') // Only fetch active jobs
+            ->where('deadline', '>=', now()) // Ensure the deadline is in the future
+            ->limit(5)
+            ->get();
+
+        return view('frontend.pages.job-show', compact('job', 'openJobs','similarJobs'));
     }
 }

@@ -480,7 +480,7 @@
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                         <i class="fa fa-money"></i>
                                         <span>{{ $job?->min_salary }} - {{ $job?->max_salary }}
-                                            {{ config('settings.site_default_currency') }} /
+                                            /
                                             {{ $job?->salaryType?->name }}</span>
                                     </div>
                                 @else

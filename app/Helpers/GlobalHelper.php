@@ -262,7 +262,7 @@ if (!function_exists('calculateDeadline')) {
     /**
      * Calculate the deadline status, styling class, and icon.
      *
-     * @param string $deadline The deadline date (e.g., "2025-03-31").
+     * @param string $deadline The deadline date (e.g., "2025-03-31 23:59:59").
      * @return array An array containing the status message, class, and icon.
      */
     function calculateDeadline($deadline)
@@ -271,13 +271,27 @@ if (!function_exists('calculateDeadline')) {
         $deadlineDate = \Carbon\Carbon::parse($deadline);
         $now = \Carbon\Carbon::now();
 
-        // Calculate the difference in days
-        $daysToDeadline = $now->diffInDays($deadlineDate, false);
+        // Calculate the difference
+        $diff = $now->diff($deadlineDate);
 
-        // Determine the status, class, and icon
-        if ($daysToDeadline > 0) {
+        if ($now < $deadlineDate) {
+            // Determine the most relevant time unit to display
+            if ($diff->y > 0) {
+                $message = $diff->y . ' year' . ($diff->y > 1 ? 's' : '') . ' to go';
+            } elseif ($diff->m > 0) {
+                $message = $diff->m . ' month' . ($diff->m > 1 ? 's' : '') . ' to go';
+            } elseif ($diff->d > 0) {
+                $message = $diff->d . ' day' . ($diff->d > 1 ? 's' : '') . ' to go';
+            } elseif ($diff->h > 0) {
+                $message = $diff->h . ' hour' . ($diff->h > 1 ? 's' : '') . ' to go';
+            } elseif ($diff->i > 0) {
+                $message = $diff->i . ' minute' . ($diff->i > 1 ? 's' : '') . ' to go';
+            } else {
+                $message = $diff->s . ' second' . ($diff->s > 1 ? 's' : '') . ' to go';
+            }
+
             return [
-                'message' => $daysToDeadline . ' days to go',
+                'message' => $message,
                 'class' => 'deadline-approaching', // Green for approaching deadline
                 'icon' => 'fa fa-hourglass-half', // Icon for approaching deadline
             ];

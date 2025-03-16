@@ -221,12 +221,12 @@
                     <div class="job-sidebar">
 
                         <h4 class="uppercase">share this job</h4>
-
+                        <hr>
                         <!-- Start of Social Media ul -->
                         <ul class="social-btns list-inline mt20">
                             <!-- Social Media -->
                             <li>
-                                <a href="#" class="social-btn-roll facebook transparent">
+                                <a data-social="facebook" href="#" class="social-btn-roll facebook transparent">
                                     <div class="social-btn-roll-icons">
                                         <i class="social-btn-roll-icon fa fa-facebook"></i>
                                         <i class="social-btn-roll-icon fa fa-facebook"></i>
@@ -236,7 +236,7 @@
 
                             <!-- Social Media -->
                             <li>
-                                <a href="#" class="social-btn-roll twitter transparent">
+                                <a data-social="twitter" href="#" class="social-btn-roll twitter transparent">
                                     <div class="social-btn-roll-icons">
                                         <i class="social-btn-roll-icon fa fa-twitter"></i>
                                         <i class="social-btn-roll-icon fa fa-twitter"></i>
@@ -246,15 +246,47 @@
 
                             <!-- Social Media -->
                             <li>
-                                <a href="#" class="social-btn-roll google-plus transparent">
+                                <a href="https://wa.me/?text=Check%20out%20this%20job%20{{ url()->current() }}"
+                                    class="social-btn-roll whatsapp transparent" target="_blank">
                                     <div class="social-btn-roll-icons">
-                                        <i class="social-btn-roll-icon fa fa-google-plus"></i>
-                                        <i class="social-btn-roll-icon fa fa-google-plus"></i>
+                                        <i class="social-btn-roll-icon fa fa-whatsapp"></i>
+                                        <i class="social-btn-roll-icon fa fa-whatsapp"></i>
                                     </div>
                                 </a>
                             </li>
+
+                            <li>
+                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ url()->current() }}"
+                                    class="social-btn-roll linkedin transparent" target="_blank">
+                                    <div class="social-btn-roll-icons">
+                                        <i class="social-btn-roll-icon fa fa-linkedin"></i>
+                                        <i class="social-btn-roll-icon fa fa-linkedin"></i>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="https://www.reddit.com/submit?url={{ url()->current() }}&title=Check%20this%20job%20out"
+                                    class="social-btn-roll reddit transparent" target="_blank">
+                                    <div class="social-btn-roll-icons">
+                                        <i class="social-btn-roll-icon fa fa-reddit"></i>
+                                        <i class="social-btn-roll-icon fa fa-reddit"></i>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.pinterest.com/pin/create/button/?url={{ url()->current() }}&media=&description=Check%20this%20job%20out"
+                                    class="social-btn-roll pinterest transparent" target="_blank">
+                                    <div class="social-btn-roll-icons">
+                                        <i class="social-btn-roll-icon fa fa-pinterest"></i>
+                                        <i class="social-btn-roll-icon fa fa-pinterest"></i>
+                                    </div>
+                                </a>
+                            </li>
+
                         </ul>
                         <!-- End of Social Media ul -->
+
 
 
 
@@ -306,6 +338,57 @@
 
                     </div>
                     <!-- Start of Job Sidebar -->
+                    <br>
+                    <!-- Start of Job Sidebar -->
+                    <div class="job-sidebar">
+
+                        <h4 class="uppercase">Skills</h4>
+                        <hr>
+                        <ul class="job-overview nopadding ">
+
+                            @foreach ($job?->skills->shuffle() as $jobSkill)
+                                <a href="" class="btn btn-blue btn-effect mt20">
+                                    {{ $jobSkill?->skill?->name }}
+                                </a>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <!-- Start of Job Sidebar -->
+
+
+                    <br>
+                    <!-- Start of Job Sidebar -->
+                    <div class="job-sidebar">
+
+                        <h4 class="uppercase">Benefits</h4>
+                        <hr>
+                        <ul class="job-overview nopadding ">
+
+                            @foreach ($job?->benefits->shuffle() as $jobBenefit)
+                                <a href="" class="btn btn-blue btn-effect mt20">
+                                    {{ $jobBenefit?->benefit?->name }}
+                                </a>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <!-- Start of Job Sidebar -->
+
+                    <br>
+                    <!-- Start of Job Sidebar -->
+                    <div class="job-sidebar">
+
+                        <h4 class="uppercase">Tags</h4>
+                        <hr>
+                        <ul class="job-overview nopadding ">
+
+                            @foreach ($job?->tags->shuffle() as $jobTag)
+                                <a href="" class="btn btn-blue btn-effect mt20">
+                                    {{ $jobTag?->tag?->name }}
+                                </a>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <!-- Start of Job Sidebar -->
 
 
                     <!-- Start of Google Map -->
@@ -323,6 +406,10 @@
             </div>
             <!-- End of Row -->
 
+            {{-- @foreach ($similarJobs as $similarJob)
+                <p>{{ $loop->index + 1 }} - {{ $similarJob->id }} - {{ $similarJob->title }}</p>
+            @endforeach --}}
+
 
             <!-- Start of Row -->
             <div class="row mt80">
@@ -332,82 +419,32 @@
                     <!-- Start of Owl Slider -->
                     <div class="owl-carousel related-jobs">
 
-                        <!-- Start of Slide item 1 -->
-                        <div class="item">
-                            <a href="job-page.html">
-                                <h5>UI/UX Designer</h5>
-                            </a>
-                            <a href="#" class="btn btn-green btn-small btn-effect mt15">full time</a>
 
-                            <h5 class="pt40 pb10"><i class="fa fa-money"></i> Salary:</h5>
-                            <h5>$25.000-$35.000</h5>
-                        </div>
-                        <!-- End of Slide item 1 -->
+                        @forelse ($similarJobs->shuffle() as $similarJob)
+                            <!-- Start of Slide item 2 -->
+                            <div class="item">
+                                <a href="{{ route('jobs.show', $similarJob?->slug) }}">
+                                    <h5>{{ $similarJob?->title }}</h5>
+                                </a>
+                                @php
+                                    $jobType = getJobTypeClassAndLabel($similarJob?->jobType?->name);
+                                @endphp
+                                <a href="javascript:;" class="btn btn-small btn-effect {{ $jobType['class'] }}"
+                                    style="margin-top: 10px;">
+                                    {{ $jobType['label'] }}
+                                </a>
+                                <h5 class="pt40 pb10"><i class="fa fa-money"></i> Salary:</h5>
+                                <h5>$15.000-$20.000</h5>
+                            </div>
+                            <!-- End of Slide item 2 -->
+                        @empty
+                            <div class="item">
+                                <a href="{{ route('jobs.index') }}">
+                                    <h5>No related jobs found</h5>
 
-
-                        <!-- Start of Slide item 2 -->
-                        <div class="item">
-                            <a href="job-page.html">
-                                <h5>Restaurant Chef</h5>
-                            </a>
-                            <a href="#" class="btn btn-red btn-small btn-effect mt15">temporary</a>
-
-                            <h5 class="pt40 pb10"><i class="fa fa-money"></i> Salary:</h5>
-                            <h5>$15.000-$20.000</h5>
-                        </div>
-                        <!-- End of Slide item 2 -->
-
-
-                        <!-- Start of Slide item 3 -->
-                        <div class="item">
-                            <a href="job-page.html">
-                                <h5>Social Marketing</h5>
-                            </a>
-                            <a href="#" class="btn btn-purple btn-small btn-effect mt15">part time</a>
-
-                            <h5 class="pt40 pb10"><i class="fa fa-money"></i> Salary:</h5>
-                            <h5>$25.000-$35.000</h5>
-                        </div>
-                        <!-- End of Slide item 3 -->
-
-
-                        <!-- Start of Slide item 4 -->
-                        <div class="item">
-                            <a href="job-page.html">
-                                <h5>PHP Developer</h5>
-                            </a>
-                            <a href="#" class="btn btn-green btn-small btn-effect mt15">full time</a>
-
-                            <h5 class="pt40 pb10"><i class="fa fa-money"></i> Salary:</h5>
-                            <h5>$35.000-$40.000</h5>
-                        </div>
-                        <!-- End of Slide item 4 -->
-
-
-                        <!-- Start of Slide item 5 -->
-                        <div class="item">
-                            <a href="job-page.html">
-                                <h5>IOS Developer</h5>
-                            </a>
-                            <a href="#" class="btn btn-blue btn-small btn-effect mt15">freelancer</a>
-
-                            <h5 class="pt40 pb10"><i class="fa fa-money"></i> Salary:</h5>
-                            <h5>$30.000</h5>
-                        </div>
-                        <!-- End of Slide item 5 -->
-
-
-                        <!-- Start of Slide item 6 -->
-                        <div class="item">
-                            <a href="job-page.html">
-                                <h5>Web Developer</h5>
-                            </a>
-                            <a href="#" class="btn btn-orange btn-small btn-effect mt15">intership</a>
-
-                            <h5 class="pt40 pb10"><i class="fa fa-money"></i> Salary:</h5>
-                            <h5>$45.000-$50.000</h5>
-                        </div>
-                        <!-- End of Slide item 6 -->
+                                </a>
+                            </div>
+                        @endforelse
 
                     </div>
                     <!-- End of Owl Slider -->
@@ -419,3 +456,32 @@
     </section>
     <!-- ===== End of Main Wrapper Job Section ===== -->
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            var itemCount = $(".related-jobs .item").length; // Count items
+
+            $(".related-jobs").owlCarousel({
+                loop: itemCount > 3, // Only loop if there are more than 3 items
+                margin: 10,
+                nav: true,
+                autoplay: true, // Enable auto-slide
+                autoplayTimeout: 3000, // Slides every 3 seconds
+                autoplayHoverPause: true, // Pause on hover
+                items: itemCount >= 3 ? 3 : itemCount, // Show only available items
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: Math.min(itemCount, 2)
+                    }, // Show max 2 items on medium screens
+                    1000: {
+                        items: Math.min(itemCount, 3)
+                    } // Show max 3 items on large screens
+                }
+            });
+        });
+    </script>
+@endpush
