@@ -103,6 +103,7 @@
     <script src="{{ asset('frontend/assets/js/tinymce/tinymce.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/countdown.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/isotope.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/slide.js') }}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.10.0/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="{{ asset('admin/assets/modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') }}"></script>
