@@ -234,88 +234,41 @@
             <!-- Start of Row -->
             <div class="row mt80" id="open-positions">
                 <div class="col-md-12">
-                    <h2 class="capitalize pb40">related jobs</h2>
+                    <h2 class="capitalize pb40">Related Jobs at {{ $company?->name }}</h2>
 
                     <!-- Start of Owl Slider -->
                     <div class="owl-carousel related-jobs">
+                        @forelse ($companySimilarJobs->shuffle() as $similarJob)
+                            <!-- Start of Slide item 2 -->
+                            <div class="item">
+                                <a href="{{ route('jobs.show', $similarJob?->slug) }}">
+                                    <h5>{{ $similarJob?->title }}</h5>
+                                </a>
+                                @php
+                                    $jobType = getJobTypeClassAndLabel($similarJob?->jobType?->name);
+                                @endphp
+                                <a href="javascript:;" class="btn btn-small btn-effect {{ $jobType['class'] }}"
+                                    style="margin-top: 10px;">
+                                    {{ $jobType['label'] }}
+                                </a>
+                                <h5 class="pt40 pb10"><i class="fa fa-money"></i> Salary:</h5>
+                                <h5>
+                                    @if ($similarJob?->salary_mode === 'range')
+                                        <span>${{ $similarJob?->min_salary }} - ${{ $similarJob?->max_salary }}</span>
+                                    @else
+                                        <span>${{ $similarJob?->custom_salary }}</span>
+                                    @endif
+                                </h5>
+                            </div>
+                            <!-- End of Slide item 2 -->
+                        @empty
+                            <div class="item">
+                                <a href="{{ route('jobs.index') }}">
+                                    <h5>No related jobs found</h5>
 
-                        <!-- Start of Slide item 1 -->
-                        <div class="item">
-                            <a href="job-page.html">
-                                <h5>UI/UX Designer</h5>
-                            </a>
-                            <a href="#" class="btn btn-green btn-small btn-effect mt15">full time</a>
-
-                            <h5 class="pt40 pb10"><i class="fa fa-money"></i> Salary:</h5>
-                            <h5>$25.000-$35.000</h5>
-                        </div>
-                        <!-- End of Slide item 1 -->
-
-
-                        <!-- Start of Slide item 2 -->
-                        <div class="item">
-                            <a href="job-page.html">
-                                <h5>Restaurant Chef</h5>
-                            </a>
-                            <a href="#" class="btn btn-red btn-small btn-effect mt15">temporary</a>
-
-                            <h5 class="pt40 pb10"><i class="fa fa-money"></i> Salary:</h5>
-                            <h5>$15.000-$20.000</h5>
-                        </div>
-                        <!-- End of Slide item 2 -->
-
-
-                        <!-- Start of Slide item 3 -->
-                        <div class="item">
-                            <a href="job-page.html">
-                                <h5>Social Marketing</h5>
-                            </a>
-                            <a href="#" class="btn btn-purple btn-small btn-effect mt15">part time</a>
-
-                            <h5 class="pt40 pb10"><i class="fa fa-money"></i> Salary:</h5>
-                            <h5>$25.000-$35.000</h5>
-                        </div>
-                        <!-- End of Slide item 3 -->
-
-
-                        <!-- Start of Slide item 4 -->
-                        <div class="item">
-                            <a href="job-page.html">
-                                <h5>PHP Developer</h5>
-                            </a>
-                            <a href="#" class="btn btn-green btn-small btn-effect mt15">full time</a>
-
-                            <h5 class="pt40 pb10"><i class="fa fa-money"></i> Salary:</h5>
-                            <h5>$35.000-$40.000</h5>
-                        </div>
-                        <!-- End of Slide item 4 -->
-
-
-                        <!-- Start of Slide item 5 -->
-                        <div class="item">
-                            <a href="job-page.html">
-                                <h5>IOS Developer</h5>
-                            </a>
-                            <a href="#" class="btn btn-blue btn-small btn-effect mt15">freelancer</a>
-
-                            <h5 class="pt40 pb10"><i class="fa fa-money"></i> Salary:</h5>
-                            <h5>$30.000</h5>
-                        </div>
-                        <!-- End of Slide item 5 -->
-
-
-                        <!-- Start of Slide item 6 -->
-                        <div class="item">
-                            <a href="job-page.html">
-                                <h5>Web Developer</h5>
-                            </a>
-                            <a href="#" class="btn btn-orange btn-small btn-effect mt15">intership</a>
-
-                            <h5 class="pt40 pb10"><i class="fa fa-money"></i> Salary:</h5>
-                            <h5>$45.000-$50.000</h5>
-                        </div>
-                        <!-- End of Slide item 6 -->
-
+                                </a>
+                            </div>
+                        @endforelse
                     </div>
                     <!-- End of Owl Slider -->
                 </div>

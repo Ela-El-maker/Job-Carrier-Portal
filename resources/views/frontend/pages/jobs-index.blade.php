@@ -7,7 +7,7 @@
             <!-- Start of Page Title -->
             <div class="row">
                 <div class="col-md-12">
-                    <h2>search jobs ver. 2</h2>
+                    <h2>search jobs </h2>
                 </div>
             </div>
             <!-- End of Page Title -->
@@ -16,8 +16,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <ul class="breadcrumb">
-                        <li><a href="#">home</a></li>
-                        <li class="active">for canditates</li>
+                        <li><a href="{{ url('/') }}">home</a></li>
+                        <li class="active">Available Jobs</li>
                     </ul>
                 </div>
             </div>
@@ -31,47 +31,7 @@
     <section class="search-jobs ptb80" id="version4">
         <div class="container">
 
-            <!-- Start of Form -->
-            <form class="job-search-form row" action="#" method="get">
 
-                <!-- Start of keywords input -->
-                <div class="col-md-3 col-sm-12 search-keywords">
-                    <label for="search-keywords">Keywords</label>
-                    <input type="text" name="search-keywords" class="form-control" id="search-keywords"
-                        placeholder="Keywords">
-                </div>
-
-                <!-- Start of category input -->
-                <div class="col-md-3 col-sm-12 search-categories">
-                    <label for="search-categories">Category</label>
-                    <select name="search-categories" class="selectpicker" id="search-categories" data-live-search="true"
-                        title="Any Category" data-size="5" data-container="body">
-                        <option value="1">Accountance</option>
-                        <option value="2">Banking</option>
-                        <option value="3">Design & Art</option>
-                        <option value="4">Developement</option>
-                        <option value="5">Insurance</option>
-                        <option value="6">IT Engineer</option>
-                        <option value="7">Healthcare</option>
-                        <option value="8">Marketing</option>
-                        <option value="9">Management</option>
-                    </select>
-                </div>
-
-                <!-- Start of location input -->
-                <div class="col-md-4 col-sm-12 search-location">
-                    <label for="search-location">Location</label>
-                    <input type="text" name="search-location" class="form-control" id="search-location"
-                        placeholder="Location">
-                </div>
-
-                <!-- Start of submit input -->
-                <div class="col-md-2 col-sm-12 search-submit">
-                    <button type="submit" class="btn btn-blue btn-effect"><i class="fa fa-search"></i>search</button>
-                </div>
-
-            </form>
-            <!-- End of Form -->
 
             <!-- Start of Row -->
             <div class="row mt60">
@@ -182,11 +142,11 @@
                             <ul class="list-inline mt20">
                                 @foreach ($jobTypes as $jobType)
                                     <li>
-                                        <input type="checkbox" id="job-type-{{ $jobType->id }}" name="jobtype[]"
-                                            value="{{ $jobType->slug }}">
-                                        <label for="job-type-{{ $jobType->id }}" style="font-weight: 400;">
+                                        <input type="checkbox" id="job-type-{{ $jobType?->id }}" name="jobtype[]"
+                                            value="{{ $jobType?->slug }}">
+                                        <label for="job-type-{{ $jobType?->id }}" style="font-weight: 400;">
                                             <!-- Reduce boldness of the label -->
-                                            {{ $jobType->name }} <span>(24)</span>
+                                            {{ $jobType?->name }}
                                         </label>
                                     </li>
                                 @endforeach
@@ -377,10 +337,45 @@
                         </div>
                         <!-- ===== End of Job Post Column 1 ===== -->
                     @empty
-                        <!-- Fallback message if no jobs are available -->
-                        <div class="col-md-12">
-                            <div class="alert alert-info">
-                                No jobs available at the moment. Please check back later!
+                        <div class="col-12">
+                            <div class="empty-jobs-container text-center py-5 my-4">
+                                <div class="empty-state-icon mb-4">
+                                    <img src="{{ asset('frontend/default-uploads/employees-tired.svg') }}"
+                                        alt="No jobs found" class="img-fluid" style="max-width: 450px;">
+                                </div>
+                                <h3 class="font-bold mb-3">No Job Listings Found</h3>
+                                <p class="text-muted mb-4">We couldn't find any job openings matching your current
+                                    filters. Try adjusting your search criteria or explore our popular categories below.</p>
+                                <div class="empty-state-actions d-flex justify-content-center gap-3 flex-wrap">
+                                    <a href="{{ route('jobs.index') }}" class="btn btn-outline">
+                                        <i class="fas fa-filter me-2"></i> Clear All Filters
+                                    </a>
+                                    <a href="{{ route('company.jobs.create') }}" class="btn btn-default"
+                                        style="background-color: #ff6b6b; color: white; border: none;margin-left: 20px;padding: 12px;">
+                                        <i class="fas fa-plus me-2"></i> Post a Job
+                                    </a>
+                                </div>
+
+                                <div class="job-suggestions mt-5">
+                                    <h5 class="font-medium mb-3">Popular Categories</h5>
+                                    <div class="suggested-searches d-flex flex-wrap justify-content-center gap-2 mt-3">
+                                        @foreach ($popularCategories as $category)
+                                            <a href="{{ route('jobs.index', ['category' => $category?->slug]) }}"
+                                                class="badge rounded-pill px-3 py-2"
+                                                style="background-color: rgba(18, 144, 121, 0.1); color: #129079; text-decoration: none; font-weight: normal;">
+                                                {{ $category->name }}
+                                            </a>
+                                        @endforeach
+
+                                        @foreach ($popularJobTypes as $type)
+                                            <a href="{{ route('jobs.index', ['jobtype' => $type->slug]) }}"
+                                                class="badge rounded-pill px-3 py-2"
+                                                style="background-color: rgba(18, 144, 121, 0.1); color: #129079; text-decoration: none; font-weight: normal;">
+                                                {{ $type->name }}
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     @endforelse

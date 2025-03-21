@@ -434,7 +434,13 @@
                                     {{ $jobType['label'] }}
                                 </a>
                                 <h5 class="pt40 pb10"><i class="fa fa-money"></i> Salary:</h5>
-                                <h5>$15.000-$20.000</h5>
+                                <h5>
+                                    @if ($similarJob?->salary_mode === 'range')
+                                        <span>${{ $similarJob?->min_salary }} - ${{ $similarJob?->max_salary }}</span>
+                                    @else
+                                        <span>${{ $similarJob?->custom_salary }}</span>
+                                    @endif
+                                </h5>
                             </div>
                             <!-- End of Slide item 2 -->
                         @empty
