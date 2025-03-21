@@ -78,6 +78,48 @@ if (!function_exists('getCompanyProfileCompletion')) {
 /*** Candidate Profile Completion Percentage */
 /*** Check profile completion and calculate percentage */
 
+// if (!function_exists('getCandidateProfileCompletion')) {
+//     function getCandidateProfileCompletion(): int
+//     {
+//         $requiredFields = [
+//             'experience_id',
+//             'profession_id',
+//             'title',
+//             'image',
+//             'cv',
+//             'full_name',
+//             'birth_date',
+//             'gender',
+//             'status',
+//             'marital_status',
+//             'bio',
+//             'country',
+//             'address',
+//             'phone_one',
+//             'phone_two',
+//             'email',
+//         ];
+
+//         $candidateProfile = Candidate::where('user_id', auth()->user()->id)->first();
+
+//         // Initialize counters
+//         $totalFields = count($requiredFields);
+//         $completedFields = 0;
+
+//         // Count how many fields are completed
+//         foreach ($requiredFields as $field) {
+//             if (!empty($candidateProfile->{$field})) {
+//                 $completedFields++;
+//             }
+//         }
+
+//         // Calculate percentage
+//         $completionPercentage = ($completedFields / $totalFields) * 100;
+
+//         return (int) $completionPercentage; // Return as an integer (rounded down)
+//     }
+// }
+
 if (!function_exists('getCandidateProfileCompletion')) {
     function getCandidateProfileCompletion(): int
     {
@@ -100,7 +142,13 @@ if (!function_exists('getCandidateProfileCompletion')) {
             'email',
         ];
 
+        // Fetch the candidate profile
         $candidateProfile = Candidate::where('user_id', auth()->user()->id)->first();
+
+        // Return 0 if profile not found
+        if (!$candidateProfile) {
+            return 0;
+        }
 
         // Initialize counters
         $totalFields = count($requiredFields);
@@ -120,6 +168,65 @@ if (!function_exists('getCandidateProfileCompletion')) {
     }
 }
 
+// if (!function_exists('getCandidateProfileCompletion')) {
+//     function getCandidateProfileCompletion(): int
+//     {
+//         $requiredFields = [
+//             'experience_id',
+//             'profession_id',
+//             'title',
+//             'image',
+//             'cv',
+//             'full_name',
+//             'birth_date',
+//             'gender',
+//             'status',
+//             'marital_status',
+//             'bio',
+//             'country',
+//             'address',
+//             'phone_one',
+//             'phone_two',
+//             'email',
+//         ];
+
+//         // Fetch the candidate profile
+//         $candidateProfile = Candidate::where('user_id', auth()->user()->id)->first();
+
+//         // Debug: Check if the candidate profile exists
+//         if (!$candidateProfile) {
+//             echo '<pre>Candidate profile not found!</pre>'; // Debug output
+//             return 0;
+//         }
+
+//         // Debug: Print the candidate profile data
+//         echo '<pre>';
+//         print_r($candidateProfile->toArray()); // Debug output
+//         echo '</pre>';
+
+//         // Initialize counters
+//         $totalFields = count($requiredFields);
+//         $completedFields = 0;
+
+//         // Count how many fields are completed
+//         foreach ($requiredFields as $field) {
+//             $value = $candidateProfile->{$field};
+//             if (!empty($value)) {
+//                 $completedFields++;
+//             }
+//             // Debug: Print field name and value
+//             echo "<pre>Field: $field, Value: " . ($value ?? 'NULL') . "</pre>"; // Debug output
+//         }
+
+//         // Calculate percentage
+//         $completionPercentage = ($completedFields / $totalFields) * 100;
+
+//         // Debug: Print the completion percentage
+//         echo "<pre>Completion Percentage: $completionPercentage%</pre>"; // Debug output
+
+//         return (int) $completionPercentage; // Return as an integer (rounded down)
+//     }
+// }
 
 /*** Format date */
 

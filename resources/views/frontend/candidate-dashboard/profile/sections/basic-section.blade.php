@@ -10,8 +10,8 @@
                     <div class="col-md-3">
                         <!-- Profile Picture Upload Section -->
                         <label>Profile Picture *</label>
-                        <x-image-preview :height="200" :width="200" :source="$candidate?->image" />
-                        <div class="form-group">
+                        <x-image-preview :height="180" :width="180" :source="$candidate?->image" />
+                        <div class="form-group" style="padding-top: 10px;">
                             <div class="upload-file-btn">
                                 <span><i class="fa fa-upload"></i> Upload</span>
                                 <input type="file" class="{{ $errors->has('profile_picture') ? 'is-invalid' : '' }}"

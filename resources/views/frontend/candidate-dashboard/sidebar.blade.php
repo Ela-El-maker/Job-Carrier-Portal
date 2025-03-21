@@ -3,13 +3,11 @@
     <!-- Sidebar Navigation -->
     <div class="sidebar-navigation card">
         <div class="card-header">
-            <div class="card-header">
-                @if (auth()->user()->role === 'company')
-                    <h4 class="sidebar-title">Company Dashboard</h4>
-                @elseif (auth()->user()->role === 'candidate')
-                    <h4 class="sidebar-title">Candidate Dashboard</h4>
-                @endif
-            </div>
+            @if (auth()->user()->role === 'company')
+                <h4 class="sidebar-title">Company Dashboard</h4>
+            @elseif (auth()->user()->role === 'candidate')
+                <h4 class="sidebar-title">Candidate Dashboard</h4>
+            @endif
         </div>
         <ul class="nav flex-column">
             <li class="nav-item">
@@ -26,17 +24,16 @@
             </li>
         </ul>
 
-        <div class="mt-20">
+        <div class="mt-3 mb-3">
             <!-- Authentication -->
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
 
                 <!-- Logout Button -->
-                <a class="nav-link btn btn-danger mt-3" onclick="event.preventDefault(); this.closest('form').submit();"
+                <a class="nav-link btn btn-danger" onclick="event.preventDefault(); this.closest('form').submit();"
                     href="{{ route('logout') }}">Logout Account</a>
             </form>
         </div>
     </div>
 </div>
-
 <!-- ===== End of Candidate Sidebar ===== -->

@@ -9,8 +9,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class CandidateLanguage extends Model
 {
     use HasFactory;
-    function language() : BelongsTo
+    protected $fillable = [
+        'candidate_id', // Add this line
+        'language_id',   // Ensure this is also included if needed
+    ];
+    function language(): BelongsTo
     {
-        return $this->belongsTo(Language::class, 'language_id','id');
+        return $this->belongsTo(Language::class, 'language_id', 'id');
     }
 }
