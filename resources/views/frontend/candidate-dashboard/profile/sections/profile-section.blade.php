@@ -69,13 +69,16 @@
                     </div>
 
 
+
                     <div class="col-md-12">
                         <!-- Title Input Section -->
                         <div class="form-group">
                             <label>Skills You Have *</label>
                             <select
                                 class="form-control form-icons selectpicker {{ $errors->has('skill_you_have') ? 'is-invalid' : '' }}"
-                                name="skill_you_have[]" multiple data-live-search="true">
+                                name="skill_you_have[]" multiple data-live-search="true" data-actions-box="true"
+                                data-selected-text-format="count > 3" data-size="8" data-width="100%"
+                                data-container="body">
                                 @foreach ($skills as $skill)
                                     @php
                                         $candidateSkills = $candidate?->skills->pluck('skill_id')->toArray() ?? [];
@@ -84,15 +87,13 @@
                                     <option @selected(in_array($skill->id, $candidateSkills)) value="{{ $skill->id }}">
                                         {{ $skill->name }}</option>
                                 @endforeach
-
                             </select>
                             <x-input-error :messages="$errors->get('skill_you_have')" class="mt-2" />
                         </div>
                     </div>
 
 
-
-                    <div class="col-md-12">
+                    {{-- <div class="col-md-12">
                         <!-- Title Input Section -->
                         <div class="form-group">
                             <label>Languages you know *</label>
@@ -101,22 +102,43 @@
                                 name="language_you_know[]" multiple data-live-search="true">
                                 <option value="">Select One</option>
                                 @foreach ($languages as $language)
-
                                     @php
 
-                                        $candidateLanguages = $candidate?->languages->pluck('language_id')->toArray() ?? [];
+                                        $candidateLanguages =
+                                            $candidate?->languages->pluck('language_id')->toArray() ?? [];
 
                                     @endphp
 
                                     <option @selected(in_array($language->id, $candidateLanguages)) value="{{ $language->id }}">
                                         {{ $language->name }}</option>
-
                                 @endforeach
 
                             </select>
                             <x-input-error :messages="$errors->get('language_you_know')" class="mt-2" />
                         </div>
 
+                    </div> --}}
+                    <div class="col-md-12">
+                        <!-- Title Input Section -->
+                        <div class="form-group">
+                            <label>Languages you know *</label>
+                            <select
+                                class="form-control form-icons selectpicker {{ $errors->has('language_you_know') ? 'is-invalid' : '' }}"
+                                name="language_you_know[]" multiple data-live-search="true" data-actions-box="true"
+                                data-selected-text-format="count > 3" data-size="8" data-width="100%"
+                                data-container="body">
+                                @foreach ($languages as $language)
+                                    @php
+                                        $candidateLanguages =
+                                            $candidate?->languages->pluck('language_id')->toArray() ?? [];
+                                    @endphp
+
+                                    <option @selected(in_array($language->id, $candidateLanguages)) value="{{ $language->id }}">
+                                        {{ $language->name }}</option>
+                                @endforeach
+                            </select>
+                            <x-input-error :messages="$errors->get('language_you_know')" class="mt-2" />
+                        </div>
                     </div>
 
                     <div class="col-md-12">

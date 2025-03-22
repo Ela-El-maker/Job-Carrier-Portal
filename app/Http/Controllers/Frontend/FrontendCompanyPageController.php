@@ -44,9 +44,9 @@ class FrontendCompanyPageController extends Controller
 
     function index(Request $request): View
     {
-        $countries = Country::all();
         $industryTypes = IndustryType::withCount('companies')->get();
         $organizations = OrganizationType::withCount('companies')->get();
+        $countries = Country::all();
         $selectedStates = null;
         $selectedCities = null;
 

@@ -8485,3 +8485,42 @@ ul.nopadding {
 .no-companies-found .btn-primary:hover {
     background-color: #0056b3;
 }
+
+/* Hide the default radio button */
+.experience-type-item input[type="radio"] {
+    display: none;
+}
+
+/* Custom radio button */
+.experience-type-item label {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.experience-type-item label::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    background-color: white;
+}
+
+/* Style for checked radio button */
+.experience-type-item input[type="radio"]:checked + label::before {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+/* Style for the label text */
+.experience-type-item label span.experience-count {
+    margin-left: 10px;
+    color: #666;
+}
