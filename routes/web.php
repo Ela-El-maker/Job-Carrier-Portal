@@ -55,6 +55,11 @@ Route::get('checkout/{plan_id}', CheckoutPageController::class)->name('checkout.
 
 Route::get('jobs', [FrontendJobPageController::class, 'index'])->name('jobs.index');
 Route::get('job/{slug}', [FrontendJobPageController::class, 'show'])->name('jobs.show');
+
+Route::post('apply-job/{id}', [FrontendJobPageController::class, 'applyJob'])->name('apply-job.store');
+
+
+
 /**
  * Candidates Frontend Pages
  */

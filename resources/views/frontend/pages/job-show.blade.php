@@ -332,9 +332,48 @@
                             </li>
                         </ul>
 
-                        <div class="mt20">
-                            <a href="#" class="btn btn-blue btn-effect">apply for job</a>
-                        </div>
+                        @if ($alreadyAppliedJob)
+                            <div class="mt20">
+                                <a href="" class="apply-now"
+                                    style="
+    background-color: #a4aca4; /* Green background */
+    border: none; /* No border */
+    color: rgb(0, 0, 0); /* White text */
+    padding: 15px 32px; /* Padding */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* No underline */
+    display: inline-block; /* Inline block */
+    font-size: 16px; /* Font size */
+    margin: 4px 2px; /* Margin */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 12px; /* Rounded corners */
+    transition: background-color 0.3s ease; /* Smooth transition */
+">
+                                    Applied
+                                </a>
+                            </div>
+                        @else
+                            <div class="mt20">
+                                <a href="" class="apply-now"
+                                    style="
+    background-color: #0fe6ee; /* Green background */
+    border: none; /* No border */
+    color: white; /* White text */
+    padding: 15px 32px; /* Padding */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* No underline */
+    display: inline-block; /* Inline block */
+    font-size: 16px; /* Font size */
+    margin: 4px 2px; /* Margin */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 12px; /* Rounded corners */
+    transition: background-color 0.3s ease; /* Smooth transition */
+">
+                                    Apply this Job
+                                </a>
+                            </div>
+                        @endif
+
 
                     </div>
                     <!-- Start of Job Sidebar -->
@@ -487,6 +526,32 @@
                         items: Math.min(itemCount, 3)
                     } // Show max 3 items on large screens
                 }
+            });
+
+            $('.apply-now').on('click', function() {
+                // alert('Apply now');
+                $.ajax({
+                    method: 'POST',
+                    url: '{{ route('apply-job.store', $job?->id) }}',
+                    data: {
+                        _token: "{{ csrf_token() }}"
+                    },
+                    beforeSend: function() {
+
+                    },
+                    success: function(response) {
+                        notyf.success(response.message);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(xhr);
+                        let errors = xhr.responseJSON.errors;
+                        $.each(errors, function(index, value) {
+                            // alert(value[0]);
+                            // console.log(value);
+                            notyf.error(value[index]);
+                        });
+                    },
+                });
             });
         });
     </script>
