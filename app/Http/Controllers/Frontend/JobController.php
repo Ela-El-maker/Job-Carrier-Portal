@@ -38,7 +38,7 @@ class JobController extends Controller
         //
         storePlanInformation();
         $query = Job::query();
-
+        $query->withCount('applications');
         $this->search($query, ['title', 'slug', 'deadline', 'status', 'created_at', 'updated_at']);
 
         $jobs = $query->where('company_id', auth()->user()->company?->id)

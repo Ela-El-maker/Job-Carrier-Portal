@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
@@ -12,129 +13,162 @@ use Srmklive\PayPal\Services\PayPal as PayPalClient;
 class PaymentController extends Controller
 {
     //
-     //
-     function paymentSuccess(): View
-     {
-         return view('frontend.pages.payment-success');
-     }
+    //
+    function paymentSuccess(): View
+    {
+        return view('frontend.pages.payment-success');
+    }
 
-     function paymentError(): View
-     {
-         return view('frontend.pages.payment-error');
-     }
-     //
-     /**
-      * Paypal Payment
-      *
-      */
-     function setPaypalConfig(): array
-     {
+    function paymentError(): View
+    {
+        return view('frontend.pages.payment-error');
+    }
+    //
+    /**
+     * Paypal Payment
+     *
+     */
+    function setPaypalConfig(): array
+    {
 
-         return  [
-             'mode'    => config('gatewaySettings.paypal_account_mode'), // Can only be 'sandbox' Or 'live'. If empty or invalid, 'live' will be used.
-             'sandbox' => [
-                 'client_id'         => config('gatewaySettings.paypal_client_id'),
-                 'client_secret'     => config('gatewaySettings.paypal_client_secret'),
-                 'app_id'            => 'APP-80W284485P519543T',
-             ],
-             'live' => [
-                 'client_id'         => config('gatewaySettings.paypal_client_id'),
-                 'client_secret'     => config('gatewaySettings.paypal_client_secret'),
-                 'app_id'            => config('gatewaySettings.paypal_app_id'),
-             ],
+        return  [
+            'mode'    => config('gatewaySettings.paypal_account_mode'), // Can only be 'sandbox' Or 'live'. If empty or invalid, 'live' will be used.
+            'sandbox' => [
+                'client_id'         => config('gatewaySettings.paypal_client_id'),
+                'client_secret'     => config('gatewaySettings.paypal_client_secret'),
+                'app_id'            => 'APP-80W284485P519543T',
+            ],
+            'live' => [
+                'client_id'         => config('gatewaySettings.paypal_client_id'),
+                'client_secret'     => config('gatewaySettings.paypal_client_secret'),
+                'app_id'            => config('gatewaySettings.paypal_app_id'),
+            ],
 
-             'payment_action' => 'Sale', // Can only be 'Sale', 'Authorization' or 'Order'
-             'currency'       => config('gatewaySettings.paypal_currency_name'),
-             'notify_url'     => '', // Change this accordingly for your application.
-             'locale'         => 'en_US', // force gateway language  i.e. it_IT, es_ES, en_US ... (for express checkout only)
-             'validate_ssl'   => env('PAYPAL_VALIDATE_SSL', true), // Validate SSL when creating api client.
-         ];
-     }
+            'payment_action' => 'Sale', // Can only be 'Sale', 'Authorization' or 'Order'
+            'currency'       => config('gatewaySettings.paypal_currency_name'),
+            'notify_url'     => '', // Change this accordingly for your application.
+            'locale'         => 'en_US', // force gateway language  i.e. it_IT, es_ES, en_US ... (for express checkout only)
+            'validate_ssl'   => env('PAYPAL_VALIDATE_SSL', true), // Validate SSL when creating api client.
+        ];
+    }
 
-     /**
-      * Paypal Success
-      *
-      */
-     function payWithPaypal()
-     {
-         //handle payment redirect
-         // dd($this->setPaypalConfig());
-         $config = $this->setPaypalConfig();
-         $provider = new PayPalClient($config);
-         $provider->getAccessToken();
+    /**
+     * Paypal Success
+     *
+     */
+    function payWithPaypal()
+    {
+        $selectedPlan = Session::get('selected_plan');
 
-         // Calculate payable amount
-         $payableAmount = round(Session::get('selected_plan')['price'] * config('gatewaySettings.paypal_currency_rate'));
-         // dd($payableAmount);
-         $response = $provider->createOrder(
-             [
-                 'intent' => 'CAPTURE',
-                 'application_context' => [
-                     'return_url' => route('company.paypal.success'),
-                     'cancel_url' => route('company.paypal.cancel'),
-                 ],
-                 'purchase_units' => [
-                     [
-                         'amount' => [
-                             'currency_code' => config('gatewaySettings.paypal_currency_name'),
-                             'value' => $payableAmount
-                         ]
-                     ]
-                 ]
-             ],
-         );
+        // Check if the selected plan is free
+        if ($selectedPlan['price'] == 0) {
+            // Check if the company has already used the free plan
+            if (OrderService::hasUsedFreePlan(Auth::user()->company->id)) {
+                return redirect()->route('company.payment.error')->withErrors(['error' => 'You have already used the free plan.']);
+            }
 
-         // dd($response);
-         if (isset($response['id']) && $response['id'] !== NULL) {
-             foreach ($response['links'] as $link) {
-                 # code...
-                 if ($link['rel'] === 'approve') {
-                     return redirect()->away($link['href']);
-                 }
-             }
-         }
-     }
+            // Store the order and assign the subscription
+            try {
+                OrderService::storeOrder('free_plan', 'free', 0, config('gatewaySettings.paypal_currency_name'), 'paid');
+                OrderService::setUserPlan();
 
-     /**
-      * Paypal Success
-      *
-      */
-     function paypalSuccess(Request $request)
-     {
-         //handle payment redirect
-         $config = $this->setPaypalConfig();
-         $provider = new PayPalClient($config);
-         $provider->getAccessToken();
-         $response = $provider->capturePaymentOrder($request->token);
-         // dd($response);
-         if (isset($response['status']) && $response['status'] === 'COMPLETED') {
-             $capture = $response['purchase_units'][0]['payments']['captures'][0];
-             try {
-                 //code...
-                 OrderService::storeOrder($capture['id'], 'payPal', $capture['amount']['value'], $capture['amount']['currency_code'], 'paid');
-                 OrderService::setUserPlan();
+                Session::forget('selected_plan');
 
-                 Session::forget('selected_plan');
+                return redirect()->route('company.payment.success');
+            } catch (\Exception $th) {
+                logger('Payment ERROR >> ' . $th);
+                return redirect()->route('company.payment.error')->withErrors(['error' => 'Something went wrong. Please try again.']);
+            }
+        }
 
-                //  return redirect('/');
-                 return redirect()->route('company.payment.success');
-             } catch (\Exception $th) {
-                 logger('Payment ERROR >> '.$th);
-             }
-         }
+        // Handle PayPal payment for non-free plans
+        $config = $this->setPaypalConfig();
+        $provider = new PayPalClient($config);
+        $provider->getAccessToken();
 
-         return redirect()->route('company.payment.error')->withErrors(['error'=>$response['error']['message']]);
+        // Calculate payable amount
+        $payableAmount = round($selectedPlan['price'] * config('gatewaySettings.paypal_currency_rate'));
 
-     }
-     /**
-      * Paypal Cancel
-      *
-      */
-     function paypalCancel()
-     {
-         //handle payment redirect
-         return redirect()->route('company.payment.error')->withErrors(['error'=>'Something went wrong. Please Try Again.']);
+        $response = $provider->createOrder(
+            [
+                'intent' => 'CAPTURE',
+                'application_context' => [
+                    'return_url' => route('company.paypal.success'),
+                    'cancel_url' => route('company.paypal.cancel'),
+                ],
+                'purchase_units' => [
+                    [
+                        'amount' => [
+                            'currency_code' => config('gatewaySettings.paypal_currency_name'),
+                            'value' => $payableAmount
+                        ]
+                    ]
+                ]
+            ],
+        );
 
-     }
+        if (isset($response['id']) && $response['id'] !== NULL) {
+            foreach ($response['links'] as $link) {
+                if ($link['rel'] === 'approve') {
+                    return redirect()->away($link['href']);
+                }
+            }
+        }
+    }
 
+    /**
+     * Paypal Success
+     *
+     */
+    function paypalSuccess(Request $request)
+    {
+        //handle payment redirection
+        $config = $this->setPaypalConfig();
+        $provider = new PayPalClient($config);
+        $provider->getAccessToken();
+        $response = $provider->capturePaymentOrder($request->token);
+        // dd($response);
+        if (isset($response['status']) && $response['status'] === 'COMPLETED') {
+            $capture = $response['purchase_units'][0]['payments']['captures'][0];
+            try {
+                //code...
+                OrderService::storeOrder($capture['id'], 'payPal', $capture['amount']['value'], $capture['amount']['currency_code'], 'paid');
+                OrderService::setUserPlan();
+
+                Session::forget('selected_plan');
+
+                return redirect()->route('company.payment.success');
+            } catch (\Exception $th) {
+                logger('Payment ERROR >> ' . $th);
+            }
+        }
+
+        // return redirect()->route('company.payment.error')->withErrors(['error'=>$response['error']['message']]);
+        return redirect()->route('company.payment.error')
+            ->withErrors(['error' => $response['error']['message'] ?? 'Payment failed. Please try again.']);
+    }
+    /**
+     * Paypal Cancel
+     *
+     */
+    function paypalCancel()
+    {
+        //handle payment redirect
+        return redirect()->route('company.payment.error')->withErrors(['error' => 'Something went wrong. Please Try Again.']);
+    }
+
+
+    /**
+     * Stripe Payment
+     *
+     */
+
+
+    function payWithStripe() {}
+
+    function stripeSuccess()
+    {
+        // Stripe::setApiKey();
+
+    }
 }

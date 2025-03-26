@@ -77,129 +77,434 @@
                             <!-- Start of Profile Description and Dashboard Cards -->
                             <div class="col-md-12 col-xs-12">
                                 <!-- Card Container for Candidate Details -->
-                                <div class="card-container">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h4>All Job Posts </h4>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-md-9">
-                                                    <div class="card-header-form">
-                                                        <form action="{{ route('company.jobs.index') }}" method="GET">
-                                                            <div class="input-group">
-                                                                <input type="text" name="search" class="form-control"
-                                                                    placeholder="Search" value="{{ request('search') }}">
-                                                                <div class="input-group-btn">
-                                                                    <button type="submit" style="height: 42px"
-                                                                        class="btn btn-primary"><i
-                                                                            class="fas fa-search"></i></button>
+                                <div
+                                    style="background-color: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 20px;">
+                                    <div
+                                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                                        <h2 style="color: #2c3e50; margin: 0;">All Job Posts</h2>
+                                        <div style="display: flex; align-items: center;">
+                                            <form action="{{ route('company.jobs.index') }}" method="GET"
+                                                style="margin-right: 15px;">
+                                                <div style="display: flex; align-items: center;">
+                                                    <input type="text" name="search" placeholder="Search Jobs"
+                                                        style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; margin-right: 10px;">
+                                                    <button type="submit"
+                                                        style="background-color: #3498db; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">
+                                                        <i class="fas fa-search"></i>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                            <a href="{{ route('company.jobs.create') }}"
+                                                style="background-color: #2ecc71; color: white; text-decoration: none; padding: 8px 12px; border-radius: 4px; display: flex; align-items: center;">
+                                                <i class="fas fa-plus-circle" style="margin-right: 5px;"></i> Create New
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div style="width: 100%; overflow-x: auto;">
+                                        <table
+                                            style="
+                                            width: 100%;
+                                            min-width: 1200px;
+                                            border-collapse: separate;
+                                            border-spacing: 0;
+                                        ">
+                                            <thead style="background: linear-gradient(to right, #4361ee, #3a0ca3);">
+                                                <tr>
+                                                    <th
+                                                        style="
+                                                        padding: 5px;
+                                                        color: white;
+                                                        font-weight: 600;
+                                                        text-align: left;
+                                                        text-transform: uppercase;
+                                                        letter-spacing: 0.5px;
+                                                        font-size: 13px;
+                                                        white-space: nowrap;
+                                                    ">
+                                                        #</th>
+                                                    <th
+                                                        style="
+                                                        padding: 5px;
+                                                        color: white;
+                                                        font-weight: 600;
+                                                        text-align: left;
+                                                        text-transform: uppercase;
+                                                        letter-spacing: 0.5px;
+                                                        font-size: 13px;
+                                                        white-space: nowrap;
+                                                    ">
+                                                        Job</th>
+                                                    <th
+                                                        style="
+                                                        padding: 5px;
+                                                        color: white;
+                                                        font-weight: 600;
+                                                        text-align: left;
+                                                        text-transform: uppercase;
+                                                        letter-spacing: 0.5px;
+                                                        font-size: 13px;
+                                                        white-space: nowrap;
+                                                    ">
+                                                        Category/Role</th>
+                                                    <th
+                                                        style="
+                                                        padding: 5px;
+                                                        color: white;
+                                                        font-weight: 600;
+                                                        text-align: left;
+                                                        text-transform: uppercase;
+                                                        letter-spacing: 0.5px;
+                                                        font-size: 13px;
+                                                        white-space: nowrap;
+                                                    ">
+                                                        Applications</th>
+                                                    <th
+                                                        style="
+                                                        padding: 5px;
+                                                        color: white;
+                                                        font-weight: 600;
+                                                        text-align: left;
+                                                        text-transform: uppercase;
+                                                        letter-spacing: 0.5px;
+                                                        font-size: 13px;
+                                                        white-space: nowrap;
+                                                    ">
+                                                        Deadline</th>
+                                                    <th
+                                                        style="
+                                                        padding: 5px;
+                                                        color: white;
+                                                        font-weight: 600;
+                                                        text-align: left;
+                                                        text-transform: uppercase;
+                                                        letter-spacing: 0.5px;
+                                                        font-size: 13px;
+                                                        white-space: nowrap;
+                                                    ">
+                                                        Status</th>
+                                                    <th
+                                                        style="
+                                                        padding: 5px;
+                                                        color: white;
+                                                        font-weight: 600;
+                                                        text-align: left;
+                                                        text-transform: uppercase;
+                                                        letter-spacing: 0.5px;
+                                                        font-size: 13px;
+                                                        white-space: nowrap;
+                                                    ">
+                                                        Applications</th>
+                                                    <th
+                                                        style="
+                                                        padding: 5px;
+                                                        color: white;
+                                                        font-weight: 600;
+                                                        text-align: left;
+                                                        text-transform: uppercase;
+                                                        letter-spacing: 0.5px;
+                                                        font-size: 13px;
+                                                        white-space: nowrap;
+                                                    ">
+                                                        Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @forelse ($jobs as $job)
+                                                    <tr
+                                                        style="
+                                                        transition: all 0.3s ease;
+                                                        border-bottom: 1px solid #e9ecef;
+                                                        background-color: white;
+                                                    ">
+                                                        <td
+                                                            style="
+                                                            padding: 10px;
+                                                            vertical-align: middle;
+                                                            color: #6c757d;
+                                                            font-weight: 500;
+                                                            font-size: 14px;
+                                                            white-space: nowrap;
+                                                        ">
+                                                            {{ $loop->iteration }}
+                                                        </td>
+                                                        <td
+                                                            style="
+                                                            padding: 10px;
+                                                            vertical-align: middle;
+                                                            white-space: nowrap;
+                                                        ">
+                                                            <div style="display: flex; flex-direction: column;">
+                                                                <div
+                                                                    style="
+                                                                    font-weight: 700;
+                                                                    color: #2d3748;
+                                                                    font-size: 15px;
+                                                                    margin-bottom: 4px;
+                                                                    letter-spacing: -0.5px;
+                                                                    max-width: 250px;
+                                                                    overflow: hidden;
+                                                                    text-overflow: ellipsis;
+                                                                ">
+                                                                    {{ $job?->title }}
+                                                                </div>
+                                                                <div
+                                                                    style="
+                                                                    color: #718096;
+                                                                    font-size: 13px;
+                                                                    display: flex;
+                                                                    align-items: center;
+                                                                ">
+                                                                    <span
+                                                                        style="
+                                                                        background-color: #e6f2ff;
+                                                                        color: #3182ce;
+                                                                        padding: 2px 6px;
+                                                                        border-radius: 4px;
+                                                                        margin-right: 8px;
+                                                                        font-size: 11px;
+                                                                        font-weight: 600;
+                                                                        max-width: 150px;
+                                                                        overflow: hidden;
+                                                                        text-overflow: ellipsis;
+                                                                    ">
+                                                                        {{ $job?->company?->name }}
+                                                                    </span>
+                                                                    {{ $job?->jobType?->name }}
                                                                 </div>
                                                             </div>
-                                                        </form>
-                                                    </div>
-
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <a href="{{ route('company.jobs.create') }}" class="btn btn-primary"><i
-                                                            class="fas fa-plus-circle"></i>
-                                                        Create New</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body p-0">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped">
-                                                    <tr>
-                                                        <th style="width: 5%">#</th>
-                                                        <th>Job</th>
-                                                        <th>Category/Role</th>
-                                                        <th>Salary</th>
-                                                        <th>Deadline</th>
-                                                        <th>Status</th>
-                                                        <th style="width: 10%">Action</th>
+                                                        </td>
+                                                        <td
+                                                            style="
+                                                            padding: 5px;
+                                                            vertical-align: middle;
+                                                            white-space: nowrap;
+                                                        ">
+                                                            <div
+                                                                style="
+                                                                font-weight: 600;
+                                                                color: #2d3748;
+                                                                font-size: 14px;
+                                                                margin-bottom: 4px;
+                                                                max-width: 150px;
+                                                                overflow: hidden;
+                                                                text-overflow: ellipsis;
+                                                            ">
+                                                                {{ $job?->category?->name }}
+                                                            </div>
+                                                            <div
+                                                                style="
+                                                                color: #718096;
+                                                                font-size: 13px;
+                                                                background-color: #f0f4f8;
+                                                                display: inline-block;
+                                                                padding: 2px 6px;
+                                                                border-radius: 4px;
+                                                                max-width: 150px;
+                                                                overflow: hidden;
+                                                                text-overflow: ellipsis;
+                                                            ">
+                                                                {{ $job?->jobRole?->name }}
+                                                            </div>
+                                                        </td>
+                                                        <td
+                                                            style="
+                                                            padding: 5px;
+                                                            vertical-align: middle;
+                                                            font-weight: 600;
+                                                            color: #4a5568;
+                                                            white-space: nowrap;
+                                                        ">
+                                                            <span
+                                                                style="
+                                                                background-color: #e6f2ff;
+                                                                color: #3182ce;
+                                                                padding: 4px 8px;
+                                                                border-radius: 4px;
+                                                                font-size: 13px;
+                                                            ">
+                                                                {{ $job?->applications_count }} Total
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            style="
+                                                            padding: 5px;
+                                                            vertical-align: middle;
+                                                            font-size: 14px;
+                                                            color: #4a5568;
+                                                            font-weight: 500;
+                                                            white-space: nowrap;
+                                                        ">
+                                                            {{ formatDate($job?->deadline) }}
+                                                        </td>
+                                                        <td
+                                                            style="
+                                                            padding: 5px;
+                                                            vertical-align: middle;
+                                                            white-space: nowrap;
+                                                        ">
+                                                            @if ($job?->status === 'pending')
+                                                                <span
+                                                                    style="
+                                                                    display: inline-block;
+                                                                    padding: 4px 8px;
+                                                                    border-radius: 4px;
+                                                                    font-size: 12px;
+                                                                    font-weight: 600;
+                                                                    text-transform: uppercase;
+                                                                    letter-spacing: 0.5px;
+                                                                    background-color: rgba(255, 152, 0, 0.15);
+                                                                    color: #ed8936;
+                                                                ">Pending</span>
+                                                            @elseif ($job?->deadline > date('Y-m-d'))
+                                                                <span
+                                                                    style="
+                                                                    display: inline-block;
+                                                                    padding: 4px 8px;
+                                                                    border-radius: 4px;
+                                                                    font-size: 12px;
+                                                                    font-weight: 600;
+                                                                    text-transform: uppercase;
+                                                                    letter-spacing: 0.5px;
+                                                                    background-color: rgba(76, 175, 80, 0.15);
+                                                                    color: #48bb78;
+                                                                ">Active</span>
+                                                            @else
+                                                                <span
+                                                                    style="
+                                                                    display: inline-block;
+                                                                    padding: 4px 8px;
+                                                                    border-radius: 4px;
+                                                                    font-size: 12px;
+                                                                    font-weight: 600;
+                                                                    text-transform: uppercase;
+                                                                    letter-spacing: 0.5px;
+                                                                    background-color: rgba(244, 67, 54, 0.15);
+                                                                    color: #f56565;
+                                                                ">Expired</span>
+                                                            @endif
+                                                        </td>
+                                                        <td
+                                                            style="
+                                                            padding: 5px;
+                                                            vertical-align: middle;
+                                                            text-align: center;
+                                                            white-space: nowrap;
+                                                        ">
+                                                            <a href=""
+                                                                style="
+                                                                   display: inline-flex;
+                                                                   align-items: center;
+                                                                   justify-content: center;
+                                                                   height: 36px;
+                                                                   padding: 0 12px;
+                                                                   background-color: #3182ce;
+                                                                   color: white;
+                                                                   text-decoration: none;
+                                                                   border-radius: 6px;
+                                                                   transition: all 0.3s ease;
+                                                                   font-weight: 600;
+                                                                   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                                                               "
+                                                                class="hover:bg-blue-700 hover:shadow-lg">
+                                                                <i class="fas fa-list mr-2"></i> View
+                                                            </a>
+                                                        </td>
+                                                        <td
+                                                            style="
+                                                            padding: 5px;
+                                                            vertical-align: middle;
+                                                            white-space: nowrap;
+                                                        ">
+                                                            <div style="display: flex; gap: 8px;">
+                                                                <a href="{{ route('company.jobs.edit', $job?->id) }}"
+                                                                    style="
+                                                                       display: inline-flex;
+                                                                       align-items: center;
+                                                                       justify-content: center;
+                                                                       height: 36px;
+                                                                       width: 36px;
+                                                                       background-color: #48bb78;
+                                                                       color: white;
+                                                                       border-radius: 6px;
+                                                                       text-decoration: none;
+                                                                       transition: all 0.3s ease;
+                                                                       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                                                                   "
+                                                                    class="hover:bg-green-600 hover:shadow-lg">
+                                                                    <i class="fas fa-edit"></i>
+                                                                </a>
+                                                                <a href="{{ route('company.jobs.destroy', $job?->id) }}"
+                                                                    style="
+                                                                       display: inline-flex;
+                                                                       align-items: center;
+                                                                       justify-content: center;
+                                                                       height: 36px;
+                                                                       width: 36px;
+                                                                       background-color: #e53e3e;
+                                                                       color: white;
+                                                                       border-radius: 6px;
+                                                                       text-decoration: none;
+                                                                       transition: all 0.3s ease;
+                                                                       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                                                                   "
+                                                                    class="delete-item hover:bg-red-600 hover:shadow-lg">
+                                                                    <i class="fas fa-trash-alt"></i>
+                                                                </a>
+                                                            </div>
+                                                        </td>
                                                     </tr>
-                                                    <tbody>
-                                                        @forelse ($jobs as $job)
-                                                            <tr>
-                                                                <td>{{ ($jobs->currentPage() - 1) * $jobs->perPage() + $loop->iteration }}
-                                                                </td> <!-- Add numbering here -->
-                                                                <td>
-                                                                    <div class="d-flex">
-
-                                                                        <div>
-                                                                            <b>{{ $job?->title }}</b>
-                                                                            <br>
-                                                                            <span>{{ $job?->company?->name }} -
-                                                                                {{ $job?->jobType?->name }}</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div>
-                                                                        <b>{{ $job?->category?->name }}</b>
-                                                                        <br>
-                                                                        <span>{{ $job?->jobRole?->name }}</span>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    @if ($job?->salary_mode === 'range')
-                                                                        {{ $job?->min_salary }} - {{ $job?->max_salary }}
-                                                                        {{ config('settings.site_default_currency') }}
-                                                                        <br>
-                                                                        <span>{{ $job?->salaryType?->name }}</span>
-                                                                    @else
-                                                                        {{ $job?->custom_salary }}
-                                                                        <br>
-                                                                        <span>{{ $job?->salaryType?->name }}</span>
-                                                                    @endif
-                                                                </td>
-                                                                <td>{{ formatDate($job?->deadline) }}</td>
-                                                                <td>
-                                                                    @if ($job?->status === 'pending')
-                                                                        <span class="badge"
-                                                                            style="background-color: #ffc107; ">Pending</span>
-                                                                    @elseif ($job?->deadline && \Carbon\Carbon::parse($job->deadline)->isFuture())
-                                                                        <span class="badge"
-                                                                            style="background-color: #28a745;">Active</span>
-                                                                    @else
-                                                                        <span class="badge"
-                                                                            style="background-color: #dc3545;">Expired</span>
-                                                                    @endif
-                                                                </td>
-                                                                <td>
-                                                                    <a href="{{ route('company.jobs.edit', $job?->id) }}"
-                                                                        class="btn btn-primary btn-small btn-block"
-                                                                        style="margin-bottom: 10px;">
-                                                                        <i class="fas fa-edit"></i>
-                                                                    </a>
-                                                                    <a href="{{ route('company.jobs.destroy', $job?->id) }}"
-                                                                        class="btn btn-danger btn-small btn-block delete-item">
-                                                                        <i class="fas fa-trash-alt"></i>
-                                                                    </a>
-                                                                </td>
-
-
-                                                            </tr>
-                                                        @empty
-                                                            <tr>
-                                                                <td colspan="6" class="text-center"> No Results Found!
-                                                                </td>
-                                                            </tr>
-                                                        @endforelse
-                                                    </tbody>
-
-                                                </table>
-                                            </div>
-                                        </div>
-
-                                        <div class="card-footer text-right">
-                                            <nav class="d-inline-block">
-                                                @if ($jobs->hasPages())
-                                                    {{ $jobs->withQueryString()->links() }}
-                                                @endif
-                                            </nav>
-
-                                        </div>
+                                                @empty
+                                                    <tr>
+                                                        <td colspan="8"
+                                                            style="
+                                                            padding: 40px;
+                                                            text-align: center;
+                                                            background-color: #f7fafc;
+                                                        ">
+                                                            <div
+                                                                style="
+                                                                font-size: 24px;
+                                                                color: #2d3748;
+                                                                margin-bottom: 10px;
+                                                                font-weight: 600;
+                                                            ">
+                                                                No Jobs Found
+                                                            </div>
+                                                            <div
+                                                                style="
+                                                                font-size: 16px;
+                                                                color: #718096;
+                                                                margin-bottom: 20px;
+                                                            ">
+                                                                Create a new job posting to get started
+                                                            </div>
+                                                            <a href="{{ route('company.jobs.create') }}"
+                                                                style="
+                                                                display: inline-block;
+                                                                padding: 10px 20px;
+                                                                background-color: #3182ce;
+                                                                color: white;
+                                                                text-decoration: none;
+                                                                border-radius: 8px;
+                                                                font-weight: 600;
+                                                                transition: all 0.3s ease;
+                                                                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                                                            ">
+                                                                Create New Job
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                @endforelse
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div style="padding: 15px; border-top: 1px solid #eaedf2; text-align: right;">
+                                        <nav style="display: inline-block;">
+                                            @if ($jobs->hasPages())
+                                                {{ $jobs->withQueryString()->links() }}
+                                            @endif
+                                        </nav>
                                     </div>
                                 </div>
                             </div>

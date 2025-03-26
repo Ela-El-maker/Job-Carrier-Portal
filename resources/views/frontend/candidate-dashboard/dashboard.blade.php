@@ -27,11 +27,11 @@
         }
 
         /*
-            body {
-                font-family: var(--font-main);
-                color: var(--text-color);
-                background-color: #fcfaff;
-            } */
+                            body {
+                                font-family: var(--font-main);
+                                color: var(--text-color);
+                                background-color: #fcfaff;
+                            } */
 
         .page-header {
             background-color: var(--breadcrumb-bg);
@@ -532,11 +532,14 @@
                                                     <!-- Profile Image Section -->
                                                     <div class="card__profile-image">
                                                         <!-- Use a default placeholder image if the user's image is missing -->
-                                                        <img src="{{ auth()->user()->image ? asset(auth()->user()->image) : asset('images/default-profile.png') }}"
+                                                        <img src="{{ $candidate?->image ? asset($candidate->image) : asset('images/default-profile.png') }}"
                                                             alt="Profile Image" class="profile-image">
+
+
                                                         <a href="{{ route('candidate.profile.index') }}"
                                                             class="edit-profile-btn">Edit Profile</a>
                                                     </div>
+
 
                                                     <!-- Warning Card Section -->
                                                     <div class="warning-card">

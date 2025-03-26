@@ -345,7 +345,7 @@
     display: inline-block; /* Inline block */
     font-size: 16px; /* Font size */
     margin: 4px 2px; /* Margin */
-    cursor: pointer; /* Pointer cursor on hover */
+    cursor: not-allowed;
     border-radius: 12px; /* Rounded corners */
     transition: background-color 0.3s ease; /* Smooth transition */
 ">

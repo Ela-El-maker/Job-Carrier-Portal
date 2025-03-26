@@ -95,69 +95,78 @@
                                                 </form>
                                             </div>
                                         </div>
-                                        <div class="card-body">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped">
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Order No.</th>
-                                                        <th>Plan</th>
-                                                        <th>Payment Method</th>
-                                                        <th>Paid Amount</th>
-                                                        <th>Payment Status</th>
-                                                        <th>Transaction Date</th>
-                                                        <th style="width: 20%">Action</th>
+
+                                        <div style="overflow-x: auto;">
+                                            <table style="width: 100%; border-collapse: separate; border-spacing: 0;">
+                                                <thead>
+                                                    <tr style="background-color: #f1f4f8;">
+                                                        <th style="padding: 12px; text-align: left; color: #2c3e50;">#</th>
+                                                        <th style="padding: 12px; text-align: left; color: #2c3e50;">Order
+                                                            No.</th>
+                                                        <th style="padding: 12px; text-align: left; color: #2c3e50;">Plan
+                                                        </th>
+                                                        <th style="padding: 12px; text-align: left; color: #2c3e50;">Payment
+                                                            Method</th>
+                                                        <th style="padding: 12px; text-align: left; color: #2c3e50;">Paid
+                                                            Amount</th>
+                                                        <th style="padding: 12px; text-align: left; color: #2c3e50;">Payment
+                                                            Status</th>
+                                                        <th style="padding: 12px; text-align: left; color: #2c3e50;">
+                                                            Transaction Date</th>
+                                                        <th style="padding: 12px; text-align: left; color: #2c3e50;">Action
+                                                        </th>
                                                     </tr>
-                                                    <tbody>
-                                                        @forelse ($orders as $order)
-                                                            <tr>
-                                                                <td>
-                                                                    {{ ($orders->currentPage() - 1) * $orders->perPage() + $loop->iteration }}
-                                                                </td>
-
-                                                                <td>#{{ $order?->order_id }}
-                                                                </td>
-
-                                                                <td>{{ $order?->package_name }}</td>
-                                                                <td>{{ $order?->payment_provider }}</td>
-
-                                                                <td>{{ $order?->amount }} {{ $order?->paid_in_currency }}
-                                                                </td>
-
-                                                                <td>
-                                                                    <div class="badge badge-info">
-                                                                        {{ $order?->payment_status }}
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <span
-                                                                        style="font-size: 14px; font-weight: bold; color: #333;">
-                                                                        {{ $order?->created_at->format('M d, Y') }}
-                                                                    </span>
-                                                                    <br>
-                                                                    <span style="font-size: 12px; color: #666;">
-                                                                        {{ $order?->created_at->format('h:i A') }}
-                                                                    </span>
-                                                                </td>
-
-                                                                <td>
-                                                                    <a href="{{ route('company.orders.show', $order?->id) }}"
-                                                                        class="btn-sm btn btn-primary"><i
-                                                                            class="fas fa-eye"></i> </a>
-                                                                </td>
-
-                                                            </tr>
-                                                        @empty
-                                                            <tr>
-                                                                <td colspan="8" class="text-center"> No Results Found!
-                                                                </td>
-                                                            </tr>
-                                                        @endforelse
-                                                    </tbody>
-
-                                                </table>
-                                            </div>
+                                                </thead>
+                                                <tbody>
+                                                    @forelse ($orders as $order)
+                                                        <tr style="border-bottom: 1px solid #e9ecef;">
+                                                            <td style="padding: 12px;">
+                                                                {{ ($orders->currentPage() - 1) * $orders->perPage() + $loop->iteration }}
+                                                            </td>
+                                                            <td style="padding: 12px; color: #2980b9;">
+                                                                #{{ $order?->order_id }}</td>
+                                                            <td style="padding: 12px;">{{ $order?->package_name }}</td>
+                                                            <td style="padding: 12px;">{{ $order?->payment_provider }}</td>
+                                                            <td style="padding: 12px; font-weight: bold;">
+                                                                {{ $order?->amount }} {{ $order?->paid_in_currency }}
+                                                            </td>
+                                                            <td style="padding: 12px;">
+                                                                <span
+                                                                    style="background-color:
+                                    @if ($order?->payment_status == 'completed') #2ecc71
+                                    @elseif($order?->payment_status == 'pending') #f39c12
+                                    @else #e74c3c @endif;
+                                    color: white; padding: 4px 8px; border-radius: 4px;">
+                                                                    {{ $order?->payment_status }}
+                                                                </span>
+                                                            </td>
+                                                            <td style="padding: 12px;">
+                                                                <div style="color: #2c3e50; font-weight: bold;">
+                                                                    {{ $order?->created_at->format('M d, Y') }}
+                                                                </div>
+                                                                <div style="color: #7f8c8d; font-size: 0.8em;">
+                                                                    {{ $order?->created_at->format('h:i A') }}
+                                                                </div>
+                                                            </td>
+                                                            <td style="padding: 12px;">
+                                                                <a href="{{ route('company.orders.show', $order?->id) }}"
+                                                                    style="background-color: #3498db; color: white; text-decoration: none; padding: 6px 10px; border-radius: 4px;">
+                                                                    <i class="fas fa-eye"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    @empty
+                                                        <tr>
+                                                            <td colspan="8"
+                                                                style="text-align: center; padding: 20px; color: #7f8c8d;">
+                                                                No Orders Found
+                                                            </td>
+                                                        </tr>
+                                                    @endforelse
+                                                </tbody>
+                                            </table>
                                         </div>
+
 
                                         <div class="card-footer text-right">
                                             <nav class="d-inline-block">
