@@ -33,7 +33,7 @@
                 </a>
             </li>
             <li class="nav-item" style="margin-bottom: 5px;">
-                <a class="nav-link btn btn-link" href="candidate-profile-save-jobs.html"
+                <a class="nav-link btn btn-link" href="{{ route('candidate.bookmarked-jobs.index') }}"
                     style="text-align: left; color: #4a5568; padding: 12px 15px; border-radius: 8px; font-weight: 500; transition: all 0.3s;">
                     <i class="fas fa-bookmark" style="margin-right: 10px; color: #4a5568;"></i>Saved Jobs
                 </a>

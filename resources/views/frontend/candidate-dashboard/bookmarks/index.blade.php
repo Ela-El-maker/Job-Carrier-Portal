@@ -43,7 +43,7 @@
                     <div class="job-post-wrapper mt20">
                         <div class="mb-3"
                             style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                            <h3 class="mb-0" style="font-size: 22px; color: #333; font-weight: 700; margin: 0;">Applied
+                            <h3 class="mb-0" style="font-size: 22px; color: #333; font-weight: 700; margin: 0;">Bookmarked
                                 Jobs <span
                                     style="background-color: #4361ee; color: white; padding: 2px 8px; border-radius: 20px; font-size: 14px; margin-left: 8px;">200</span>
                             </h3>
@@ -77,9 +77,7 @@
                                         <th
                                             style="padding: 12px; color: white; font-weight: 600; text-align: left; text-transform: uppercase; letter-spacing: 0.5px; font-size: 13px;">
                                             Salary</th>
-                                        <th
-                                            style="padding: 12px; color: white; font-weight: 600; text-align: left; text-transform: uppercase; letter-spacing: 0.5px; font-size: 13px;">
-                                            Applied Date</th>
+
                                         <th
                                             style="padding: 12px; color: white; font-weight: 600; text-align: left; text-transform: uppercase; letter-spacing: 0.5px; font-size: 13px;">
                                             Deadline</th>
@@ -92,7 +90,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($appliedJobs as $appliedJob)
+                                    @forelse ($bookmarks as $bookmark)
                                         <tr
                                             style="border-bottom: 1px solid #e9ecef; transition: background-color 0.2s ease;">
                                             <td
@@ -102,60 +100,70 @@
                                             <td style="padding: 12px; vertical-align: middle;">
                                                 <div
                                                     style="font-weight: 700; color: #2d3748; font-size: 15px; margin-bottom: 4px; max-width: 250px; overflow: hidden; text-overflow: ellipsis;">
-                                                    {{ $appliedJob?->job?->title }}
+                                                    {{ $bookmark?->job?->title }}
                                                 </div>
                                                 <div
                                                     style="color: #718096; font-size: 13px; display: flex; align-items: center;">
                                                     <span
                                                         style="background-color: #e6f2ff; color: #3182ce; padding: 2px 6px; border-radius: 4px; margin-right: 8px; font-size: 11px; max-width: 150px; overflow: hidden; text-overflow: ellipsis;">
-                                                        {{ $appliedJob?->job?->company?->name }}
+                                                        {{ $bookmark?->job?->company?->name }}
                                                     </span>
-                                                    {{ $appliedJob?->job?->jobType?->name }}
+                                                    {{ $bookmark?->job?->jobType?->name }}
                                                 </div>
                                             </td>
                                             <td style="padding: 12px; vertical-align: middle;">
                                                 <div
                                                     style="font-weight: 600; color: #2d3748; font-size: 14px; max-width: 150px; overflow: hidden; text-overflow: ellipsis;">
-                                                    {{ $appliedJob?->job?->category?->name }}
+                                                    {{ $bookmark?->job?->category?->name }}
                                                 </div>
                                                 <div
                                                     style="color: #718096; font-size: 13px; background-color: #f0f4f8; display: inline-block; padding: 2px 6px; border-radius: 4px; max-width: 150px; overflow: hidden; text-overflow: ellipsis;">
-                                                    {{ $appliedJob?->job?->jobRole?->name }}
+                                                    {{ $bookmark?->job?->jobRole?->name }}
                                                 </div>
                                             </td>
 
                                             <td
                                                 style="padding: 12px; vertical-align: middle; font-size: 14px; color: #444;">
-                                                @if ($appliedJob?->job?->salary_mode === 'range')
-                                                    <div style="font-weight: 600;">{{ $appliedJob?->job?->min_salary }} -
-                                                        {{ $appliedJob?->job?->max_salary }}
+                                                @if ($bookmark?->job?->salary_mode === 'range')
+                                                    <div style="font-weight: 600;">{{ $bookmark?->job?->min_salary }} -
+                                                        {{ $bookmark?->job?->max_salary }}
                                                         {{ config('settings.site_default_currency') }}</div>
                                                     <span style="color: #6c757d; font-size: 13px;">
-                                                        per {{ $appliedJob?->job?->salaryType?->name }}
+                                                        per {{ $bookmark?->job?->salaryType?->name }}
                                                     </span>
                                                 @else
-                                                    <div style="font-weight: 600;">{{ $appliedJob?->job?->custom_salary }}
+                                                    <div style="font-weight: 600;">{{ $bookmark?->job?->custom_salary }}
                                                     </div>
                                                     <span style="color: #6c757d; font-size: 13px;">
-                                                        per {{ $appliedJob?->job?->salaryType?->name }}
+                                                        per {{ $bookmark?->job?->salaryType?->name }}
                                                     </span>
                                                 @endif
                                             </td>
 
-                                            <td
-                                                style="padding: 12px; vertical-align: middle; color: #4a5568; font-weight: 500;">
-                                                {{ relativeTime($appliedJob?->created_at) }}
+
+
+                                            <td style="padding: 12px; vertical-align: middle;">
+                                                @php
+                                                    $deadlineInfo = calculateDeadline($bookmark?->job?->deadline);
+                                                @endphp
+                                                <div style="display: flex; align-items: center; gap: 8px;">
+                                                    <i class="{{ $deadlineInfo['icon'] }}"
+                                                        style="color: {{ $deadlineInfo['class'] === 'deadline-passed' ? '#e53e3e' : '#38a169' }};"></i>
+                                                    <span
+                                                        style="color: {{ $deadlineInfo['class'] === 'deadline-passed' ? '#e53e3e' : '#4a5568' }}; font-weight: 500;">
+                                                        {{ $deadlineInfo['message'] }}
+                                                    </span>
+                                                </div>
+                                                <div style="font-size: 12px; color: #718096; margin-top: 4px;">
+                                                    {{ formatDate($bookmark?->job?->deadline) }}
+                                                </div>
                                             </td>
 
-                                            <td
-                                                style="padding: 12px; vertical-align: middle; color: #4a5568; font-weight: 500;">
-                                                {{ formatDate($appliedJob?->job?->deadline) }}
-                                            </td>
                                             <td style="padding: 12px; vertical-align: middle;">
-                                                @if ($appliedJob?->job?->status === 'pending')
+                                                @if ($bookmark?->job?->status === 'pending')
                                                     <span
                                                         style="display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; background-color: rgba(255, 152, 0, 0.15); color: #ed8936;">Pending</span>
-                                                @elseif ($appliedJob?->job?->deadline > now())
+                                                @elseif ($bookmark?->job?->deadline > now())
                                                     <span
                                                         style="display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; background-color: rgba(76, 175, 80, 0.15); color: #48bb78;">Active</span>
                                                 @else
@@ -164,13 +172,13 @@
                                                 @endif
                                             </td>
                                             <td style="padding: 12px; vertical-align: middle;">
-                                                @if ($appliedJob?->job?->deadline < now())
+                                                @if ($bookmark?->job?->deadline < now())
                                                     <span
                                                         style="display: inline-flex; align-items: center; justify-content: center; padding: 6px 12px; background-color: #6c757d; color: white; border-radius: 6px; font-size: 14px; cursor: not-allowed; opacity: 0.7;">
                                                         <i class="fas fa-eye-slash" style="margin-right: 5px;"></i> Expired
                                                     </span>
                                                 @else
-                                                    <a href="{{ route('jobs.show', $appliedJob?->job?->slug) }}"
+                                                    <a href="{{ route('jobs.show', $bookmark?->job?->slug) }}"
                                                         style="display: inline-flex; align-items: center; justify-content: center; padding: 6px 12px; background-color: #4361ee; color: white; border-radius: 6px; text-decoration: none; transition: background-color 0.2s; font-size: 14px; box-shadow: 0 2px 5px rgba(67, 97, 238, 0.2);">
                                                         <i class="fas fa-eye" style="margin-right: 5px;"></i> View
                                                     </a>
@@ -200,8 +208,8 @@
                         </div>
                         <div style="padding: 15px; border-top: 1px solid #eaedf2; text-align: right;">
                             <nav style="display: inline-block;">
-                                @if ($appliedJobs->hasPages())
-                                    {{ $appliedJobs->withQueryString()->links() }}
+                                @if ($bookmarks->hasPages())
+                                    {{ $bookmarks->withQueryString()->links() }}
                                 @endif
                             </nav>
                         </div>

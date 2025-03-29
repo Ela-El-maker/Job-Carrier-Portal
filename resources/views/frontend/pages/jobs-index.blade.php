@@ -265,11 +265,28 @@
                                         </b>
                                     </li>
 
+                                    @php
+                                        $bookmarked = \App\Models\JobBookmark::where(
+                                            'candidate_id',
+                                            auth()->user()?->candidateProfile?->id,
+                                        )
+                                            ->pluck('job_id')
+                                            ->toArray();
+                                        // dd($bookmarked);
+                                    @endphp
+
                                     <li>
                                         <!-- Bookmark Icon -->
-                                        <a href="#" class="bookmark-icon" data-job-id="{{ $job->id }}">
-                                            <i class="far fa-bookmark"></i> <!-- Font Awesome bookmark icon -->
-                                            <i class="fas fa-bookmark"></i> <!-- Font Awesome bookmark icon -->
+                                        <a href="javascript:;" class="bookmark-icon job-bookmark"
+                                            data-id="{{ $job?->id }}">
+
+
+                                            @if (in_array($job?->id, $bookmarked))
+                                                <i class="fas fa-bookmark"></i> <!-- Font Awesome bookmark icon -->
+                                            @else
+                                                <i class="far fa-bookmark"></i> <!-- Font Awesome bookmark icon -->
+                                            @endif
+
                                         </a>
                                     </li>
                                 </ul>
@@ -450,6 +467,37 @@
                         }
                     });
                 }
+            });
+
+            $('.job-bookmark').on('click', function(e) {
+                e.preventDefault();
+                let id = $(this).data('id');
+                $.ajax({
+                    method: 'GET',
+                    url: '{{ route('job.bookmark', ':id') }}'.replace(":id", id),
+                    data: {},
+                    beforeSend: function() {
+
+                    },
+                    success: function(response) {
+                        $('.job-bookmark').each(function() {
+                            let elementId = $(this).data('id');
+                            if (elementId == response.id) {
+                                $(this).find('i').addClass('fas fa-bookmark');
+                            }
+                        });
+                        notyf.success(response.message);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(xhr);
+                        let errors = xhr.responseJSON.errors;
+                        $.each(errors, function(index, value) {
+                            // alert(value[0]);
+                            // console.log(value);
+                            notyf.error(value[index]);
+                        });
+                    }
+                })
             });
         });
     </script>

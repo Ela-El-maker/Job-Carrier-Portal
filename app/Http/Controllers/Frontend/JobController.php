@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\JobCreateRequest;
+use App\Models\AppliedJob;
 use App\Models\Benefits;
 use App\Models\City;
 use App\Models\Company;
@@ -45,6 +46,19 @@ class JobController extends Controller
             ->orderBy('created_at', 'DESC')
             ->paginate(10);
         return view('frontend.company-dashboard.jobs.index', compact('jobs'));
+    }
+
+    function applications(string $id): View
+    {
+
+        $query = AppliedJob::where('job_id', $id);
+        $this->search($query, ['full_name', 'deadline', 'status', 'birth_date']);
+        $applications = $query->paginate(15);
+        $jobTitle = Job::select('title')->where('id', $id)->first();
+        return view(
+            'frontend.company-dashboard.applications.index',
+            compact('applications', 'jobTitle')
+        );
     }
 
     /**
