@@ -33,7 +33,8 @@
         <div class="container">
             <!-- Start of Row -->
             <div class="row">
-                @include('frontend.company-dashboard.sidebar')
+                @include('frontend.candidate-dashboard.sidebar')
+
                 <!-- ===== Start of Job Post Main ===== -->
                 <div class="col-md-8 col-xs-12 job-post-main">
                     <h4>Welcome {{ auth()->user()->name }}!</h4>
