@@ -33,6 +33,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/responsive.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/comments.css') }}">
+
 
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.10.0/dist/css/bootstrap-datepicker3.min.css">
@@ -104,6 +106,8 @@
     <script src="{{ asset('frontend/assets/js/countdown.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/isotope.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/slide.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/comments.js') }}"></script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.10.0/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="{{ asset('admin/assets/modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') }}"></script>

@@ -17,3 +17,6 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+app\Http\Controllers\Frontend\CommentController.php
+app\Http\Controllers\Frontend\FrontendBlogPageController.php
+resources\views\frontend\pages\comments

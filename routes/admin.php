@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Auth\PasswordController;
 use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -31,6 +32,7 @@ use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\StateController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\UploadController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['guest:admin'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
@@ -92,6 +94,7 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin', 'as' => 'admi
     Route::get('order/invoice/{id}', [OrderController::class, 'invoice'])->name('orders.invoice');
 
 
+
     /**
      * Job Categories
      */
@@ -136,6 +139,7 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin', 'as' => 'admi
 
 
 
+
     /**Payment Setting Route Section */
     Route::get('payment-settings', [PaymentSettingController::class, 'index'])->name('payment-settings.index');
 
@@ -145,4 +149,16 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin', 'as' => 'admi
     Route::get('site-settings', [SiteSettingController::class, 'index'])->name('site-settings.index');
 
     Route::post('general-settings', [SiteSettingController::class, 'updateGeneralSetting'])->name('general-settings.update');
+
+
+    /***
+     * Blogs
+     */
+
+    Route::resource('blogs', BlogController::class);
+
+    /**
+     * Upload Controller Route
+     */
+    Route::post('/upload/image', [UploadController::class, 'storeImage'])->name('upload.image');
 });
