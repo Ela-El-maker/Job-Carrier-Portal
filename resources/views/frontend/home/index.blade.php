@@ -1,8 +1,13 @@
 @extends('frontend.layouts.master')
 @section('contents')
-    <!-- ===== Start of Main Search Section ===== -->
+    <!-- ===== Start of Hero Page Title Section ===== -->
     @include('frontend.home.sections.hero-section')
+    <!-- ===== End of Hero Page Title Section ===== -->
+
+    <!-- ===== Start of Main Search Section ===== -->
+    @include('frontend.home.sections.search-section')
     <!-- ===== End of Main Search Section ===== -->
+
     <!-- ===== Start of Popular Categories Section ===== -->
     @include('frontend.home.sections.popular-categories-section')
     <!-- ===== End of Popular Categories Section ===== -->
@@ -42,6 +47,4 @@
     @include('frontend.home.sections.login-pop-up-section')
     <!-- cd-user-modal -->
     <!-- ===== End of Login Pop Up div ===== -->
-
-
 @endsection

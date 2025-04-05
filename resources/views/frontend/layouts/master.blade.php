@@ -31,6 +31,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/font-awesome.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/swiper.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/responsive.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/comments.css') }}">
@@ -115,6 +116,7 @@
     <!-- jQuery and Popper.js for Bootstrap 4 -->
     <script src="/node_modules/jquery/dist/jquery.slim.min.js"></script>
     <script src="/node_modules/popper.js/dist/umd/popper.min.js"></script>
+
 
     <!-- Bootstrap 4 JavaScript -->
     <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>

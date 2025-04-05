@@ -102,6 +102,8 @@ namespace App\Models{
  * @property int $featured
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Comment> $allComments
+ * @property-read int|null $all_comments_count
  * @property-read \App\Models\User $author
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Comment> $comments
  * @property-read int|null $comments_count
@@ -335,13 +337,28 @@ namespace App\Models{
 /**
  * 
  *
- * @property-read \App\Models\Blog|null $blog
+ * @property int $id
+ * @property int $blog_id
+ * @property int $user_id
+ * @property int|null $parent_id
+ * @property string $body
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Blog $blog
+ * @property-read Comment|null $parent
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Comment> $replies
  * @property-read int|null $replies_count
- * @property-read \App\Models\User|null $user
+ * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|Comment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Comment newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Comment query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Comment whereBlogId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Comment whereBody($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Comment whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Comment whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Comment whereParentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Comment whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Comment whereUserId($value)
  */
 	class Comment extends \Eloquent {}
 }
@@ -481,6 +498,33 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Experience whereUpdatedAt($value)
  */
 	class Experience extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property string $title Title or subtitle for the hero
+ * @property string $sub_title Description of the hero
+ * @property string $image Image URL for the hero
+ * @property string $background_image Background image URL for the hero
+ * @property int $show_at_home Whether to show this hero section on the homepage
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Hero newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Hero newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Hero query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Hero whereBackgroundImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Hero whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Hero whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Hero whereImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Hero whereShowAtHome($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Hero whereSubTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Hero whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Hero whereUpdatedAt($value)
+ */
+	class Hero extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -1110,6 +1154,8 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Candidate|null $candidateProfile
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Comment> $comments
+ * @property-read int|null $comments_count
  * @property-read \App\Models\Company|null $company
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count

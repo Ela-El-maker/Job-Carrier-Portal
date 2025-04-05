@@ -315,41 +315,60 @@
                             </div>
                             <!-- End of Job Post Body -->
 
-                            <!-- Start of Job Post Footer -->
-                            <div class="job-post-footer row">
-
-                                <!-- Location -->
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <i class="fa fa-map-marker"></i>
+                            <div
+                                style="
+                                    display: flex;
+                                    justify-content: space-between;
+                                    align-items: center;
+                                    padding: 12px 0;
+                                    border-top: 1px solid #eee;
+                                    margin-top: 15px;
+                                    font-size: 14px;
+                                    color: #555;
+                                    flex-wrap: wrap;
+                                        ">
+                                <!-- Location - Left Side -->
+                                <div
+                                    style="flex: 1; min-width: 120px; padding: 0 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                    <i class="fa fa-map-marker" style="color: #38b2ac; margin-right: 5px;"></i>
                                     <span>{{ formatLocation($job?->company?->companyCountry?->name, $job?->company?->companyState?->name, $job?->company?->companyCity?->name) }}</span>
                                 </div>
 
-                                <!-- Years of Experience -->
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <i class="fa fa-briefcase"></i>
+                                <!-- Years of Experience - Center -->
+                                <div
+                                    style="flex: 1; min-width: 120px; padding: 0 5px; text-align: center; white-space: nowrap;">
+                                    <i class="fa fa-briefcase" style="color: #38b2ac; margin-right: 5px;"></i>
                                     <span>{{ $job?->jobExperience?->name }}</span>
                                 </div>
 
-                                <!-- Salary -->
-                                @if ($job?->salary_mode === 'range')
-                                    <div class="col-md-4 col-sm-6 col-xs-12">
-                                        <i class="fa fa-money"></i>
-                                        <span>{{ $job?->min_salary }} - {{ $job?->max_salary }}
-                                            /
+                                <!-- Salary - Right Side -->
+                                <div
+                                    style="flex: 1; min-width: 120px; padding: 0 5px; text-align: right; white-space: nowrap;">
+                                    @if ($job?->salary_mode === 'range')
+                                        <i class="fa fa-money" style="color: #38b2ac; margin-right: 5px;"></i>
+                                        <span>{{ $job?->min_salary }} - {{ $job?->max_salary }} /
                                             {{ $job?->salaryType?->name }}</span>
-                                    </div>
-                                @else
-                                    <div class="col-lg-7 col-7">
-                                        <span class="card-text-price">
-                                            {{ $job?->custom_salary }} / {{ $job?->salaryType?->name }}
-                                        </span>
-                                        <span class="text-muted">
-
-                                        </span>
-                                    </div>
-                                @endif
+                                    @else
+                                        <i class="fa fa-money" style="color: #38b2ac; margin-right: 5px;"></i>
+                                        <span>{{ $job?->custom_salary }} / {{ $job?->salaryType?->name }}</span>
+                                    @endif
+                                </div>
                             </div>
-                            <!-- End of Job Post Footer -->
+
+                            <style>
+                                @media (max-width: 600px) {
+                                    .job-post-footer>div {
+                                        flex: 100% !important;
+                                        text-align: left !important;
+                                        margin-bottom: 8px;
+                                        min-width: 100% !important;
+                                    }
+
+                                    .job-post-footer>div:last-child {
+                                        margin-bottom: 0;
+                                    }
+                                }
+                            </style>
 
                         </div>
                         <!-- ===== End of Job Post Column 1 ===== -->
