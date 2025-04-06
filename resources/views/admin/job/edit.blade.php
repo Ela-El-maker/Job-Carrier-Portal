@@ -438,29 +438,34 @@
                                 </div>
 
                                 <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <input @checked($job?->is_featured) type="checkbox" id="featured"
-                                                    class="{{ hasError($errors, 'featured') }}" name="featured"
-                                                    value="1">
-                                                <label for="featured">Featured</label>
-                                                <x-input-error :messages="$errors->get('featured')" class="mt-2" />
-                                            </div>
+                                    <div class="form-group row">
+                                        <div class="col-md-4">
+                                            <input @checked($job?->is_featured) type="checkbox" id="featured"
+                                                class="{{ hasError($errors, 'featured') }}" name="featured"
+                                                value="1">
+                                            <label for="featured">Featured</label>
+                                            <x-input-error :messages="$errors->get('featured')" class="mt-2" />
                                         </div>
 
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <input @checked($job?->is_highlighted) type="checkbox" id="highlight"
-                                                    class="{{ hasError($errors, 'highlight') }}" name="highlight"
-                                                    value="1">
-                                                <label for="highlight">Highlight</label>
-                                                <x-input-error :messages="$errors->get('highlight')" class="mt-2" />
-                                            </div>
+                                        <div class="col-md-4">
+                                            <input @checked($job?->is_highlighted) type="checkbox" id="highlight"
+                                                class="{{ hasError($errors, 'highlight') }}" name="highlight"
+                                                value="1">
+                                            <label for="highlight">Highlight</label>
+                                            <x-input-error :messages="$errors->get('highlight')" class="mt-2" />
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <input @checked($job?->is_golden) type="checkbox" id="golden_job"
+                                                class="{{ hasError($errors, 'golden_job') }}" name="golden_job"
+                                                value="1">
+                                            <label for="golden_job">Gold Job</label>
+                                            <x-input-error :messages="$errors->get('golden_job')" class="mt-2" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
 
                             <div class="card">
                                 <div class="card-header">

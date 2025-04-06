@@ -13,7 +13,7 @@
 
                         <!-- Icon -->
                         <div class="category-icon pt10">
-                            <i class="{{ $category?->icon }}" style="font-size: 50px;"></i>
+                            <i class="{{ $category?->icon }}" style="font-size: 70px;"></i>
                         </div>
 
                         <!-- Category Info - Title -->

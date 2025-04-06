@@ -21,6 +21,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\JobController;
 use App\Http\Controllers\Frontend\LocationController;
 use App\Http\Controllers\Frontend\PricingPageController;
+use App\Http\Controllers\Frontend\UploadController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -59,6 +60,10 @@ Route::get('checkout/{plan_id}', CheckoutPageController::class)->name('checkout.
 
 Route::get('jobs', [FrontendJobPageController::class, 'index'])->name('jobs.index');
 Route::get('job/{slug}', [FrontendJobPageController::class, 'show'])->name('jobs.show');
+/**
+ * Upload Controller Route
+ */
+Route::post('/upload/image', [UploadController::class, 'storeImage'])->name('upload.image');
 
 Route::post('apply-job/{id}', [FrontendJobPageController::class, 'applyJob'])->name('apply-job.store');
 Route::get('job-bookmark/{id}', [CandidateJobBookmarkController::class, 'save'])->name('job.bookmark');

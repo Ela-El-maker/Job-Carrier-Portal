@@ -65,6 +65,23 @@
                                                 Post
                                             </div>
                                         </div>
+
+                                        <div class="pricing-item">
+                                            <div class="pricing-item-icon">
+                                                @if ($plan?->golden_job == 0)
+                                                    <div class="pricing-item-icon bg-danger text-white"><i
+                                                            class="fas fa-times"></i>
+                                                    </div>
+                                                @else
+                                                    <i class="fas fa-check"></i>
+                                                @endif
+                                            </div>
+                                            <div class="pricing-item-label">
+                                                {{ $plan?->golden_job }} Golden Job Post
+                                            </div>
+                                        </div>
+
+
                                         <div class="pricing-item">
                                             @if ($plan->profile_verified)
                                                 <div class="pricing-item-icon"><i class="fas fa-check"></i>
@@ -77,6 +94,7 @@
                                             <div class="pricing-item-label">Verify Company</div>
 
                                         </div>
+
 
                                     </div>
                                 </div>

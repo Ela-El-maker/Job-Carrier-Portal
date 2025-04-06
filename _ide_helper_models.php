@@ -706,6 +706,7 @@ namespace App\Models{
  * @property string $icon
  * @property string $name
  * @property string $slug
+ * @property int|null $show_at_popular
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Job> $jobs
@@ -718,6 +719,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|JobCategory whereIcon($value)
  * @method static \Illuminate\Database\Eloquent\Builder|JobCategory whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|JobCategory whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|JobCategory whereShowAtPopular($value)
  * @method static \Illuminate\Database\Eloquent\Builder|JobCategory whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|JobCategory whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|JobCategory withUniqueSlugConstraints(\Illuminate\Database\Eloquent\Model $model, string $attribute, array $config, string $slug)
@@ -958,6 +960,7 @@ namespace App\Models{
  * @property int $job_limit
  * @property int $featured_job_limit
  * @property int $highlight_job_limit
+ * @property int $golden_job
  * @property int $profile_verified
  * @property int $recommended
  * @property int $frontend_show
@@ -970,6 +973,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Plan whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Plan whereFeaturedJobLimit($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Plan whereFrontendShow($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Plan whereGoldenJob($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Plan whereHighlightJobLimit($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Plan whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Plan whereJobLimit($value)
@@ -1189,6 +1193,7 @@ namespace App\Models{
  * @property int $job_limit
  * @property int $featured_job_limit
  * @property int $highlight_job_limit
+ * @property int $golden_job
  * @property int $profile_verified
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -1198,6 +1203,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|UserPlan whereCompanyId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UserPlan whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UserPlan whereFeaturedJobLimit($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserPlan whereGoldenJob($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UserPlan whereHighlightJobLimit($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UserPlan whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UserPlan whereJobLimit($value)

@@ -18,8 +18,8 @@ return new class extends Migration
             $table->integer('job_limit')->default(0);
             $table->integer('featured_job_limit')->default(0);
             $table->integer('highlight_job_limit')->default(0);
+            $table->integer('golden_job')->default(0);
             $table->integer('profile_verified')->default(0);
-
             $table->timestamps();
         });
     }

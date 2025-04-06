@@ -63,8 +63,20 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label for="golden_job">Golden Job</label>
+                                <input type="text" name="golden_job" id="golden_job"
+                                    class="form-control {{ hasError($errors, 'golden_job') }}"
+                                    value="{{ old('golden_job', $plan->golden_job ?? '') }}">
+                                <x-input-error :messages="$errors->get('golden_job')" class="mt-2" />
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label for="">Recommended</label>
-                                    <select name="recommended" class="form-control {{ hasError($errors, 'recommended') }}"
+                                <select name="recommended"
+                                    class="form-control select2 {{ hasError($errors, 'recommended') }}"
                                     value="{{ old('recommended') }}" id="">
                                     <option value="0">No</option>
                                     <option value="1">Yes</option>
@@ -76,7 +88,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">Profile Verified</label>
-                                    <select name="profile_verified" class="form-control {{ hasError($errors, 'profile_verified') }}"
+                                <select name="profile_verified"
+                                    class="form-control select2 {{ hasError($errors, 'profile_verified') }}"
                                     value="{{ old('profile_verified') }}" id="">
                                     <option value="0">No</option>
                                     <option value="1">Yes</option>
@@ -84,10 +97,12 @@
                                 <x-input-error :messages="$errors->get('profile_verified')" class="mt-2" />
                             </div>
                         </div>
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">Show this Package in frontend</label>
-                                    <select name="frontend_show" class="form-control {{ hasError($errors, 'frontend_show') }}"
+                                <select name="frontend_show"
+                                    class="form-control select2 {{ hasError($errors, 'frontend_show') }}"
                                     value="{{ old('frontend_show') }}" id="">
                                     <option value="0">No</option>
                                     <option value="1">Yes</option>
@@ -99,7 +114,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">Show this Package in Home</label>
-                                    <select name="show_at_home" class="form-control {{ hasError($errors, 'show_at_home') }}"
+                                <select name="show_at_home"
+                                    class="form-control select2 {{ hasError($errors, 'show_at_home') }}"
                                     value="{{ old('show_at_home') }}" id="">
                                     <option value="0">No</option>
                                     <option value="1">Yes</option>
@@ -107,6 +123,8 @@
                                 <x-input-error :messages="$errors->get('show_at_home')" class="mt-2" />
                             </div>
                         </div>
+
+
                     </div>
 
 

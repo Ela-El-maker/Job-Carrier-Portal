@@ -126,6 +126,12 @@ class JobController extends Controller
             Notify::errorNotification('You have reached your Highlighted job plan limit. Please upgrade your plan to post more highlighted jobs.');
             return redirect()->back()->with('error', 'Unable to post job. Please try again.');
         }
+
+        if (session('user_plan')->golden_job < 1) {
+
+            Notify::errorNotification('You have reached your Golden job plan limit. Please upgrade your plan to post more golden jobs.');
+            return redirect()->back()->with('error', 'Unable to post job. Please try again.');
+        }
         $job = new Job();
         $job->title = $request->title;
         $job->company_id = auth()->user()->company->id;
@@ -150,11 +156,13 @@ class JobController extends Controller
         $job->education_id = $request->education;
         $job->job_type_id = $request->job_type;
 
+
         //Tags, Benefits,Skills will be handled separately
 
         // $job->apply_on = $request->receive_applications;
         $job->is_featured = $request->featured;
         $job->is_highlighted = $request->highlight;
+        $job->is_golden = $request->golden_job; // Check if golden job is checked
         $job->description = $request->description;
         $job->save();
 
@@ -200,6 +208,9 @@ class JobController extends Controller
                 }
                 if ($job->is_highlighted == 1) {
                     $userPlan->highlight_job_limit = $userPlan->highlight_job_limit - 1;
+                }
+                if ($job->is_golden == 1) {
+                    $userPlan->golden_job = $userPlan->golden_job - 1;
                 }
                 $userPlan->save();
                 storePlanInformation();
@@ -297,6 +308,7 @@ class JobController extends Controller
         // $job->apply_on = $request->receive_applications;
         $job->is_featured = $request->featured;
         $job->is_highlighted = $request->highlight;
+        $job->is_golden = $request->golden_job; // Check if golden job is checked
         $job->description = $request->description;
         $job->save();
 

@@ -34,6 +34,7 @@ return new class extends Migration
             $table->text('apply_url')->nullable();
             $table->boolean('is_featured')->nullable();
             $table->boolean('is_highlighted')->nullable();
+            $table->boolean('is_golden')->default(0);
             $table->date('featured_until')->nullable();
             $table->date('highlighted_until')->nullable();
             $table->integer('total_views')->default(0);

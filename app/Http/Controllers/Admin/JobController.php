@@ -102,10 +102,12 @@ class JobController extends Controller
         // $job->apply_on = $request->receive_applications;
         $job->is_featured = $request->featured;
         $job->is_highlighted = $request->highlight;
+        $job->is_golden = $request->golden_job;
         $job->description = $request->description;
         $job->status = 'active';
         $job->save();
 
+        // dd($job); // Uncomment this line to debug if needed
         // Insert Tags
         foreach ($request->tags as $tag) {
             $createTag = new JobTag();
@@ -211,6 +213,7 @@ class JobController extends Controller
         // $job->apply_on = $request->receive_applications;
         $job->is_featured = $request->featured;
         $job->is_highlighted = $request->highlight;
+        $job->is_golden = $request->golden_job;
         $job->description = $request->description;
         $job->save();
 

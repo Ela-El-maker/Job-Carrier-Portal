@@ -507,7 +507,7 @@
 
                                                     <div class="card-body">
                                                         <div class="row">
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-4">
                                                                 <div class="form-group">
                                                                     <input type="checkbox" id="featured"
                                                                         class="{{ hasError($errors, 'featured') }}"
@@ -517,7 +517,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-4">
                                                                 <div class="form-group">
                                                                     <input type="checkbox" id="highlight"
                                                                         class="{{ hasError($errors, 'highlight') }}"
@@ -526,9 +526,21 @@
                                                                     <x-input-error :messages="$errors->get('highlight')" class="mt-2" />
                                                                 </div>
                                                             </div>
+
+                                                            <!-- Golden Job Checkbox -->
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <input type="checkbox" id="golden_job"
+                                                                        class="{{ hasError($errors, 'golden_job') }}"
+                                                                        name="golden_job" value="1">
+                                                                    <label for="golden_job">Gold Job</label>
+                                                                    <x-input-error :messages="$errors->get('golden_job')" class="mt-2" />
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
+
 
                                                 <div class="card">
                                                     <div class="card-header">
@@ -539,12 +551,16 @@
 
                                                         <div class="row">
                                                             <div class="col-md-12">
-                                                                <div class="form-group">
-                                                                    <label for="">Description <span
-                                                                            class="text-danger">*</span></label>
-                                                                    <textarea id="editor" name="description" class="form-control">{{ old('description') }}</textarea>
+
+                                                                <div class="form-group mb-3">
+                                                                    <label for="description">Description</label>
+                                                                    <textarea class="form-control {{ hasError($errors, 'description') }}" id="editor" name="description">
+                                                                        {{ old('description') }}
+                                                                    </textarea>
                                                                     <x-input-error :messages="$errors->get('description')" class="mt-2" />
                                                                 </div>
+
+
                                                             </div>
                                                         </div>
 

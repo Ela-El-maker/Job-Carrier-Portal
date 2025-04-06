@@ -46,6 +46,7 @@ class OrderService
                 'job_limit' => $userPlan ? $userPlan->job_limit + $selectedPlan['job_limit'] : $selectedPlan['job_limit'],
                 'featured_job_limit' => $userPlan ? $userPlan->featured_job_limit + $selectedPlan['featured_job_limit'] : $selectedPlan['featured_job_limit'],
                 'highlight_job_limit' => $userPlan ? $userPlan->highlight_job_limit + $selectedPlan['highlight_job_limit'] : $selectedPlan['highlight_job_limit'],
+                'golden_job' => $userPlan ? $userPlan->golden_job + $selectedPlan['golden_job'] : $selectedPlan['golden_job'],
                 'profile_verified' => $selectedPlan['profile_verified'],
             ]
         );

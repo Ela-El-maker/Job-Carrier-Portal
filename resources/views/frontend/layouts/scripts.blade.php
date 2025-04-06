@@ -27,8 +27,21 @@
     });
 
 
+    // ClassicEditor
+    //     .create(document.querySelector('#editor'))
+    //     .catch(error => {
+    //         console.error(error);
+    //     });
+
     ClassicEditor
-        .create(document.querySelector('#editor'))
+        .create(document.querySelector('#editor'), {
+
+            ckfinder: {
+                uploadUrl: "{{ route('upload.image', ['_token' => csrf_token()]) }}",
+                options: {},
+
+            }
+        })
         .catch(error => {
             console.error(error);
         });

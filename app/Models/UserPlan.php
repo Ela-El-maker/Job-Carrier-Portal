@@ -16,6 +16,7 @@ class UserPlan extends Model
         'job_limit',
         'featured_job_limit',
         'highlight_job_limit',
+        'golden_job',
         'profile_verified',
     ];
 }
