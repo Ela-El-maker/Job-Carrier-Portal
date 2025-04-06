@@ -6,35 +6,18 @@
 
         <!-- Start of Owl Slider -->
         <div class="owl-carousel partners-slider">
-            <!-- Company Logo -->
-            <div class="item">
-                <a href="#"><img src="{{ asset('frontend/assets/images/companies/themeforest.png') }}"
-                        alt=""></a>
-            </div>
+            @forelse ($popularCompanies as $company)
+                <div class="item">
+                    <a href="{{ route('companies.show', $company->slug) }}" title="{{ $company->name }}">
+                        <img src="{{ asset($company->logo) }}" alt="{{ $company->name }}" class="img-fluid"
+                            style="max-height: 80px; width: auto;">
+                    </a>
+                </div>
 
-            <!-- Company Logo -->
-            <div class="item">
-                <a href="#"><img src="{{ asset('frontend/assets/images/companies/codecanyon.png') }}"
-                        alt=""></a>
-            </div>
+            @empty
+            @endforelse
 
-            <!-- Company Logo -->
-            <div class="item">
-                <a href="#"><img src="{{ asset('frontend/assets/images/companies/graphicriver.png') }}"
-                        alt=""></a>
-            </div>
 
-            <!-- Company Logo -->
-            <div class="item">
-                <a href="#"><img src="{{ asset('frontend/assets/images/companies/photodune.png') }}"
-                        alt=""></a>
-            </div>
-
-            <!-- Company Logo -->
-            <div class="item">
-                <a href="#"><img src="{{ asset('frontend/assets/images/companies/audiojungle.png') }}"
-                        alt=""></a>
-            </div>
         </div>
         <!-- End of Owl Slider -->
 

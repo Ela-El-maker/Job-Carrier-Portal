@@ -110,7 +110,10 @@ class FrontendJobPageController extends Controller
         // Eager load relationships
         $query->with(['country', 'state', 'city', 'category', 'jobType']);
 
-        $jobs = $query->paginate(18);
+        $jobs = $query->orderBy('created_at', 'desc')
+            ->orderBy('updated_at', 'desc')
+            ->paginate(18);
+
 
         return view('frontend.pages.jobs-index', compact('jobs', 'countries', 'selectedStates', 'selectedCities', 'jobCategories', 'jobTypes', 'popularCategories', 'popularJobTypes'));
     }
@@ -136,22 +139,56 @@ class FrontendJobPageController extends Controller
         return view('frontend.pages.job-show', compact('job', 'openJobs', 'similarJobs', 'alreadyAppliedJob'));
     }
 
+    // function applyJob(string $id)
+    // {
+    //     if (!auth()->check()) {
+    //         throw ValidationException::withMessages(['Please login to apply for this job']);
+    //     }
+
+    //     $alreadyAppliedJob = AppliedJob::where(['job_id' => $id, 'candidate_id' => auth()->user()->id])->exists();
+    //     if ($alreadyAppliedJob) {
+    //         throw ValidationException::withMessages(['You have already applied for this job']);
+    //     }
+    //     $applyJob = new AppliedJob();
+    //     $applyJob->job_id = $id;
+    //     $applyJob->candidate_id = auth()->user()->id;
+    //     $applyJob->save();
+
+    //     // Return a success response
+    //     return response(
+    //         ['message' => 'Job application submitted successfully.'],
+    //         200
+    //     );
+    // }
+
     function applyJob(string $id)
     {
+        // 1. Check if user is authenticated
         if (!auth()->check()) {
             throw ValidationException::withMessages(['Please login to apply for this job']);
         }
 
-        $alreadyAppliedJob = AppliedJob::where(['job_id' => $id, 'candidate_id' => auth()->user()->id])->exists();
+        // 2. Verify the user is a candidate
+        if (auth()->user()->role !== 'candidate') { // Adjust based on your role system
+            throw ValidationException::withMessages(['Only candidates can apply for jobs']);
+        }
+
+        // 3. Check for duplicate applications
+        $alreadyAppliedJob = AppliedJob::where([
+            'job_id' => $id,
+            'candidate_id' => auth()->user()->id
+        ])->exists();
+
         if ($alreadyAppliedJob) {
             throw ValidationException::withMessages(['You have already applied for this job']);
         }
+
+        // 4. Create the application
         $applyJob = new AppliedJob();
         $applyJob->job_id = $id;
         $applyJob->candidate_id = auth()->user()->id;
         $applyJob->save();
 
-        // Return a success response
         return response(
             ['message' => 'Job application submitted successfully.'],
             200

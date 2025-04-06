@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\Country;
 use App\Models\Hero;
 use App\Models\Job;
@@ -31,6 +32,20 @@ class HomeController extends Controller
             ->orderByDesc('jobs_count')
             ->take(8)
             ->get();
-        return view('frontend.home.index', compact('plans', 'heroes', 'countries', 'jobCount', 'jobCategories', 'popularJobCategories', 'featuredCategories'));
+
+
+        $popularCompanies = Company::query()
+            ->select('companies.*')
+            ->join('jobs', 'jobs.company_id', '=', 'companies.id')
+            ->join('applied_jobs', 'applied_jobs.job_id', '=', 'jobs.id')
+            ->where('jobs.status', 'active')
+            ->where('jobs.deadline', '>=', now())
+            ->groupBy('companies.id')
+            ->orderByRaw('COUNT(applied_jobs.id) DESC')
+            ->take(10)
+            ->get();
+
+
+        return view('frontend.home.index', compact('plans', 'heroes', 'countries', 'jobCount', 'jobCategories', 'popularJobCategories', 'featuredCategories', 'popularCompanies'));
     }
 }

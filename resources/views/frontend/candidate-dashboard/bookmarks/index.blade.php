@@ -46,7 +46,7 @@
                             style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                             <h3 class="mb-0" style="font-size: 22px; color: #333; font-weight: 700; margin: 0;">Bookmarked
                                 Jobs <span
-                                    style="background-color: #4361ee; color: white; padding: 2px 8px; border-radius: 20px; font-size: 14px; margin-left: 8px;">200</span>
+                                    style="background-color: #4361ee; color: white; padding: 2px 8px; border-radius: 20px; font-size: 14px; margin-left: 8px;">{{ $bookmarks->total() }}</span>
                             </h3>
                             <form action="" method="GET" style="display: flex; align-items: center;">
                                 <div

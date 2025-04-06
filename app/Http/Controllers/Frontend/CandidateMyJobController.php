@@ -26,6 +26,7 @@ class CandidateMyJobController extends Controller
         $this->search($query, ['name', 'slug']);
 
         $appliedJobs = $query->with(['job'])
+            ->orderBy('created_at', 'desc') // Order by latest applied jobs first
             ->where('candidate_id',  auth()->user()->id)
             ->paginate(15);
 

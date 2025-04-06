@@ -26,6 +26,7 @@ use App\Services\Notify;
 use App\Traits\Searchable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class JobController extends Controller
@@ -69,10 +70,10 @@ class JobController extends Controller
         // Fetch all required data
         storePlanInformation();
         $userPlan = session('user_plan');
-        // dd($userPlan);
-        if ($userPlan->job_limit < 1) {
-            Notify::errorNotification('You have reached your job plan limit. Please upgrade your plan to post more jobs.');
 
+        // Check if userPlan exists and is an array
+        if (!isset($userPlan['job_limit']) || $userPlan['job_limit'] < 1) {
+            Notify::errorNotification('You have reached your job plan limit. Please upgrade your plan to post more jobs.');
             return to_route('company.jobs.index')->with('error', 'Unable to retrieve your plan information. Please try again.');
         }
         $companies = Company::where(['profile_completion' => 1, 'visibility' => 1])->get();
@@ -118,52 +119,65 @@ class JobController extends Controller
         //
         // dd($request->all());
         // $job = new Job();
-        if (session('user_plan')->featured_job_limit < 1) {
-            Notify::errorNotification('You have reached your Featured job plan limit. Please upgrade your plan to post more featured jobs.');
-            return redirect()->back()->with('error', 'Unable to post job. Please try again.');
-        }
-        if (session('user_plan')->highlight_job_limit < 1) {
-            Notify::errorNotification('You have reached your Highlighted job plan limit. Please upgrade your plan to post more highlighted jobs.');
-            return redirect()->back()->with('error', 'Unable to post job. Please try again.');
+        // 1. Verify company exists
+        $company = auth()->user()->company;
+        if (!$company) {
+            throw ValidationException::withMessages(['You need to create a company profile first']);
         }
 
-        if (session('user_plan')->golden_job < 1) {
+        // 2. Get current plan
+        $userPlan = $company->userPlan;
 
-            Notify::errorNotification('You have reached your Golden job plan limit. Please upgrade your plan to post more golden jobs.');
-            return redirect()->back()->with('error', 'Unable to post job. Please try again.');
+        // 3. Check BASE job limit (always required)
+        if ($userPlan->job_limit < 1) {
+            Notify::errorNotification('Regular job posting limit reached. Please upgrade.');
+            return back()->with('error', 'Job limit reached');
         }
+
+        // 4. Check OPTIONAL features ONLY if they're selected
+        if ($request->has('featured') && $userPlan->featured_job_limit < 1) {
+            Notify::errorNotification('Featured job limit reached. Please upgrade.');
+            return back()->with('error', 'Featured job limit reached');
+        }
+
+        if ($request->has('highlight') && $userPlan->highlight_job_limit < 1) {
+            Notify::errorNotification('Highlighted job limit reached. Please upgrade.');
+            return back()->with('error', 'Highlighted job limit reached');
+        }
+
+        if ($request->has('golden_job') && $userPlan->golden_job < 1) {
+            Notify::errorNotification('Golden job limit reached. Please upgrade.');
+            return back()->with('error', 'Golden job limit reached');
+        }
+
         $job = new Job();
         $job->title = $request->title;
-        $job->company_id = auth()->user()->company->id;
+        $job->company_id = $company->id;
         $job->job_category_id = $request->category;
         $job->vacancies = $request->vacancies;
         $job->deadline = $request->deadline;
-
         $job->country_id = $request->country;
         $job->state_id = $request->state;
         $job->city_id = $request->city;
         $job->address = $request->address;
-
-
         $job->salary_mode = $request->salary_mode;
         $job->min_salary = $request->min_salary;
         $job->max_salary = $request->max_salary;
         $job->custom_salary = $request->custom_salary;
         $job->salary_type_id = $request->salary_type;
-
         $job->job_experience_id = $request->experience;
         $job->job_role_id = $request->job_role;
         $job->education_id = $request->education;
         $job->job_type_id = $request->job_type;
 
-
-        //Tags, Benefits,Skills will be handled separately
-
-        // $job->apply_on = $request->receive_applications;
-        $job->is_featured = $request->featured;
-        $job->is_highlighted = $request->highlight;
-        $job->is_golden = $request->golden_job; // Check if golden job is checked
+        // Set featured, highlighted, and golden job statuses
+        $job->is_featured = $request->featured ?? 0;
+        $job->is_highlighted = $request->highlight ?? 0;
+        $job->is_golden = $request->golden_job ?? 0;
         $job->description = $request->description;
+
+        // dd($job->is_featured, $job->is_highlighted, $job->is_golden);
+        // Save the job
         $job->save();
 
         // Insert Tags
@@ -198,25 +212,31 @@ class JobController extends Controller
             $createSkill->save();
         }
 
-        // Decrement user plan limits
-        if ($job) {
-            $userPlan = auth()->user()->company?->userPlan;
-            if ($userPlan) {
-                $userPlan->job_limit = $userPlan->job_limit - 1;
-                if ($job->is_featured == 1) {
-                    $userPlan->featured_job_limit = $userPlan->featured_job_limit - 1;
-                }
-                if ($job->is_highlighted == 1) {
-                    $userPlan->highlight_job_limit = $userPlan->highlight_job_limit - 1;
-                }
-                if ($job->is_golden == 1) {
-                    $userPlan->golden_job = $userPlan->golden_job - 1;
-                }
-                $userPlan->save();
-                storePlanInformation();
-            }
-        }
 
+        // Decrement user plan limits
+        // if ($job) {
+        //     $userPlan = auth()->user()->company?->userPlan;
+        //     if ($userPlan) {
+        //         $userPlan->job_limit = $userPlan->job_limit - 1;
+        //         if ($job->is_featured == 1) {
+        //             $userPlan->featured_job_limit = $userPlan->featured_job_limit - 1;
+        //         }
+        //         if ($job->is_highlighted == 1) {
+        //             $userPlan->highlight_job_limit = $userPlan->highlight_job_limit - 1;
+        //         }
+        //         if ($job->is_golden == 1) {
+        //             $userPlan->golden_job = $userPlan->golden_job - 1;
+        //         }
+        //         $userPlan->save();
+        //         storePlanInformation();
+        //     }
+        // }
+        // 6. Decrement ONLY used features
+        $userPlan->decrement('job_limit');
+        if ($job->is_featured) $userPlan->decrement('featured_job_limit');
+        if ($job->is_highlighted) $userPlan->decrement('highlight_job_limit');
+        if ($job->is_golden) $userPlan->decrement('golden_job');
+        storePlanInformation();
 
 
 
@@ -277,10 +297,42 @@ class JobController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(JobCreateRequest $request, string $id)
     {
-        //
         $job = Job::findOrFail($id);
+
+        $company = auth()->user()->company;
+        if (!$company) {
+            throw ValidationException::withMessages(['You need to create a company profile first']);
+        }
+
+        $userPlan = $company->userPlan;
+
+        // Get current and new values for premium features
+        $wasFeatured = $job->is_featured;
+        $wasHighlighted = $job->is_highlighted;
+        $wasGolden = $job->is_golden;
+
+        $newFeatured = $request->featured ?? 0;
+        $newHighlighted = $request->highlight ?? 0;
+        $newGolden = $request->golden_job ?? 0;
+
+        // Check for upgrades to premium features
+        if (!$wasFeatured && $newFeatured && $userPlan->featured_job_limit < 1) {
+            Notify::errorNotification('Featured job limit reached. Please upgrade.');
+            return back()->with('error', 'Featured job limit reached');
+        }
+
+        if (!$wasHighlighted && $newHighlighted && $userPlan->highlight_job_limit < 1) {
+            Notify::errorNotification('Highlighted job limit reached. Please upgrade.');
+            return back()->with('error', 'Highlighted job limit reached');
+        }
+
+        if (!$wasGolden && $newGolden && $userPlan->golden_job < 1) {
+            Notify::errorNotification('Golden job limit reached. Please upgrade.');
+            return back()->with('error', 'Golden job limit reached');
+        }
+
         $job->title = $request->title;
         $job->job_category_id = $request->category;
         $job->vacancies = $request->vacancies;
@@ -306,9 +358,9 @@ class JobController extends Controller
         //Tags, Benefits,Skills will be handled separately
 
         // $job->apply_on = $request->receive_applications;
-        $job->is_featured = $request->featured;
-        $job->is_highlighted = $request->highlight;
-        $job->is_golden = $request->golden_job; // Check if golden job is checked
+        $job->is_featured = $newFeatured;
+        $job->is_highlighted = $newHighlighted;
+        $job->is_golden = $newGolden;
         $job->description = $request->description;
         $job->save();
 
@@ -344,9 +396,6 @@ class JobController extends Controller
             $jobBenefit->benefit_id = $createBenefit->id;
             $jobBenefit->save();
         }
-
-
-
         // Insert Skills
         JobSkills::where('job_id', $id)->delete();
         foreach ($request->skills as $skill) {
@@ -355,6 +404,28 @@ class JobController extends Controller
             $createSkill->skill_id = $skill;
             $createSkill->save();
         }
+
+        // Adjust plan limits
+        if ($wasFeatured && !$newFeatured) {
+            $userPlan->featured_job_limit += 1;
+        } elseif (!$wasFeatured && $newFeatured) {
+            $userPlan->featured_job_limit -= 1;
+        }
+
+        if ($wasHighlighted && !$newHighlighted) {
+            $userPlan->highlight_job_limit += 1;
+        } elseif (!$wasHighlighted && $newHighlighted) {
+            $userPlan->highlight_job_limit -= 1;
+        }
+
+        if ($wasGolden && !$newGolden) {
+            $userPlan->golden_job += 1;
+        } elseif (!$wasGolden && $newGolden) {
+            $userPlan->golden_job -= 1;
+        }
+
+        $userPlan->save();
+        storePlanInformation();
 
         Notify::updatedNotification();
         return to_route('company.jobs.index');
