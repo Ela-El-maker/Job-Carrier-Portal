@@ -12,6 +12,10 @@
     @include('frontend.home.sections.popular-categories-section')
     <!-- ===== End of Popular Categories Section ===== -->
 
+    <!-- ===== Start of Featured Categories Section ===== -->
+    @include('frontend.home.sections.featured-categories-section')
+    <!-- ===== End of Featured Categories Section ===== -->
+
     <!-- ===== Start of Signup & Video Section ===== -->
     @include('frontend.home.sections.signup-video-section')
     <!-- ===== End of Signup & Video Section ===== -->

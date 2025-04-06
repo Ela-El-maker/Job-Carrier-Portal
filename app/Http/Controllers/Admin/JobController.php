@@ -100,9 +100,10 @@ class JobController extends Controller
         //Tags, Benefits,Skills will be handled separately
 
         // $job->apply_on = $request->receive_applications;
-        $job->is_featured = $request->featured;
-        $job->is_highlighted = $request->highlight;
-        $job->is_golden = $request->golden_job;
+        $job->is_featured = $request->featured ?? 0;
+        $job->is_highlighted = $request->highlight ?? 0;
+        $job->is_golden = $request->golden_job ?? 0;
+
         $job->description = $request->description;
         $job->status = 'active';
         $job->save();
@@ -211,9 +212,10 @@ class JobController extends Controller
         //Tags, Benefits,Skills will be handled separately
 
         // $job->apply_on = $request->receive_applications;
-        $job->is_featured = $request->featured;
-        $job->is_highlighted = $request->highlight;
-        $job->is_golden = $request->golden_job;
+        $job->is_featured = $request->featured ?? 0;
+        $job->is_highlighted = $request->highlight ?? 0;
+        $job->is_golden = $request->golden_job ?? 0;
+
         $job->description = $request->description;
         $job->save();
 
