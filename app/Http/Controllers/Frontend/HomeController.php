@@ -45,17 +45,25 @@ class HomeController extends Controller
             ->take(10)
             ->get();
 
-        // $popularCompanies = Company::withCount(['jobs as applications_count' => function ($query) {
-        //     $query->where('status', 'active')
-        //         ->where('deadline', '>=', now())
-        //         ->whereHas('applications');
-        // }])
-        //     ->orderByDesc('applications_count')
-        //     ->take(10)
-        //     ->get();
+        $topJobs = Job::with('company')
+            ->where('status', 'active')
+            ->where('deadline', '>=', now())
+            ->orderBy('created_at', 'desc')
+            ->orderBy('updated_at', 'desc')
+            // ->orderBy('views', 'desc') // Assuming you have a 'views' column to determine popularity
+            ->take(5)
+            ->get();
+
+        $goldenJobs = Job::with('company')
+            ->where('status', 'active')
+            ->where('deadline', '>=', now())
+            ->where('is_golden', 1) // Assuming you have a 'is_golden' column to determine golden jobs
+            ->orderBy('created_at', 'desc')
+            ->orderBy('updated_at', 'desc')
+            ->take(1)
+            ->get();
 
 
-
-        return view('frontend.home.index', compact('plans', 'heroes', 'countries', 'jobCount', 'jobCategories', 'popularJobCategories', 'featuredCategories', 'popularCompanies'));
+        return view('frontend.home.index', compact('plans', 'heroes', 'countries', 'jobCount', 'jobCategories', 'popularJobCategories', 'featuredCategories', 'popularCompanies', 'topJobs', 'goldenJobs'));
     }
 }
