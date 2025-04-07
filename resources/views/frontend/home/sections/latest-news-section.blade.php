@@ -3,7 +3,7 @@
 
         <!-- Section Title -->
         <div class="section-title">
-            <h2>latest news</h2>
+            <h2>{{ $blogTitle?->title }}</h2>
         </div>
         @forelse ($blogs as $blog)
             <!-- Start of Blog Post -->
@@ -55,9 +55,7 @@
 
 
         <div class="col-md-12 col-xs-12 mt60 text-center">
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
-                and scrambled it to make a type specimen book.</p>
+            <p>{!! $blogTitle?->description !!}</p>
 
             <a href="{{ route('blogs.index') }}" class="btn btn-purple btn-effect mt20">visit blog</a>
         </div>

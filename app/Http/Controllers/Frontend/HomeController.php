@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
+use App\Models\BlogSectionSetting;
 use App\Models\Company;
 use App\Models\Country;
 use App\Models\Hero;
@@ -65,8 +66,8 @@ class HomeController extends Controller
             ->get();
 
         $blogs = Blog::where('status', 1)->latest()->take(5)->get();
+        $blogTitle = BlogSectionSetting::first();
 
-
-        return view('frontend.home.index', compact('plans', 'heroes', 'countries', 'jobCount', 'jobCategories', 'popularJobCategories', 'featuredCategories', 'popularCompanies', 'topJobs', 'goldenJobs', 'blogs'));
+        return view('frontend.home.index', compact('plans', 'heroes', 'countries', 'jobCount', 'jobCategories', 'popularJobCategories', 'featuredCategories', 'popularCompanies', 'topJobs', 'goldenJobs', 'blogs', 'blogTitle'));
     }
 }

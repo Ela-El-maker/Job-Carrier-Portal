@@ -127,6 +127,8 @@
                 <ul class="dropdown-menu">
                     <li class="{{ setSidebarActive(['admin.hero.*']) }}"><a class="nav-link"
                             href="{{ route('admin.hero.index') }}">Hero</a></li>
+                    <li class="{{ setSidebarActive(['admin.blog-section-setting.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.blog-section-setting.index') }}">Blog</a></li>
                 </ul>
             </li>
 

@@ -131,6 +131,27 @@ namespace App\Models{
  * 
  *
  * @property int $id
+ * @property string $title
+ * @property string $description
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|BlogSectionSetting newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|BlogSectionSetting newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|BlogSectionSetting query()
+ * @method static \Illuminate\Database\Eloquent\Builder|BlogSectionSetting whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BlogSectionSetting whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BlogSectionSetting whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BlogSectionSetting whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BlogSectionSetting whereUpdatedAt($value)
+ */
+	class BlogSectionSetting extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
  * @property int $user_id
  * @property int|null $experience_id
  * @property int|null $profession_id
@@ -578,6 +599,7 @@ namespace App\Models{
  * @property string|null $apply_url
  * @property int|null $is_featured
  * @property int|null $is_highlighted
+ * @property int $is_golden
  * @property string|null $featured_until
  * @property string|null $highlighted_until
  * @property int $total_views
@@ -631,6 +653,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Job whereHighlightedUntil($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Job whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Job whereIsFeatured($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Job whereIsGolden($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Job whereIsHighlighted($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Job whereJobCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Job whereJobExperienceId($value)
@@ -706,7 +729,8 @@ namespace App\Models{
  * @property string $icon
  * @property string $name
  * @property string $slug
- * @property int|null $show_at_popular
+ * @property int $show_at_popular
+ * @property int $show_at_featured
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Job> $jobs
@@ -719,6 +743,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|JobCategory whereIcon($value)
  * @method static \Illuminate\Database\Eloquent\Builder|JobCategory whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|JobCategory whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|JobCategory whereShowAtFeatured($value)
  * @method static \Illuminate\Database\Eloquent\Builder|JobCategory whereShowAtPopular($value)
  * @method static \Illuminate\Database\Eloquent\Builder|JobCategory whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|JobCategory whereUpdatedAt($value)
