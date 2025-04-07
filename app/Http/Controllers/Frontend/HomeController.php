@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blog;
 use App\Models\Company;
 use App\Models\Country;
 use App\Models\Hero;
@@ -63,7 +64,9 @@ class HomeController extends Controller
             ->take(1)
             ->get();
 
+        $blogs = Blog::where('status', 1)->latest()->take(5)->get();
 
-        return view('frontend.home.index', compact('plans', 'heroes', 'countries', 'jobCount', 'jobCategories', 'popularJobCategories', 'featuredCategories', 'popularCompanies', 'topJobs', 'goldenJobs'));
+
+        return view('frontend.home.index', compact('plans', 'heroes', 'countries', 'jobCount', 'jobCategories', 'popularJobCategories', 'featuredCategories', 'popularCompanies', 'topJobs', 'goldenJobs', 'blogs'));
     }
 }

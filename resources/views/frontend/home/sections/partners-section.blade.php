@@ -5,7 +5,7 @@
         <div class="owl-carousel partners-slider">
             <!-- Partner Logo -->
             <div class="item">
-                <a href="#"><img src="images/companies/themeforest.png" alt=""></a>
+                <a href="#"><img src="frontend/assets/images/companies/themeforest.png" alt=""></a>
             </div>
 
             <!-- Partner Logo -->
