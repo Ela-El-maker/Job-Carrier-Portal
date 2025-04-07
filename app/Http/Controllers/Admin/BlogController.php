@@ -48,6 +48,8 @@ class BlogController extends Controller
         $blog->author_id = auth()->user()->id;
         $blog->description = $request->description;
         $blog->status = $request->status;
+        $blog->show_at_popular = $request->show_at_popular;
+
         $blog->featured = $request->featured;
         $blog->save();
         Notify::createdNotification();
@@ -84,6 +86,7 @@ class BlogController extends Controller
         $blog->author_id = auth()->user()->id;
         $blog->description = $request->description;
         $blog->status = $request->status;
+        $blog->show_at_popular = $request->show_at_popular;
         $blog->featured = $request->featured;
         $blog->save();
         Notify::updatedNotification();

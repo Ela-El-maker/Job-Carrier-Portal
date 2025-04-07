@@ -43,10 +43,10 @@
                             </div>
 
 
-                            {{-- Row for Status & Featured --}}
+                            {{-- Row for Statusm Popular & Featured --}}
                             <div class="row mb-3">
                                 {{-- Status --}}
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label for="status">Status</label>
                                     <select class="form-control select2 {{ hasError($errors, 'status') }}" name="status">
                                         <option value="1" {{ old('status') == 1 ? 'selected' : '' }}>Active</option>
@@ -56,7 +56,7 @@
                                 </div>
 
                                 {{-- Featured --}}
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label for="featured">Featured</label>
                                     <select class="form-control select2 {{ hasError($errors, 'featured') }}"
                                         name="featured">
@@ -65,7 +65,21 @@
                                     </select>
                                     <x-input-error :messages="$errors->get('featured')" class="mt-2" />
                                 </div>
+
+                                {{-- Show at Popular --}}
+                                <div class="col-md-4">
+                                    <label for="show_at_popular">Show at Popular</label>
+                                    <select class="form-control select2 {{ hasError($errors, 'show_at_popular') }}"
+                                        name="show_at_popular">
+                                        <option value="1" {{ old('show_at_popular') == 1 ? 'selected' : '' }}>Yes
+                                        </option>
+                                        <option value="0" {{ old('show_at_popular') == 0 ? 'selected' : '' }}>No
+                                        </option>
+                                    </select>
+                                    <x-input-error :messages="$errors->get('show_at_popular')" class="mt-2" />
+                                </div>
                             </div>
+
 
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Create</button>

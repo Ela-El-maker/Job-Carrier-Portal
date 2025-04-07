@@ -68,6 +68,7 @@ class HomeController extends Controller
         $blogs = Blog::where('status', 1)->latest()->take(5)->get();
         $blogTitle = BlogSectionSetting::first();
 
+
         return view('frontend.home.index', compact('plans', 'heroes', 'countries', 'jobCount', 'jobCategories', 'popularJobCategories', 'featuredCategories', 'popularCompanies', 'topJobs', 'goldenJobs', 'blogs', 'blogTitle'));
     }
 }

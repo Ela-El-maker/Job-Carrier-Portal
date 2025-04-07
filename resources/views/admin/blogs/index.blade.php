@@ -36,15 +36,16 @@
                             <th>Description</th>
                             <th>Image</th>
                             <th>Status</th>
+                            <th style="width: 15%">IsPopular</th>
                             <th>Featured</th>
-                            <th style="width: 20%">Action</th>
+                            <th style="width: 25%">Action</th>
                         </tr>
                         <tbody>
                             @forelse ($blogs as $blog)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     {{-- Title --}}
-                                    <td>{{ $blog?->title }}</td>
+                                    <td>{{ Str::limit(strip_tags($blog?->title), 10, '...') }}</td>
 
                                     {{-- Description (limited to 80 chars) --}}
                                     <td>{{ Str::limit(strip_tags($blog?->description), 80, '...') }}</td>
@@ -70,6 +71,19 @@
                                             <span
                                                 style="background-color: #f8d7da; color: #721c24; padding: 2px 8px; border-radius: 12px; font-size: 12px;">
                                                 Inactive
+                                            </span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($blog?->show_at_popular == 1)
+                                            <span
+                                                style="background-color: #d4edda; color: #155724; padding: 2px 8px; border-radius: 12px; font-size: 12px;">
+                                                Yes
+                                            </span>
+                                        @else
+                                            <span
+                                                style="background-color: #f8d7da; color: #721c24; padding: 2px 8px; border-radius: 12px; font-size: 12px;">
+                                                No
                                             </span>
                                         @endif
                                     </td>

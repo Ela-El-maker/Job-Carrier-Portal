@@ -13,7 +13,9 @@
                 </a>
 
                 <!-- Small Description -->
-                <p class="pt40">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type changed.</p>
+                <p class="pt40">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                    has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                    galley of type changed.</p>
 
                 <!-- Info -->
                 <ul class="nopadding">
@@ -42,65 +44,51 @@
             </div>
 
             <!-- 3rd Footer Column -->
+            @php
+                $popularBlogs = \App\Models\Blog::where('status', 1)
+                    ->where('show_at_popular', 1)
+                    ->inRandomOrder()
+                    ->latest()
+                    ->take(3)
+                    ->get();
+            @endphp
             <div class="col-md-3 col-sm-6 col-xs-6 footer-posts">
                 <h3>popular posts</h3>
+                @forelse ($popularBlogs as $blog)
+                    <!-- Single Post 1 -->
+                    <div class="footer-blog-post">
 
-                <!-- Single Post 1 -->
-                <div class="footer-blog-post">
+                        <!-- Thumbnail -->
+                        <div class="thumbnail-post">
+                            <a href="{{ route('blogs.show', $blog?->slug) }}">
+                                <img src="{{ asset($blog?->image) }}"
+                                    alt="{{ Str::limit(strip_tags($blog?->title), 5, '...') }}">
+                            </a>
+                        </div>
 
-                    <!-- Thumbnail -->
-                    <div class="thumbnail-post">
-                        <a href="blog-post-right-sidebar.html">
-                            <img src="images/blog/blog1.jpg" alt="">
-                        </a>
+                        <!-- Link -->
+                        <div class="post-info">
+                            <a
+                                href="{{ route('blogs.show', $blog?->slug) }}">{{ Str::limit(strip_tags($blog?->title), 10, '...') }}</a>
+                            <span>{{ relativeTime($blog?->created_at) }}</span>
+                        </div>
                     </div>
-
-                    <!-- Link -->
-                    <div class="post-info">
-                        <a href="blog-post-right-sidebar.html">blog post 1</a>
-                        <span>1 day ago</span>
+                @empty
+                    <div class="footer-blog-post text-muted text-center small">
+                        <i class="fas fa-info-circle d-block mb-1" style="font-size: 1.2rem;"></i>
+                        No popular posts to show.
                     </div>
-                </div>
+                @endforelse
 
-                <!-- Single Post 2 -->
-                <div class="footer-blog-post">
 
-                    <!-- Thumbnail -->
-                    <div class="thumbnail-post">
-                        <a href="blog-post-right-sidebar.html">
-                            <img src="images/blog/blog2.jpg" alt="">
-                        </a>
-                    </div>
 
-                    <!-- Link -->
-                    <div class="post-info">
-                        <a href="blog-post-right-sidebar.html">blog post 2</a>
-                        <span>2 day ago</span>
-                    </div>
-                </div>
-
-                <!-- Single Post 3 -->
-                <div class="footer-blog-post">
-
-                    <!-- Thumbnail -->
-                    <div class="thumbnail-post">
-                        <a href="blog-post-right-sidebar.html">
-                            <img src="images/blog/blog3.jpg" alt="">
-                        </a>
-                    </div>
-
-                    <!-- Link -->
-                    <div class="post-info">
-                        <a href="blog-post-right-sidebar.html">blog post 3</a>
-                        <span>4 day ago</span>
-                    </div>
-                </div>
             </div>
 
             <!-- 4th Footer Column -->
             <div class="col-md-3 col-sm-6 col-xs-6 footer-newsletter">
                 <h3>newsletter</h3>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                    industry's standard dummy text ever since the 1500s.</p>
 
                 <!-- Subscribe Form -->
                 <form action="#" class="form-inline mailchimp mtb30" novalidate>
@@ -108,7 +96,8 @@
                     <!-- Form -->
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="email" name="EMAIL" class="form-control" id="mc-email" placeholder="Your Email" autocomplete="off">
+                            <input type="email" name="EMAIL" class="form-control" id="mc-email"
+                                placeholder="Your Email" autocomplete="off">
                             <label for="mc-email"></label>
                             <button type="submit" class="btn btn-blue btn-effect">Submit</button>
                         </div>
@@ -131,7 +120,8 @@
                             <span>Helpline Center</span>
 
                             <p class="pt10 nomargin">Chat Live now!
-                                <br>Hello, my name is John Doe, how may i help you?</p>
+                                <br>Hello, my name is John Doe, how may i help you?
+                            </p>
 
                             <!-- Live Chat Link -->
                             <div class="text-right pt15">
