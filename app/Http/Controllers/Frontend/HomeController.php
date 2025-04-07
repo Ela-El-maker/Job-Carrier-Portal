@@ -45,6 +45,16 @@ class HomeController extends Controller
             ->take(10)
             ->get();
 
+        // $popularCompanies = Company::withCount(['jobs as applications_count' => function ($query) {
+        //     $query->where('status', 'active')
+        //         ->where('deadline', '>=', now())
+        //         ->whereHas('applications');
+        // }])
+        //     ->orderByDesc('applications_count')
+        //     ->take(10)
+        //     ->get();
+
+
 
         return view('frontend.home.index', compact('plans', 'heroes', 'countries', 'jobCount', 'jobCategories', 'popularJobCategories', 'featuredCategories', 'popularCompanies'));
     }
