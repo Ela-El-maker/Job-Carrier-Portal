@@ -258,7 +258,7 @@
     <div class='section-block pricing-block'>
 
         <div class='section-header'>
-            <h2>My <strong class='color'>Pricing< /strong>
+            <h2>My <strong class='color'>Pricing</strong>
             </h2>
         </div>
 
@@ -358,15 +358,15 @@
                     </div>
 
                     <ul class='items'>
-                        <l i>
+                        <li>
                             App Designing
-                            </li>
-                            <li>
-                                App Development
-                            </li>
-                            <li>
-                                Web Development
-                            </li>
+                        </li>
+                        <li>
+                            App Development
+                        </li>
+                        <li>
+                            Web Development
+                        </li>
                     </ul>
 
                     <a href='#' class='btn-custom btn-color'>
