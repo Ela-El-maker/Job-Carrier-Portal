@@ -20,6 +20,7 @@ use App\Http\Controllers\Frontend\FrontendCompanyPageController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\JobController;
 use App\Http\Controllers\Frontend\LocationController;
+use App\Http\Controllers\Frontend\Portfolio\PortfolioHomeController;
 use App\Http\Controllers\Frontend\PricingPageController;
 use App\Http\Controllers\Frontend\UploadController;
 use App\Http\Controllers\ProfileController;
@@ -80,6 +81,14 @@ Route::get('blog/{slug}', [FrontendBlogPageController::class, 'show'])->name('bl
  */
 Route::get('candidates', [FrontendCandidatePageController::class, 'index'])->name('candidates.index');
 Route::get('candidates/{slug}', [FrontendCandidatePageController::class, 'show'])->name('candidates.show');
+
+/**
+ * Candiate Frontend Portfolio Page
+ *
+ */
+
+Route::get('candidates/{slug}/portfolio', [PortfolioHomeController::class, 'show'])->name('candidates.portfolio.show');
+
 
 /***  Candidate Dashboard Routes */
 Route::group(

@@ -1,4 +1,4 @@
-<div class="tab-pane fade" id="experience" role="tabpanel" aria-labelledby="experience-tab">
+<div class="tab-pane fade" id="portfolio" role="tabpanel" aria-labelledby="portfolio-tab">
 
     <!-- Trigger the modal with a button -->
 
