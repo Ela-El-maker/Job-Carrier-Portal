@@ -1,4 +1,12 @@
 <div class="tab-pane fade" id="serviceSection" role="tabpanel" aria-labelledby="service-tab">
+    @php
+        $portfolioServices =
+            $portfolioServices ??
+            \App\Models\PortfolioService::where('candidate_id', auth()->user()?->candidateProfile?->id)
+                ->orderBy('id', 'DESC')
+                ->get();
+    @endphp
+
     <div style="margin-top: 40px;">
         <h3 style="color: #1e293b; font-weight: 600; margin-bottom: 8px; font-size: 20px; letter-spacing: -0.5px;">
             Services</h3>
@@ -27,13 +35,13 @@
                             #</th>
                         <th
                             style="padding: 14px 16px; text-align: left; color: #475569; border-bottom: 1px solid #e2e8f0; font-weight: 600;">
-                            Service</th>
+                            Icon</th>
                         <th
                             style="padding: 14px 16px; text-align: left; color: #475569; border-bottom: 1px solid #e2e8f0; font-weight: 600;">
-                            Level</th>
+                            Name</th>
                         <th
                             style="padding: 14px 16px; text-align: left; color: #475569; border-bottom: 1px solid #e2e8f0; font-weight: 600;">
-                            Experience</th>
+                            URL</th>
                         <th
                             style="padding: 14px 16px; text-align: left; color: #475569; border-bottom: 1px solid #e2e8f0; font-weight: 600;">
                             Status</th>
@@ -42,28 +50,43 @@
                             Actions</th>
                     </tr>
                 </thead>
-                <tbody class="services-tbody">
-                    <tr style="transition: background-color 0.15s ease;">
-                        <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">1</td>
-                        <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">HTML & CSS</td>
-                        <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">Intermediate</td>
-                        <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">3 years</td>
-                        <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">
-                            <span
-                                style="background-color: #dcfce7; color: #166534; font-size: 12px; padding: 4px 8px; border-radius: 50px; font-weight: 500;">Active</span>
-                        </td>
-                        <td style="padding: 12px; border-bottom: 1px solid #e0e6ed;">
-                            <a href="" class="btn-small btn btn-primary edit-service"
-                                style="background-color: #2ecc71; color: white; padding: 6px 10px; text-decoration: none; border-radius: 4px; margin-right: 5px;"
-                                data-bs-toggle="modal" data-bs-target="#myServiceModal">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a href="" class="btn-small btn btn-danger delete-service"
-                                style="background-color: #e74c3c; color: white; padding: 6px 10px; text-decoration: none; border-radius: 4px;">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
-                        </td>
-                    </tr>
+                <tbody class="service-tbody">
+                    @forelse ($portfolioServices as $service)
+                        <tr style="transition: background-color 0.15s ease;">
+                            <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">{{ $loop->iteration }}
+                            </td>
+                            <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">
+                                {{ $service?->service_icon }}</td>
+                            <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">
+                                {{ $service?->service_name }}</td>
+                            <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">
+                                {{ $service?->service_url }}</td>
+                            <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">
+                                @if ($service?->service_visible === 1)
+                                    <span class="badge badge-success">Yes</span>
+                                @else
+                                    <span class="badge badge-danger">No</span>
+                                @endif
+                            <td style="padding: 12px; border-bottom: 1px solid #e0e6ed;">
+                                <a href="" class="btn-small btn btn-primary edit-client"
+                                    style="background-color: #2ecc71; color: white; padding: 6px 10px; text-decoration: none; border-radius: 4px; margin-right: 5px;"
+                                    data-bs-toggle="modal" data-bs-target="#myClientsModal">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="" class="btn-small btn btn-danger delete-client"
+                                    style="background-color: #e74c3c; color: white; padding: 6px 10px; text-decoration: none; border-radius: 4px;">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                    @empty
+
+                        <tr>
+                            <td colspan="6" class="text-center"> No Results Found! </td>
+                        </tr>
+                    @endforelse
+
                 </tbody>
             </table>
         </div>

@@ -19,11 +19,6 @@ return new class extends Migration
             $table->text('resume')->nullable();
             $table->text('sub_description')->nullable();
             $table->text('portfolio_about')->nullable();
-            $table->string('service_name')->nullable();
-            $table->string('service_url')->nullable();
-            $table->string('service_icon')->nullable();
-            $table->text('service_description')->nullable();
-            $table->boolean('service_visible')->default(0);
             $table->string('client_name')->nullable();
             $table->string('client_company')->nullable();
             $table->string('client_title')->nullable();

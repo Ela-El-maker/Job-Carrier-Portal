@@ -457,23 +457,15 @@
                 },
                 success: function(response) {
                     // Populate modal fields with the service data
-                    $('#ServiceForm input[name="company"]').val(response.company);
-                    $('#ServiceForm input[name="department"]').val(response.department);
-                    $('#ServiceForm input[name="designation"]').val(response
-                        .designation);
-                    $('#ServiceForm input[name="start"]').val(response.start);
-                    $('#ServiceForm input[name="end"]').val(response.end);
-                    $('#ServiceForm textarea[name="responsibilities"]').val(response
-                        .responsibilities);
+                    $('#ServiceForm input[name="service_name"]').val(response.service_name);
+                    $('#ServiceForm input[name="service_icon"]').val(response.service_icon);
+                    $('#ServiceForm input[name="service_url"]').val(response
+                        .service_url);
+                    $('#ServiceForm input[name="service_visible"]').val(response.service_visible);
+                    $('#ServiceForm textarea[name="service_description"]').val(response
+                        .service_description);
 
-                    // Set the checkbox for currently working
-                    if (response.currently_working === 1) {
-                        $('#ServiceForm input[name="currently_working"]').prop('checked',
-                            true);
-                    } else {
-                        $('#ServiceForm input[name="currently_working"]').prop('checked',
-                            false);
-                    }
+
 
                     $('#myServiceModal').modal('show'); // Open the modal
                     hideLoader();
