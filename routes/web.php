@@ -21,6 +21,7 @@ use App\Http\Controllers\Frontend\FrontendCompanyPageController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\JobController;
 use App\Http\Controllers\Frontend\LocationController;
+use App\Http\Controllers\Frontend\Portfolio\PortfolioClientController;
 use App\Http\Controllers\Frontend\Portfolio\PortfolioHomeController;
 use App\Http\Controllers\Frontend\Portfolio\PortfolioServiceController;
 use App\Http\Controllers\Frontend\PricingPageController;
@@ -123,6 +124,15 @@ Route::group(
             'edit'    => 'portfolio.service.edit',
             'update'  => 'portfolio.service.update',
             'destroy' => 'portfolio.service.destroy',
+        ]);
+        Route::resource('/portfolio/client', PortfolioClientController::class)->names([
+            'index'   => 'portfolio.client.index',
+            'create'  => 'portfolio.client.create',
+            'store'   => 'portfolio.client.store',
+            'show'    => 'portfolio.client.show',
+            'edit'    => 'portfolio.client.edit',
+            'update'  => 'portfolio.client.update',
+            'destroy' => 'portfolio.client.destroy',
         ]);
         // Route::post('/profile/portfolio-info-update', [CandidatePortfolioController::class, 'portfolioInfoUpdate'])->name('profile.portfolio-info.update');
         Route::resource('experience', CandidateExperienceController::class);

@@ -83,7 +83,8 @@ class PortfolioServiceController extends Controller
         $service = PortfolioService::findorfail($id);
 
         if (auth()->user()->candidateProfile->id  !== $service->candidate_id) {
-            abort(404);
+
+            return response(['message' => 'Unauthorized'], 401);
         }
 
         $request->validate([
@@ -116,7 +117,7 @@ class PortfolioServiceController extends Controller
 
 
             if (auth()->user()->candidateProfile->id  !== $service->candidate_id) {
-                abort(404);
+                return response(['message' => 'Unauthorized'], 401);
             }
 
             $service->delete();

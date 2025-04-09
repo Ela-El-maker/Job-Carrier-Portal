@@ -298,17 +298,17 @@
                                 </div>
 
                                 <div style="flex: 0 0 50%; padding: 8px;">
-                                    <label for="service_visible"
+                                    <label for="client_visible"
                                         style="display: block; margin-bottom: 8px; font-size: 14px; font-weight: 500; color: #475569;">
                                         Show <span style="color: #ef4444;">*</span>
                                     </label>
-                                    <select name="service_visible" id="service_visible"
+                                    <select name="client_visible" id="client_visible"
                                         class="form-control form-icons selectpicker"
                                         style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; background-color: white; font-size: 14px; color: #334155; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
                                         <option value="1">Yes</option>
                                         <option value="0">No</option>
                                     </select>
-                                    <x-input-error :messages="$errors->get('service_visible')" class="mt-2"
+                                    <x-input-error :messages="$errors->get('client_visible')" class="mt-2"
                                         style="font-size: 12px; color: #ef4444;" />
                                 </div>
 
@@ -531,5 +531,158 @@
 
         // Fetch Services on page load
         fetchService();
+
+
+        // Client Section Variables
+        var clientEditId = "";
+        var clientEditMode = false;
+
+        /***
+         * Client Section
+         *
+         */
+        // Function to fetch all Clients and update the table
+        function fetchClients() {
+            $.ajax({
+                method: 'GET',
+                url: "{{ route('candidate.portfolio.client.index') }}", // Update with your actual route
+                success: function(response) {
+                    $('.client-tbody').html(response);
+                },
+                error: function(xhr, status, error) {
+                    console.log('Error fetching clients:', error);
+                }
+            });
+        }
+
+        // Handle form submission for adding or editing client
+        $('#ClientForm').on('submit', function(event) {
+            event.preventDefault();
+
+            const formData = $(this).serialize();
+            let method = clientEditMode ? 'PUT' : 'POST';
+            let url = clientEditMode ?
+                "{{ route('candidate.portfolio.client.update', ':id') }}".replace(':id', clientEditId) :
+                "{{ route('candidate.portfolio.client.store') }}"; // Update with your actual routes
+
+            $.ajax({
+                method: method,
+                url: url,
+                data: formData,
+                beforeSend: function() {
+                    showLoader();
+                },
+                success: function(response) {
+                    fetchClients(); // Refresh the Client list
+                    $('#ClientForm').trigger('reset'); // Clear the form
+                    $('#myClientModal').modal('hide'); // Hide the modal
+                    hideLoader();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: response.message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    notyf.success(response.message);
+                    clientEditId = ""; // Reset the editId
+                    clientEditMode = false; // Switch off edit mode
+                },
+                error: function(xhr, status, error) {
+                    hideLoader();
+                    console.log('Error saving Client:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'There was an error saving the Client.',
+                    });
+                }
+            });
+        });
+
+        // Handle edit button click to populate modal with client data
+        $('body').on('click', '.edit-client', function(e) {
+            e.preventDefault(); // Prevent default link behavior
+
+            let url = $(this).attr('href'); // Get the edit URL
+
+            $.ajax({
+                method: 'GET',
+                url: url,
+                beforeSend: function() {
+                    showLoader();
+                },
+                success: function(response) {
+                    // Populate modal fields with the client data
+                    $('#ClientForm input[name="client_name"]').val(response.client_name);
+                    $('#ClientForm select[name="service_visible"]').val(response.service_visible);
+                    $('#ClientForm input[name="client_company"]').val(response.client_company);
+                    $('#ClientForm input[name="client_title"]').val(response.client_title);
+                    $('#ClientForm textarea[name="client_note"]').val(response.client_note);
+
+                    $('#myClientModal').modal('show'); // Open the modal
+                    hideLoader();
+
+                    clientEditId = response.id; // Set the ID for updating
+                    clientEditMode = true; // Enable edit mode
+                },
+                error: function(xhr, status, error) {
+                    hideLoader();
+                    console.log('Error loading Client:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Failed to load Client data.',
+                    });
+                }
+            });
+        });
+
+        // Delete Client
+        $("body").on('click', '.delete-client', function(e) {
+            e.preventDefault();
+            let url = $(this).attr('href')
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        method: 'DELETE',
+                        url: url,
+                        data: {
+                            _token: "{{ csrf_token() }}"
+                        },
+                        beforeSend: function() {
+                            showLoader();
+                        },
+                        success: function(response) {
+                            fetchClients();
+                            hideLoader();
+                            notyf.success(response.message);
+                        },
+                        error: function(xhr, status, error) {
+                            console.log(xhr);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: xhr.responseJSON.message ||
+                                    'Failed to delete client',
+                            });
+                            hideLoader();
+                        }
+                    });
+                }
+            });
+        });
+
+        // Fetch Clients on page load
+        fetchClients();
     </script>
 @endpush

@@ -15,12 +15,28 @@ class CandidatePortfolio extends Model
         'sub_description',
         'background_image',
         'resume',
-        'portfolio_about'
+        'portfolio_about',
+        'github_url',
+        'linkedin_url',
+        'whatsapp_url',
+        'instagram_url',
+        'portfolio_url',
+
     ];
 
 
     function services(): HasMany
     {
         return $this->hasMany(PortfolioService::class, 'candidate_id', 'id')->orderBy('id', 'DESC');
+    }
+
+    function clients(): HasMany
+    {
+        return $this->hasMany(PortfolioClient::class, 'candidate_id', 'id')->orderBy('id', 'DESC');
+    }
+
+    function candidateSocial(): HasMany
+    {
+        return $this->hasMany(CandidateSocial::class, 'candidate_id', 'id');
     }
 }

@@ -22,10 +22,16 @@ class CandidatePortfolioAboutRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'portfolio_about' => 'required|string',
-            'socials' => 'nullable|array',
-            'socials.*.type' => 'nullable|string|exists:social_platforms,type',
-            'socials.*.url' => 'nullable|active_url',
+            'portfolio_about' => 'required|string',
+            'github_url' => 'nullable|active_url',
+            'linkedin_url' => 'nullable|active_url',
+            'whatsapp_url' => 'nullable|active_url',
+            'instagram_url' => 'nullable|active_url',
+            'portfolio_url' => 'nullable|active_url',
+
+            // 'socials' => 'nullable|array',
+            // 'socials.*.type' => 'nullable|string|exists:social_platforms,type',
+            // 'socials.*.url' => 'nullable|active_url',
         ];
     }
 }

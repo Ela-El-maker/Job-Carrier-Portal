@@ -19,11 +19,11 @@ return new class extends Migration
             $table->text('resume')->nullable();
             $table->text('sub_description')->nullable();
             $table->text('portfolio_about')->nullable();
-            $table->string('client_name')->nullable();
-            $table->string('client_company')->nullable();
-            $table->string('client_title')->nullable();
-            $table->text('client_note')->nullable();
-            $table->boolean('client_visible')->default(0);
+            $table->string('github_url')->nullable();
+            $table->string('linkedin_url')->nullable();
+            $table->string('whatsapp_url')->nullable();
+            $table->string('instagram_url')->nullable();
+            $table->string('portfolio_url')->nullable();
             $table->boolean('portfolio_complete')->default(0);
             $table->boolean('portfolio_visibility')->default(0);
             $table->timestamps();

@@ -10,4 +10,10 @@ class SocialPlatform extends Model
 {
     use HasFactory;
     protected $fillable = ['name', 'type'];
+
+
+    public function candidateSocials()
+    {
+        return $this->hasMany(CandidateSocial::class);
+    }
 }

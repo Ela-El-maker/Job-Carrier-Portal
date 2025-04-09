@@ -1,11 +1,5 @@
 <div class="tab-pane fade" id="serviceSection" role="tabpanel" aria-labelledby="service-tab">
-    @php
-        $portfolioServices =
-            $portfolioServices ??
-            \App\Models\PortfolioService::where('candidate_id', auth()->user()?->candidateProfile?->id)
-                ->orderBy('id', 'DESC')
-                ->get();
-    @endphp
+
 
     <div style="margin-top: 40px;">
         <h3 style="color: #1e293b; font-weight: 600; margin-bottom: 8px; font-size: 20px; letter-spacing: -0.5px;">
@@ -53,7 +47,8 @@
                 <tbody class="service-tbody">
                     @forelse ($portfolioServices as $service)
                         <tr style="transition: background-color 0.15s ease;">
-                            <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">{{ $loop->iteration }}
+                            <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">
+                                {{ $loop->iteration }}
                             </td>
                             <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">
                                 {{ $service?->service_icon }}</td>
@@ -70,7 +65,7 @@
                             <td style="padding: 12px; border-bottom: 1px solid #e0e6ed;">
                                 <a href="" class="btn-small btn btn-primary edit-client"
                                     style="background-color: #2ecc71; color: white; padding: 6px 10px; text-decoration: none; border-radius: 4px; margin-right: 5px;"
-                                    data-bs-toggle="modal" data-bs-target="#myClientsModal">
+                                    data-bs-toggle="modal" data-bs-target="#myClientModal">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <a href="" class="btn-small btn btn-danger delete-client"
@@ -129,52 +124,48 @@
                             Title</th>
                         <th
                             style="padding: 14px 16px; text-align: left; color: #475569; border-bottom: 1px solid #e2e8f0; font-weight: 600;">
-                            Note</th>
+                            Visible</th>
                         <th
                             style="padding: 14px 16px; text-align: left; color: #475569; border-bottom: 1px solid #e2e8f0; font-weight: 600; width: 140px;">
                             Actions</th>
                     </tr>
                 </thead>
-                <tbody class="clients-tbody">
-                    <tr style="transition: background-color 0.15s ease;">
-                        <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">1</td>
-                        <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">John Doe</td>
-                        <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">Acme Corp.</td>
-                        <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">CEO</td>
-                        <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">Very important client</td>
-                        <td style="padding: 12px; border-bottom: 1px solid #e0e6ed;">
-                            <a href="" class="btn-small btn btn-primary edit-client"
-                                style="background-color: #2ecc71; color: white; padding: 6px 10px; text-decoration: none; border-radius: 4px; margin-right: 5px;"
-                                data-bs-toggle="modal" data-bs-target="#myClientsModal">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a href="" class="btn-small btn btn-danger delete-client"
-                                style="background-color: #e74c3c; color: white; padding: 6px 10px; text-decoration: none; border-radius: 4px;">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
-                        </td>
-                    </tr>
+                <tbody class="client-tbody">
+                    @foreach ($portfolioClients as $client)
+                        <tr style="transition: background-color 0.15s ease;">
+                            <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">{{ $loop->iteration }}
+                            </td>
+                            <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">
+                                {{ $client?->client_name }}
+                            </td>
+                            <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">
+                                {{ $client?->client_company }}</td>
+                            <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">
+                                {{ $client?->client_title }}</td>
 
-                    <tr style="transition: background-color 0.15s ease;">
-                        <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">2</td>
-                        <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">Jane Smith</td>
-                        <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">Tech Innovations</td>
-                        <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">CTO</td>
-                        <td style="padding: 14px 16px; border-bottom: 1px solid #e2e8f0;">Important partner</td>
-                        <td style="padding: 12px; border-bottom: 1px solid #e0e6ed;">
-                            <a href="" class="btn-small btn btn-primary edit-client"
-                                style="background-color: #2ecc71; color: white; padding: 6px 10px; text-decoration: none; border-radius: 4px; margin-right: 5px;"
-                                data-bs-toggle="modal" data-bs-target="#myClientsModal">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a href="" class="btn-small btn btn-danger delete-client"
-                                style="background-color: #e74c3c; color: white; padding: 6px 10px; text-decoration: none; border-radius: 4px;">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
-                        </td>
-                    </tr>
+                            <td style="padding:14px 16px;border-bottom:1px solid #e2e8f0;">
+                                @if ($client?->client_visible === 1)
+                                    <span class="badge text-bg-success">Visible</span>
+                                @else
+                                    <span class="badge text-bg-danger">Invisible</span>
+                                @endif
+                            </td>
+                            <td style="padding: 12px; border-bottom: 1px solid #e0e6ed;">
+                                <a href="{{ route('candidate.portfolio.client.edit', $client->id) }}"
+                                    class="btn-small btn btn-primary edit-client"
+                                    style="background-color: #0b6fb6; color: white; padding: 6px 10px; text-decoration: none; border-radius: 4px; margin-right: 5px;"
+                                    data-bs-toggle="modal" data-bs-target="#myClientModal">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{{ route('candidate.portfolio.client.destroy', $client->id) }}"
+                                    class="btn-small btn btn-danger delete-client"
+                                    style="background-color: #e74c3c; color: white; padding: 6px 10px; text-decoration: none; border-radius: 4px;">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
 
-                    <!-- Additional rows can go here -->
                 </tbody>
             </table>
         </div>

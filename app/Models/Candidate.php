@@ -50,53 +50,57 @@ class Candidate extends Model
     }
 
 
-    function skills() : HasMany
+    function skills(): HasMany
     {
-        return $this->hasMany(CandidateSkill::class, 'candidate_id','id');
+        return $this->hasMany(CandidateSkill::class, 'candidate_id', 'id');
     }
 
-    function languages() : HasMany
+    function languages(): HasMany
     {
-        return $this->hasMany(CandidateLanguage::class, 'candidate_id','id');
-    }
-
-
-
-    function candidateCountry() : BelongsTo
-    {
-        return $this->belongsTo(Country::class, 'country','id');
+        return $this->hasMany(CandidateLanguage::class, 'candidate_id', 'id');
     }
 
 
-    function candidateState() : BelongsTo
+
+    function candidateCountry(): BelongsTo
     {
-        return $this->belongsTo(State::class, 'state','id');
+        return $this->belongsTo(Country::class, 'country', 'id');
     }
 
 
-    function candidateCity() : BelongsTo
+    function candidateState(): BelongsTo
     {
-        return $this->belongsTo(City::class, 'city','id');
+        return $this->belongsTo(State::class, 'state', 'id');
     }
 
-    function experience() : BelongsTo
+
+    function candidateCity(): BelongsTo
     {
-        return $this->belongsTo(Experience::class, 'experience_id','id');
+        return $this->belongsTo(City::class, 'city', 'id');
     }
 
-    function experiences() : HasMany
+    function experience(): BelongsTo
     {
-        return $this->hasMany(CandidateExperience::class, 'candidate_id','id')->orderBy('id','DESC');
+        return $this->belongsTo(Experience::class, 'experience_id', 'id');
     }
 
-    function educations() : HasMany
+    function experiences(): HasMany
     {
-        return $this->hasMany(CandidateEducation::class, 'candidate_id','id')->orderBy('id','DESC');
+        return $this->hasMany(CandidateExperience::class, 'candidate_id', 'id')->orderBy('id', 'DESC');
     }
 
-    function profession() : BelongsTo
+    function educations(): HasMany
     {
-        return $this->belongsTo(Profession::class, 'profession_id','id');
+        return $this->hasMany(CandidateEducation::class, 'candidate_id', 'id')->orderBy('id', 'DESC');
     }
 
+    function profession(): BelongsTo
+    {
+        return $this->belongsTo(Profession::class, 'profession_id', 'id');
+    }
+
+    public function portfolio()
+    {
+        return $this->hasOne(CandidatePortfolio::class, 'candidate_id', 'id');
+    }
 }
