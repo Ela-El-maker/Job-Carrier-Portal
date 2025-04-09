@@ -26,15 +26,26 @@
                 <div style="display: flex; align-items: center; margin-bottom: 10px;">
                     <div
                         style="width: 50px; height: 50px; border-radius: 50%; background-color: #e2e8f0; display: flex; justify-content: center; align-items: center; margin-right: 15px; overflow: hidden;">
-                        <i class="fas fa-user" style="font-size: 20px; color: #4361ee;"></i>
+
+                        @if (auth()->user()->candidateProfile?->image)
+                            <img src="{{ asset(auth()->user()->candidateProfile->image) }}" alt="Profile Image"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                        @else
+                            <i class="fas fa-user" style="font-size: 20px; color: #4361ee;"></i>
+                        @endif
                     </div>
+
                     <div>
                         <h5 style="margin: 0 0 5px; font-size: 16px; font-weight: 600; color: #2d3748;">
-                            {{ auth()->user()->name }}</h5>
-                        <p style="margin: 0; font-size: 14px; color: #718096;">{{ auth()->user()->email }}</p>
+                            {{ auth()->user()->name }}
+                        </h5>
+                        <p style="margin: 0; font-size: 14px; color: #718096;">
+                            {{ auth()->user()->email }}
+                        </p>
                     </div>
                 </div>
             </div>
+
 
             <ul class="nav flex-column" style="padding: 10px 0; list-style: none; margin: 0;">
                 <li class="nav-item" style="margin-bottom: 8px;">
@@ -69,6 +80,16 @@
                         <i class="fas fa-bookmark"
                             style="margin-right: 12px; font-size: 16px; width: 20px; text-align: center; color: #718096;"></i>
                         <span>Saved Jobs</span>
+                        <span
+                            style="margin-left: auto; background-color: rgba(67, 97, 238, 0.1); color: #4361ee; font-size: 12px; padding: 2px 8px; border-radius: 20px; font-weight: 600;">12</span>
+                    </a>
+                </li>
+                <li class="nav-item" style="margin-bottom: 8px;">
+                    <a class="nav-link btn btn-link" href="{{ route('candidate.portfolio.index') }}"
+                        style="display: flex; align-items: center; text-align: left; color: #4a5568; padding: 12px 16px; border-radius: 10px; font-weight: 500; transition: all 0.2s; text-decoration: none; border: none;">
+                        <i class="fas fa-bookmark"
+                            style="margin-right: 12px; font-size: 16px; width: 20px; text-align: center; color: #718096;"></i>
+                        <span>Portfolio</span>
                         <span
                             style="margin-left: auto; background-color: rgba(67, 97, 238, 0.1); color: #4361ee; font-size: 12px; padding: 2px 8px; border-radius: 20px; font-weight: 600;">12</span>
                     </a>

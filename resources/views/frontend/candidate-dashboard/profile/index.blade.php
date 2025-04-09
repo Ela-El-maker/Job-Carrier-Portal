@@ -92,10 +92,7 @@
                                             <a href="#experience" data-toggle="tab" role="tab"
                                                 aria-controls="experience" aria-selected="false">Experience & Education</a>
                                         </li>
-                                        <li>
-                                            <a href="#portfolio" data-toggle="tab" role="tab" aria-controls="portfolio"
-                                                aria-selected="false">Portfolio</a>
-                                        </li>
+
                                         <li>
                                             <a href="#account" data-toggle="tab" role="tab" aria-controls="account"
                                                 aria-selected="false">Account Setting</a>
@@ -109,8 +106,6 @@
                                         @include('frontend.candidate-dashboard.profile.sections.profile-section')
 
                                         @include('frontend.candidate-dashboard.profile.sections.experience-section')
-
-                                        @include('frontend.candidate-dashboard.profile.sections.portfolio-section')
 
                                         @include('frontend.candidate-dashboard.profile.sections.account-section')
 
@@ -241,8 +236,6 @@
 
                                 </div>
                             </div>
-
-
                         </div>
                         <div class="text-right">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>

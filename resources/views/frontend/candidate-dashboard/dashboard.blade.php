@@ -27,11 +27,11 @@
         }
 
         /*
-                            body {
-                                font-family: var(--font-main);
-                                color: var(--text-color);
-                                background-color: #fcfaff;
-                            } */
+                                    body {
+                                        font-family: var(--font-main);
+                                        color: var(--text-color);
+                                        background-color: #fcfaff;
+                                    } */
 
         .page-header {
             background-color: var(--breadcrumb-bg);
@@ -532,7 +532,7 @@
                                                     <!-- Profile Image Section -->
                                                     <div class="card__profile-image">
                                                         <!-- Use a default placeholder image if the user's image is missing -->
-                                                        <img src="{{ $candidate?->image ? asset($candidate->image) : asset('images/default-profile.png') }}"
+                                                        <img src="{{ asset(auth()->user()->candidateProfile?->image) ? asset($candidate->image) : asset('images/default-profile.png') }}"
                                                             alt="Profile Image" class="profile-image">
 
 
@@ -566,7 +566,7 @@
                                                 <div class="profile-card-content">
                                                     <!-- Profile Image Section -->
                                                     <div class="card__profile-image">
-                                                        <img src="{{ auth()->user()->image ? asset(auth()->user()->image) : asset('images/default-profile.png') }}"
+                                                        <img src="{{ auth()->user()->candidateProfile?->image }}"
                                                             alt="Profile Image" class="profile-image">
                                                         <a href="{{ route('candidate.profile.index') }}"
                                                             class="edit-profile-btn">View Profile</a>

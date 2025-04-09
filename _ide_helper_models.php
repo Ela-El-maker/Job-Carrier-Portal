@@ -99,6 +99,7 @@ namespace App\Models{
  * @property int $author_id
  * @property string $description
  * @property int $status
+ * @property int $show_at_popular
  * @property int $featured
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -117,6 +118,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Blog whereFeatured($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Blog whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Blog whereImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Blog whereShowAtPopular($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Blog whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Blog whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Blog whereTitle($value)
@@ -313,6 +315,59 @@ namespace App\Models{
  *
  * @property int $id
  * @property int $candidate_id
+ * @property string|null $hero_title
+ * @property string|null $background_image
+ * @property string|null $resume
+ * @property string|null $sub_description
+ * @property string|null $portfolio_about
+ * @property string|null $service_name
+ * @property string|null $service_url
+ * @property string|null $service_icon
+ * @property string|null $service_description
+ * @property int $service_visible
+ * @property string|null $client_name
+ * @property string|null $client_company
+ * @property string|null $client_title
+ * @property string|null $client_note
+ * @property int $client_visible
+ * @property int $portfolio_complete
+ * @property int $portfolio_visibility
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidatePortfolio newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidatePortfolio newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidatePortfolio query()
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidatePortfolio whereBackgroundImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidatePortfolio whereCandidateId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidatePortfolio whereClientCompany($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidatePortfolio whereClientName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidatePortfolio whereClientNote($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidatePortfolio whereClientTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidatePortfolio whereClientVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidatePortfolio whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidatePortfolio whereHeroTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidatePortfolio whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidatePortfolio wherePortfolioAbout($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidatePortfolio wherePortfolioComplete($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidatePortfolio wherePortfolioVisibility($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidatePortfolio whereResume($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidatePortfolio whereServiceDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidatePortfolio whereServiceIcon($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidatePortfolio whereServiceName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidatePortfolio whereServiceUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidatePortfolio whereServiceVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidatePortfolio whereSubDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidatePortfolio whereUpdatedAt($value)
+ */
+	class CandidatePortfolio extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $candidate_id
  * @property int $skill_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -327,6 +382,30 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|CandidateSkill whereUpdatedAt($value)
  */
 	class CandidateSkill extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $candidate_id
+ * @property int $social_id
+ * @property string|null $url
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\SocialPlatform $social
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidateSocial newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidateSocial newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidateSocial query()
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidateSocial whereCandidateId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidateSocial whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidateSocial whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidateSocial whereSocialId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidateSocial whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CandidateSocial whereUrl($value)
+ */
+	class CandidateSocial extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -1016,6 +1095,17 @@ namespace App\Models{
 /**
  * 
  *
+ * @method static \Illuminate\Database\Eloquent\Builder|PortfolioService newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|PortfolioService newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|PortfolioService query()
+ */
+	class PortfolioService extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
  * @property int $id
  * @property string $name
  * @property string $slug
@@ -1100,6 +1190,27 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Skill withUniqueSlugConstraints(\Illuminate\Database\Eloquent\Model $model, string $attribute, array $config, string $slug)
  */
 	class Skill extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $type
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPlatform newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPlatform newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPlatform query()
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPlatform whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPlatform whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPlatform whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPlatform whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPlatform whereUpdatedAt($value)
+ */
+	class SocialPlatform extends \Eloquent {}
 }
 
 namespace App\Models{

@@ -6,6 +6,7 @@ use App\Http\Controllers\Frontend\CandidateEducationController;
 use App\Http\Controllers\Frontend\CandidateExperienceController;
 use App\Http\Controllers\Frontend\CandidateJobBookmarkController;
 use App\Http\Controllers\Frontend\CandidateMyJobController;
+use App\Http\Controllers\Frontend\CandidatePortfolioController;
 use App\Http\Controllers\Frontend\CandidateProfileController;
 use App\Http\Controllers\Frontend\CheckoutPageController;
 use App\Http\Controllers\Frontend\CommentController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\JobController;
 use App\Http\Controllers\Frontend\LocationController;
 use App\Http\Controllers\Frontend\Portfolio\PortfolioHomeController;
+use App\Http\Controllers\Frontend\Portfolio\PortfolioServiceController;
 use App\Http\Controllers\Frontend\PricingPageController;
 use App\Http\Controllers\Frontend\UploadController;
 use App\Http\Controllers\ProfileController;
@@ -107,6 +109,22 @@ Route::group(
         Route::get('/profile', [CandidateProfileController::class, 'index'])->name('profile.index');
         Route::post('/profile/basic-info-update', [CandidateProfileController::class, 'basicInfoUpdate'])->name('profile.basic-info.update');
         Route::post('/profile/profile-info-update', [CandidateProfileController::class, 'profileInfoUpdate'])->name('profile.profile-info.update');
+
+        //Portfolio Information
+        Route::get('/portfolio', [CandidatePortfolioController::class, 'index'])->name('portfolio.index');
+        Route::get('/portfolio', [CandidatePortfolioController::class, 'index'])->name('portfolio.index');
+        Route::post('/portfolio/portfolio-hero-update', [CandidatePortfolioController::class, 'portfolioHeroUpdate'])->name('portfolio.hero.update');
+        Route::post('/portfolio/portfolio-about-update', [CandidatePortfolioController::class, 'portfolioAboutUpdate'])->name('portfolio.about.update');
+        Route::resource('/portfolio/service', PortfolioServiceController::class)->names([
+            'index'   => 'portfolio.service.index',
+            'create'  => 'portfolio.service.create',
+            'store'   => 'portfolio.service.store',
+            'show'    => 'portfolio.service.show',
+            'edit'    => 'portfolio.service.edit',
+            'update'  => 'portfolio.service.update',
+            'destroy' => 'portfolio.service.destroy',
+        ]);
+        // Route::post('/profile/portfolio-info-update', [CandidatePortfolioController::class, 'portfolioInfoUpdate'])->name('profile.portfolio-info.update');
         Route::resource('experience', CandidateExperienceController::class);
         Route::resource('education', CandidateEducationController::class);
         Route::post('/profile/account-info-update', [CandidateProfileController::class, 'accountInfoUpdate'])->name('profile.account-info.update');

@@ -95,11 +95,9 @@
 
             <div class='section-header'>
 
-                <h2>My <strong class='color'>Ser vices</strong></h2>
+                <h2>My <strong class='color'>Services</strong></h2>
 
             </div>
-
-
 
             <div class='row'>
 
@@ -175,87 +173,8 @@
 
     </div>
 
-    <div class='section-block skills-block'>
-        <div class='container-fluid'>
 
-            <div class='section-header'>
-
-                <h2>
-                    My <strong class='color'>Skills</strong>
-                </h2>
-
-            </div>
-
-            <div class='row'>
-
-                <div class='col-md-6'>
-
-                    <div class='skill'>
-
-                        <h4>HTML/CSS</h4>
-
-                        <div class='bar'>
-                            <div class='percent' styl e='width:85%;'></div>
-                        </div>
-
-                    </div>
-
-
-                    <div class='skill'>
-
-                        <h4>php</h4>
-
-                        <div class='bar'>
-                            <div class='percent' style='width:90%;'></div>
-                        </div>
-
-                    </div>
-
-
-                    <div class='skill'>
-
-                        <h4>jQuery</h4>
-
-                        <div class='bar'>
-                            <div class='percent' style='width:75%;'>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class='col-md-6'>
-
-                    <div class='skill'>
-                        <h4>JavaScript</h4>
-                        <div class='bar'>
-                            <div class='percent' style='width:85%;'></div>
-                        </div>
-                    </div>
-
-
-                    <div class='skill'>
-                        <h4>WordPress</h4>
-                        <div class='bar'>
-                            <div class='percent' style='width:90%;'>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class='skill'>
-                        <h4>SEO</h4>
-                        <div class='bar'>
-                            <div class='percent' style='width:75%;'></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class='section-block pricing-block'>
+    {{-- <div class='section-block pricing-block'>
 
         <div class='section-header'>
             <h2>My <strong class='color'>Pricing</strong>
@@ -379,5 +298,5 @@
 
 
         </div>
-    </div>
+    </div> --}}
 </section>
