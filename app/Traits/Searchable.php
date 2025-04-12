@@ -4,15 +4,18 @@ namespace App\Traits;
 
 trait Searchable
 {
-    function search($query, array $searchableFields)
+    public function applySearch($query, array $searchableFields)
     {
         if (request()->has('search')) {
-            return $query->where(function ($subquery) use ($searchableFields) {
+            $search = request('search');
+
+            return $query->where(function ($subquery) use ($searchableFields, $search) {
                 foreach ($searchableFields as $field) {
-                    $subquery->orwhere($field, 'like', '%' . request('search') . '%');
+                    $subquery->orWhere($field, 'like', '%' . $search . '%');
                 }
             });
         }
-        return ;
+
+        return $query;
     }
 }
