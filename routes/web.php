@@ -86,7 +86,7 @@ Route::get('candidates', [FrontendCandidatePageController::class, 'index'])->nam
 Route::get('candidates/{slug}', [FrontendCandidatePageController::class, 'show'])->name('candidates.show');
 
 /**
- * Candiate Frontend Portfolio Page
+ * Candidate Frontend Portfolio Page
  *
  */
 
