@@ -81,7 +81,7 @@
                             <!-- Confirm Password -->
                             <div class="form-group col-md-6">
                                 <label>Confirm Password</label>
-                                <input type="password"name="password_confirmation"
+                                <input type="password" name="password_confirmation"
                                     class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
                                     placeholder="************">
                                 <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />

@@ -15,7 +15,7 @@ trait FileUploadTrait
         if($request->hasFile($inputName))
         {
             $file = $request-> {$inputName};
-            $ext = $file ->getclientoriginalextension();
+            $ext = $file->getClientOriginalExtension();
             $fileName = 'media_'.uniqid().'.'.$ext;
             $file->move(public_path($path), $fileName);
 
