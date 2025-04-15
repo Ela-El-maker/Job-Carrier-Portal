@@ -411,3 +411,48 @@ if (!function_exists('calculateDeadline')) {
         }
     }
 }
+if (!function_exists('calculateAge')) {
+    /**
+     * Calculate detailed age (e.g., "2 years, 3 months", "6 months, 12 days").
+     *
+     * @param string|null $dob Date of birth in Y-m-d or similar format.
+     * @return string
+     */
+    function calculateAge(?string $dob): string
+    {
+        if (!$dob) {
+            return 'Unknown';
+        }
+
+        try {
+            $birthDate = \Carbon\Carbon::parse($dob);
+            $now = \Carbon\Carbon::now();
+
+            // If DOB is today
+            if ($birthDate->isToday()) {
+                return 'Just born';
+            }
+
+            $diff = $birthDate->diff($now);
+
+            $parts = [];
+
+            if ($diff->y > 0) {
+                $parts[] = $diff->y . ' year' . ($diff->y > 1 ? 's' : '');
+            }
+
+            if ($diff->m > 0) {
+                $parts[] = $diff->m . ' month' . ($diff->m > 1 ? 's' : '');
+            }
+
+            if ($diff->d > 0 && $diff->y === 0) { // Only show days if under 1 year
+                $parts[] = $diff->d . ' day' . ($diff->d > 1 ? 's' : '');
+            }
+
+            return implode(', ', $parts);
+        } catch (\Exception $e) {
+            return 'Invalid date';
+        }
+    }
+}
+

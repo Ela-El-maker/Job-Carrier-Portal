@@ -5,7 +5,7 @@
 
             <div class='section-header'>
                 <h2>
-                    I'm a <str ong class='color'>Programmer</strong>
+                    {{ $candidatePortfolio?->hero_title }}
                 </h2>
             </div>
 
@@ -17,27 +17,27 @@
 
                         <li>
                             <strong>Name:</strong>
-                            <span>Jo hn Doe</span>
+                            <span>{{ $candidatePortfolio?->candidate?->full_name }}</span>
                         </li>
 
                         <li>
                             <strong>Job:</strong>
-                            <span>Free lancer</span>
+                            <span>{{ $candidatePortfolio?->candidate?->title }}</span>
                         </li>
 
                         <li>
                             <strong>Age:</strong>
-                            <span>26 Years </span>
+                            <span>{{ calculateAge($candidatePortfolio?->candidate?->birth_date) }} </span>
                         </li>
 
                         <li>
                             <strong>Residence:</strong>
-                            <span>United St ates</span>
+                            <span>{{ formatLocation($candidatePortfolio?->candidate?->candidateCountry?->name, $candidatePortfolio?->candidate?->candidateState?->name) }}</span>
                         </li>
 
                         <li>
                             <strong>Hometown:</strong>
-                            <span>Dokr i</span>
+                            <span>{{ formatLocation($candidatePortfolio?->candidate?->candidateCity?->name, $candidatePortfolio?->candidate?->address) }}</span>
                         </li>
 
 
@@ -49,34 +49,20 @@
                 <div class='col-md-8'>
 
                     <div class='about-text'>
-                        <p>
-                            Qui ne indoctum electram vituperatoribus. Eirmod tamquam efficiend i me i cu,
-                            eum idque vo luptatum ad, quo i d tollit regione prompta. Cu probo iusto
-                            assentior eos, usu summo perpetua ne. Te suas phaedrum ullamcorper has. Ea mei
-                            ponderum rationibus dissentias. Inani phaedrum suavitate eu qui, vide aperiri
-                            facilis est eu. Te appetere cotidieque pro, duo eu assum facete instructior, no
-                            autem aeterno reprimique nec. Pri cu delectus adolescens, eruditi placerat cu
-                            sed, zril nonumes forensibus in eam. Eam ne dolore diceret pericula, in vis
-                            numquam pertinax. Vel ne dolorum eloquentiam, et vel senserit incorrupte
-                            neglegentur, pro cu audiam ocurreret reprimique.
-                        </p>
-
-                        <p>
-                            Qui ne indoctum electram vituperatoribus. Eirmod tamquam efficiendi mei cu, eum
-                            idque voluptatum ad, quo id tollit regione prompta. Cu probo iusto assentior.
-                            Qui ne indoctum electra m vituperatoribus. Eirmod tamquam efficiendi mei cu, eum
-                            idque voluptatum ad.
-                        </p>
+                        <p>{!! $candidatePortfolio?->portfolio_about !!}</p>
 
                     </div>
 
                     <div class='about-btns'>
+                        @if ($candidatePortfolio?->resume)
+                            <a href='{{ asset($candidatePortfolio?->resume) }}' class='btn-custom btn-color' download>
+                                Download Resume
+                            </a>
+                        @endif
 
-                        <a href='#' class='btn-custom btn-color'>
-                            Download Resume
-                        </a>
 
-                        <a href='#' class='btn-custom btn-color'>
+
+                        <a href='{{ $candidatePortfolio?->whatsapp_url }}' class='btn-custom btn-color'>
                             Hire Me
                         </a>
 
@@ -100,69 +86,39 @@
             </div>
 
             <div class='row'>
+                @forelse ($candidatePortfolio->portfolioServices as $service)
+                @if ($service?->service_visible)
+                    <div class='col-md-4'>
+                        <div class='service'>
 
-                <div class='col-md-4'>
-                    <div class='service'>
+                            {{-- Icon wrapped in a link --}}
+                            <div class='icon'>
+                                <a href="{{ $service?->service_url  }}" target="_blank" style="text-decoration: none;">
+                                  
+                                    <i class="{{ $service?->service_icon }}" style="font-size: 50px;"></i>
+                                </a>
+                            </div>
 
-                        <div class='icon'>
-                            <i class='icon-basic-photo'></i>
+                            <div class='content'>
+
+                                {{-- Name wrapped in a link --}}
+                                <h4>
+                                    <a href="{{ $service?->service_url  }}" target="_blank" style="text-decoration: none; color: inherit;">
+                                        {{ $service?->service_name }}
+                                    </a>
+                                </h4>
+
+                                <p>{{ $service?->service_description }}</p>
+
+                            </div>
+
                         </div>
-
-                        <div class='content'>
-
-                            <h4>Photo gr ap hy</h4>
-
-                            <p>
-                                Ei constituam theophrastus per, sea dolorum disputationi in, vel menandri
-                                suavitate similique in. Vide assum conceptam eum.
-                            </p>
-
-                        </div>
-
                     </div>
-                </div>
+                @endif
+            @empty
+                <p class="text-muted fst-italic">No Services have been added yet.</p>
+            @endforelse
 
-                <div class='col-md-4'>
-                    <div class='service'>
-
-                        <div class='icon'>
-                            <i class='icon-basic-keyboard'></i>
-                        </div>
-
-                        <div class='content'>
-
-                            <h4> Programming</h4>
-
-                            <p>
-                                Ei constit uam theophrastus per, sea dolorum disputationi in, vel menandri
-                                suav itate similique in. Vide assum conceptam eum.
-                            </p>
-
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class='col-md-4'>
-                    <div class='service'>
-
-                        <div class='icon'>
-                            <i class='ion-social-wordpress-outline'></i>
-                        </div>
-
-                        <div class='content'>
-
-                            <h4>WordPress</h4>
-
-                            <p>
-                                Ei constituam theophras tus per, sea dolorum disputationi in, vel
-                                menandri suavitate similiq ue in. Vide assum conceptam eum.
-                            </p>
-
-                        </div>
-
-                    </div>
-                </div>
 
 
 

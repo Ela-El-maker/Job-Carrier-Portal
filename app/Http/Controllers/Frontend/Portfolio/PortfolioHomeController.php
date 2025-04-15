@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend\Portfolio;
 
 use App\Http\Controllers\Controller;
+use App\Models\CandidatePortfolio;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -17,6 +18,8 @@ class PortfolioHomeController extends Controller
 
     function show($slug): View
     {
-        return view('frontend.portfolio.show');
+        $candidatePortfolio = CandidatePortfolio::firstOrFail();
+        // dd($candidatePortfolio);
+        return view('frontend.portfolio.show',compact('candidatePortfolio'));
     }
 }

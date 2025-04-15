@@ -20,18 +20,6 @@
                 </a>
             </li>
 
-            <li>
-                <a href='#portfolio' class='section-toggle' data-section='portfolio'>
-                    Portfolio
-                </a>
-            </li>
-
-
-            <li>
-                <a href='#contact' class='section-toggle' data-section='contact'>
-                    Contact
-                </a>
-            </li>
 
 
         </ul>

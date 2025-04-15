@@ -11,77 +11,28 @@
             </div>
 
             <ul class='timeline'>
+                @forelse ($candidatePortfolio?->educations   as $education)
+                    <li>
 
-                <li>
+                        <div class='timeline-content'>
 
-                    <div class='timeline-content'>
-
-                        <h 4>CSS College Lark an a</h4>
+                            <h4>{{ $education?->level }}</h4>
 
                             <em>
-                                <span>Masters Degree</span>
-                                <span>2013-2016</span>
+                                <span>{{ $education?->degree }}</span>
+                                <span>{{ $education?->year }}</span>
                             </em>
 
-                            <p>
-                                Lorem ipsum dolor sit amet, id electram reprimique his, dicta saepe oporteat
-                                e
-                                os
-                                an, esse erat doming at lam. Nec quodsi suscipian tur an, ad graece nemore
-                                ocurreret
-                                lam, agam ipsum meliore quo ut.
-                            </p>
+                            <p>{{ $education?->note }}</p>
 
-                    </div>
+                        </div>
 
-                </li>
+                    </li>
 
-                <li>
+                @empty
+                    <p class="text-muted fst-italic">No education details have been added yet.</p>
+                @endforelse
 
-                    <div cl ass='timeline-content'>
-
-                        <h4>CSS Colleg e Larkana</h4>
-
-                        <em>
-                            <span>Masters Degr ee</span>
-                            <span>2013-2016</span>
-                        </em>
-
-                        <p>
-                            Lorem ipsum dolor sit amet, id electram reprimique his, dicta saep e oporteat
-                            eos
-                            an,
-                            esse erat doming at lam. Nec quodsi suscipiantur an, ad graece nemore ocurreret
-                            lam,
-                            agam ipsum meliore quo ut.
-                        </p>
-
-                    </div>
-
-                </li>
-
-                <li>
-
-                    <div class='timeline-content'>
-
-                        <h4>CSS College Larkana</h4>
-
-                        <em>
-                            <span>Masters Degree</span>
-                            <span>2013-2016</span>
-                        </em>
-
-                        <p>
-                            Lorem ipsum dolor sit amet, id electram reprimique his, dicta saepe oporteat eos
-                            an,
-                            esse erat doming at lam. Nec quodsi suscipiantur an, ad graece nemore ocurreret
-                            lam,
-                            agam ipsum meliore quo ut.
-                        </p>
-
-                    </div>
-
-                </li>
 
 
 
@@ -102,75 +53,46 @@
             </div>
 
             <ul class='timeline'>
+                @forelse ($candidatePortfolio?->experiences as $experience)
+                    <li>
+                        <div class='timeline-content'
+                            style="@if ($experience?->currently_working) border: solid 5px #00DD61; @endif">
 
-                <li>
+                            <h4>{{ $experience?->company }}</h4>
 
-                    <div class='timeline-content'>
+                            <em>
+                                <span>{{ $experience?->department }} | {{ $experience?->designation }}</span><br>
+                                <span>
+                                    {{ formatDate($experience?->start) }} -
+                                    {{ $experience?->end ? formatDate($experience?->end) : 'Present' }}
+                                </span>
+                            </em>
 
-                        <h4>CSS College Larkana</h4>
+                            <p>{{ $experience?->responsibilities }}</p>
 
-                        <em>
-                            <span>Masters Degree</span>
-                            <span>2013-2016</span>
-                        </em>
+                            {{-- Current Status --}}
+                            <div style="margin-top: 0.5rem;">
+                                @if ($experience->currently_working)
+                                    <span
+                                        style="background-color: #00DD61; color: white; padding: 2px 8px; border-radius: 4px; font-weight: bold; font-size: 0.875rem;">
+                                        ✅ Currently Working Here
+                                    </span>
+                                @else
+                                    <span
+                                        style="background-color: #ccc; color: #333; padding: 2px 8px; border-radius: 4px; font-weight: bold; font-size: 0.875rem;">
+                                        ❌ No Longer Working Here
+                                    </span>
+                                @endif
+                            </div>
 
-                        <p>
-                            Lorem ipsum dolor sit amet, id electram reprimique his, dicta saepe oporteat eos
-                            an,
-                            e
-                            sse erat doming a t la m. Nec quodsi su scipiantur an, a d graece nemore
-                            ocurreret
-                            lam,
-                            agam ipsum meliore quo ut.
-                        </p>
-
-                    </div>
-
-                </li>
-
-                <li>
-
-                    <div class='timeline-content'>
-
-                        <h4>CSS College Larkana</h4>
-
-                        <em>
-                            <span>Masters Degree</span>
-                            <span>2013-2 016</span>
-                        </em>
-
-                        <p>
-                            Lorem ipsum dolor sit amet, id el ectram reprimique his, dicta saepe oporteat
-                            eos an, esse erat doming at lam. Nec quodsi suscipiantur an, ad gr aece nemore
-                            ocurreret lam, agam ipsum meliore quo ut.
-                        </p>
-
-                    </div>
-
-                </li>
-
-                <li>
-
-                    <div class='timeline-content'>
-
-                        <h4>CSS College Larkana</h4>
-
-                        <em>
-                            <span>Masters Degr ee</span>
-                            <span>2013-2016 </span>
-                        </em>
-
-                        <p>
-                            Lorem ipsu m dolor sit amet, id electram reprimique h is, dicta saepe oporteat
-                            eos
-                            an,
-                            esse erat doming at lam. Nec quodsi suscipiantur an, ad graece nemore ocurrer et
-                            lam,
-                            agam ipsum meliore quo ut.
-                        </p>
-                    </div>
-                </li>
+                        </div>
+                    </li>
+                @empty
+                    <p class="text-muted fst-italic">No work experience added yet.</p>
+                @endforelse
             </ul>
+
+
         </div>
     </div>
 
@@ -187,125 +109,27 @@
 
             <div class='testimonials-slider'>
 
+                @forelse ($candidatePortfolio?->portfolioClients as $client)
+                    @if ($client->client_visible)
+                        <div class='testimonial'>
 
-                <div class='testimonial'>
+                            <div class='icon'>
+                                <i class='ion-quote'></i>
+                            </div>
 
-                    <div class='icon'>
-                        <i class='ion-quote'></i>
-                    </div>
+                            <p>
+                                {{ $client?->client_note }}
+                            </p>
 
-                    <p>
-                        Ei constituam theophrastus per, sea dolorum disputationi in, vel menandri suavitate
-                        similique in. Vide assum conceptam eum et. Has postulant vul putate eu. Pro justo
-                        aliquando prodesset at.
-                    </p>
-
-                    <div class='author'>
-                        <h4>J ak e Doe</h4>
-                        <span>CEO a t Company</span>
-                    </div>
-
-                </div>
-
-                <div class='testimonial'>
-
-                    <div class='icon'>
-                        <i class='ion-quote'></i>
-                    </div>
-
-                    <p>
-                        Ei constituam theophra stus per, sea dol or um disputationi in, vel menandri
-                        suavitate
-                        si mi lique in. Vide assum conceptam eum et. Has postulant vul putate eu. Pro justo
-                        aliquando prodesset at.
-                    </p>
-
-                    <div class='author'>
-                        <h4>Jake Doe</h4>
-                        <span>CEO at Company</span>
-                    </div>
-
-                </div>
-
-
-                <div class='testimonial'>
-
-                    <div class='icon'>
-                        <i class='ion-quote'></i>
-                    </div>
-
-                    <p>
-                        Ei constituam theophrastus per, sea dolorum disputationi in, vel menandri suavitate
-                        si
-                        milique in. Vide a ssum conceptam eum et. Has postulant v ul putate eu. Pro justo
-                        aliquando prodesset at.
-                    </p>
-
-                    <div class='author'>
-                        <h4>Jake Doe</h4>
-                        <span>CEO at Company</span>
-                    </div>
-
-                </div>
-
-                <div class='testimonial'>
-
-                    <div class='icon'>
-                        <i class='ion-quote'></i>
-                    </div>
-
-                    <p>
-                        Ei constituam theophrastus per, sea dolorum disputationi in, vel menandri suavitate
-                        similique in. Vide assum conceptam eu m et. Has postulant vul putate eu. Pro j usto
-                        aliquando prodesset at.
-                    </p>
-
-                    <div class='author'>
-                        <h 4>Jake Doe</h4>
-                            <span>CEO at Company</span>
-                    </div>
-
-                </div>
-
-
-                <div class='testimonial'>
-
-                    <div class='icon'>
-                        <i class='ion-quote'></i>
-                    </div>
-
-                    <p>
-                        Ei constituam theophrastus per, sea dolorum disputationi in, vel menandri suavitate
-                        similique in. Vide assum conceptam eu m et. Has postulan t vul putate eu. Pro justo
-                        aliquando p rodesset at.
-                    </p>
-
-                    <div class='author'>
-                        <h4>Jake Doe</h4>
-                        <span>CEO at Company</span>
-                    </div>
-
-                </div>
-
-                <div class='testimonial'>
-
-                    <div class='icon'>
-                        <i class='ion-quote'></i>
-                    </div>
-
-                    <p>
-                        Ei constituam theop hrastus per, sea dolorum disputationi in, vel menandri suavitate
-                        similique in. Vide assum conceptam eum et. Has postula nt vul putate eu. Pr o justo
-                        aliquando prodesset at.
-                    </p>
-
-                    <div class='author'>
-                        <h4>Jake Doe</h4>
-                        <span>CEO at Company</span>
-                    </div>
-
-                </div>
-
+                            <div class='author'>
+                                <h4>{{ $client?->client_name }}</h4>
+                                <span>{{ $client?->client_title }} at {{ $client?->client_company }}</span>
+                            </div>
+                        </div>
+                    @endif
+                @empty
+                    <p class="text-muted fst-italic">No Client Responses added yet.</p>
+                @endforelse
 
             </div>
 

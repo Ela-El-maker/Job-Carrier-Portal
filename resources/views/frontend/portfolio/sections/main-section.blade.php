@@ -6,10 +6,10 @@
             <div class='inner'>
                 <div class='intro-text'>
 
-                    <h1>I'm John Doe</h1>
+                    <h1>{{ $candidatePortfolio?->candidate?->full_name }}</h1>
 
                     <p>
-                        A Friend, Dude and Buddy From Earth
+                        {{ $candidatePortfolio?->sub_description }}
                     </p>
 
                     <div class='intro-btns'>
@@ -18,7 +18,7 @@
                             Discover More
                         </a>
 
-                        <a href='#contact' class='btn-custom section-toggle' data-section='contact'>
+                        <a href='{{ $candidatePortfolio?->linkedin_url }}' class='btn-custom section-toggle' data-section='contact'>
                             Hire Me
                         </a>
 
