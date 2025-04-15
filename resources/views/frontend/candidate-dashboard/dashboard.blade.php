@@ -532,7 +532,7 @@
                                                     <!-- Profile Image Section -->
                                                     <div class="card__profile-image">
                                                         <!-- Use a default placeholder image if the user's image is missing -->
-                                                        <img src="{{ asset(auth()->user()->candidateProfile?->image) ? asset($candidate->image) : asset('images/default-profile.png') }}"
+                                                        <img src="{{ asset(auth()->user()?->candidateProfile?->image) ? asset($candidate?->image) : asset('images/default-profile.png') }}"
                                                             alt="Profile Image" class="profile-image">
 
 

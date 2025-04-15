@@ -15,7 +15,7 @@
                     <div class="col-md-3">
                         <!-- Profile Picture Upload Section -->
                         <label>Background Image </label>
-                        <x-image-preview :height="180" :width="180" :source="$candidatePortfolio?->background_image" />
+                        <x-image-preview :height="180" :width="145" :source="$candidatePortfolio?->background_image" />
                         <div class="form-group" style="padding-top: 10px;">
                             <div class="upload-file-btn">
                                 <span><i class="fa fa-upload"></i> Upload</span>
