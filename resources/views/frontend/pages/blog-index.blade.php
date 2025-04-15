@@ -232,14 +232,19 @@
                                     </div>
                                 </a>
                             </li>
-
+                            <li>
+                                <a href="https://t.me/share/url?url={{ url()->current() }}&text=Check%20this%20job%20out"
+                                    class="social-btn-roll telegram transparent" target="_blank">
+                                    <div class="social-btn-roll-icons">
+                                        <i class="social-btn-roll-icon fa fa-telegram"></i>
+                                        <i class="social-btn-roll-icon fa fa-telegram"></i>
+                                    </div>
+                                </a>
+                            </li>
                         </ul>
                         <!-- End of Social Media ul -->
                     </div>
                     <!-- Start of Social Media -->
-
-
-
                 </div>
                 <!-- End of Blog Sidebar -->
             </div>

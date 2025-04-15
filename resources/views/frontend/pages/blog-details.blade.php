@@ -61,7 +61,7 @@
 
                     <!-- Start of Social Media ul -->
                     <ul class="social-btns list-inline mt20">
-                        <!-- Social Media -->
+                        <!-- Facebook -->
                         <li>
                             <a data-social="facebook" href="#" class="social-btn-roll facebook transparent">
                                 <div class="social-btn-roll-icons">
@@ -71,7 +71,7 @@
                             </a>
                         </li>
 
-                        <!-- Social Media -->
+                        <!-- Twitter -->
                         <li>
                             <a data-social="twitter" href="#" class="social-btn-roll twitter transparent">
                                 <div class="social-btn-roll-icons">
@@ -81,7 +81,7 @@
                             </a>
                         </li>
 
-                        <!-- Social Media -->
+                        <!-- WhatsApp -->
                         <li>
                             <a href="https://wa.me/?text=Check%20out%20this%20job%20{{ url()->current() }}"
                                 class="social-btn-roll whatsapp transparent" target="_blank">
@@ -92,6 +92,7 @@
                             </a>
                         </li>
 
+                        <!-- LinkedIn -->
                         <li>
                             <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ url()->current() }}"
                                 class="social-btn-roll linkedin transparent" target="_blank">
@@ -102,6 +103,7 @@
                             </a>
                         </li>
 
+                        <!-- Reddit -->
                         <li>
                             <a href="https://www.reddit.com/submit?url={{ url()->current() }}&title=Check%20this%20job%20out"
                                 class="social-btn-roll reddit transparent" target="_blank">
@@ -111,6 +113,8 @@
                                 </div>
                             </a>
                         </li>
+
+                        <!-- Pinterest -->
                         <li>
                             <a href="https://www.pinterest.com/pin/create/button/?url={{ url()->current() }}&media=&description=Check%20this%20job%20out"
                                 class="social-btn-roll pinterest transparent" target="_blank">
@@ -121,7 +125,18 @@
                             </a>
                         </li>
 
+                        <!-- Telegram -->
+                        <li>
+                            <a href="https://t.me/share/url?url={{ url()->current() }}&text=Check%20this%20job%20out"
+                                class="social-btn-roll telegram transparent" target="_blank">
+                                <div class="social-btn-roll-icons">
+                                    <i class="social-btn-roll-icon fa fa-telegram"></i>
+                                    <i class="social-btn-roll-icon fa fa-telegram"></i>
+                                </div>
+                            </a>
+                        </li>
                     </ul>
+
                     <!-- End of Social Media ul -->
 
 
