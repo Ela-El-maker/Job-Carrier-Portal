@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend\Portfolio;
 
 use App\Http\Controllers\Controller;
+use App\Models\Candidate;
 use App\Models\CandidatePortfolio;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -18,8 +19,17 @@ class PortfolioHomeController extends Controller
 
     function show($slug): View
     {
-        $candidatePortfolio = CandidatePortfolio::firstOrFail();
-        // dd($candidatePortfolio);
-        return view('frontend.portfolio.show',compact('candidatePortfolio'));
+        // First find the candidate
+        $candidate = Candidate::where(['profile_complete' => 1, 'visibility' => 1, 'slug' => $slug])->firstOrFail();
+
+        // Then get their portfolio (assuming there's a relationship)
+        $candidatePortfolio = $candidate->portfolio; // or whatever your relationship is
+
+        if (!$candidatePortfolio) {
+            // Show a custom "not found" view
+            return view('frontend.portfolio.not-found', compact('candidate'));
+        }
+
+        return view('frontend.portfolio.show', compact('candidatePortfolio'));
     }
 }

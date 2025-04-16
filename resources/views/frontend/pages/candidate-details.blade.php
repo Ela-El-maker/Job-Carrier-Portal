@@ -55,32 +55,64 @@
                         </div>
 
                         <!-- Start of Social Media Buttons -->
-                        <ul class="social-btns list-inline mt20">
-                            <!-- Social Media Buttons -->
-                            <li><a href="#" class="social-btn-roll facebook transparent">
-                                    <div class="social-btn-roll-icons"><i class="social-btn-roll-icon fa fa-facebook"></i><i
-                                            class="social-btn-roll-icon fa fa-facebook"></i></div>
-                                </a></li>
-                            <li><a href="#" class="social-btn-roll twitter transparent">
-                                    <div class="social-btn-roll-icons"><i class="social-btn-roll-icon fa fa-twitter"></i><i
-                                            class="social-btn-roll-icon fa fa-twitter"></i></div>
-                                </a></li>
-                            <li><a href="#" class="social-btn-roll google-plus transparent">
-                                    <div class="social-btn-roll-icons"><i
-                                            class="social-btn-roll-icon fa fa-google-plus"></i><i
-                                            class="social-btn-roll-icon fa fa-google-plus"></i></div>
-                                </a></li>
-                            <li><a href="#" class="social-btn-roll instagram transparent">
-                                    <div class="social-btn-roll-icons"><i
-                                            class="social-btn-roll-icon fa fa-instagram"></i><i
-                                            class="social-btn-roll-icon fa fa-instagram"></i></div>
-                                </a></li>
-                            <li><a href="#" class="social-btn-roll linkedin transparent">
-                                    <div class="social-btn-roll-icons"><i class="social-btn-roll-icon fa fa-linkedin"></i><i
-                                            class="social-btn-roll-icon fa fa-linkedin"></i></div>
-                                </a></li>
+                        <ul class="social-btns list-inline mt-4">
+                            <!-- Portfolio -->
+                            <li class="list-inline-item">
+                                <a href="{{ $candidate?->portfolio?->website_url }}"
+                                    class="social-btn-roll portfolio transparent" target="_blank">
+                                    <div class="social-btn-roll-icons">
+                                        <i class="social-btn-roll-icon fa fa-briefcase"></i>
+                                        <i class="social-btn-roll-icon fa fa-briefcase"></i>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <!-- Instagram -->
+                            <li class="list-inline-item">
+                                <a href="{{ $candidate?->portfolio?->instagram_url }}"
+                                    class="social-btn-roll instagram transparent" target="_blank">
+                                    <div class="social-btn-roll-icons">
+                                        <i class="social-btn-roll-icon fa fa-instagram"></i>
+                                        <i class="social-btn-roll-icon fa fa-instagram"></i>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <!-- LinkedIn -->
+                            <li class="list-inline-item">
+                                <a href="{{ $candidate?->portfolio?->linkedin_url }}"
+                                    class="social-btn-roll linkedin transparent" target="_blank">
+                                    <div class="social-btn-roll-icons">
+                                        <i class="social-btn-roll-icon fa fa-linkedin"></i>
+                                        <i class="social-btn-roll-icon fa fa-linkedin"></i>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <!-- GitHub -->
+                            <li class="list-inline-item">
+                                <a href="{{ $candidate?->portfolio?->github_url }}"
+                                    class="social-btn-roll github transparent" target="_blank">
+                                    <div class="social-btn-roll-icons">
+                                        <i class="social-btn-roll-icon fa fa-github"></i>
+                                        <i class="social-btn-roll-icon fa fa-github"></i>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <!-- WhatsApp -->
+                            <li class="list-inline-item">
+                                <a href="{{ $candidate?->portfolio?->whatsapp_url }}"
+                                    class="social-btn-roll whatsapp transparent" target="_blank">
+                                    <div class="social-btn-roll-icons">
+                                        <i class="social-btn-roll-icon fa fa-whatsapp"></i>
+                                        <i class="social-btn-roll-icon fa fa-whatsapp"></i>
+                                    </div>
+                                </a>
+                            </li>
                         </ul>
                         <!-- End of Social Media Buttons -->
+
                         <hr>
                         <!-- Profile Details -->
                         <div class="profile-details mt40">
@@ -90,8 +122,14 @@
                         </div>
                         <hr>
 
+                        <div class="mt-4">
+                            <a href="{{ route('candidates.portfolio.show', ['slug' => $candidate->slug]) }}"
+                                class="btn btn-blue btn-effect" target="_blank">
+                                <i class="fa fa-briefcase"></i> Visit Portfolio
+                            </a>
+                        </div>
                         <!-- Experience Section -->
-                        <div class="profile-details mt40">
+                        {{-- <div class="profile-details mt40">
                             <div class="mt-5 mb-5">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -137,7 +175,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <!-- End of Profile Description -->
@@ -238,273 +276,5 @@
         </div>
     </section>
     <!-- ===== End of Candidate Profile Section ===== -->
-
-
-
-
-
-    <!-- ===== Start of Portfolio Section ===== -->
-    <section class="portfolio ptb80">
-        <div class="container">
-
-            <div class="row">
-                <h3 class="text-center pb60">Recent Work</h3>
-
-                <!-- Filter Buttons -->
-                <ul class="list-inline text-center uppercase" id="portfolio-sorting">
-                    <li><a href="#0" data-filter="*" class="current">all</a></li>
-                    <li><a href="#0" data-filter=".portfolio-cat1">logos</a></li>
-                    <li><a href="#0" data-filter=".portfolio-cat2">websites</a></li>
-                    <li><a href="#0" data-filter=".portfolio-cat3">ui</a></li>
-                    <li><a href="#0" data-filter=".portfolio-cat4">printings</a></li>
-                </ul>
-            </div>
-
-            <!-- Start of Portfolio Grid -->
-            <div class="row portfolio-grid mt40">
-
-                <!-- Portfolio Item -->
-                <div class="element col-md-4 col-sm-6 col-xs-6 portfolio-cat1">
-                    <figure>
-                        <a href="images/portfolio/image1.jpg" class="hover-zoom">
-                            <img src="images/portfolio/image1.jpg" class="img-responsive" alt="">
-                        </a>
-                    </figure>
-                </div>
-
-                <!-- Portfolio Item -->
-                <div class="element col-md-4 col-sm-6 col-xs-6 portfolio-cat2">
-                    <figure>
-                        <a href="images/portfolio/image2.jpg" class="hover-zoom">
-                            <img src="images/portfolio/image2.jpg" class="img-responsive" alt="">
-                        </a>
-                    </figure>
-                </div>
-
-                <!-- Portfolio Item -->
-                <div class="element col-md-4 col-sm-6 col-xs-6 portfolio-cat3">
-                    <figure>
-                        <a href="images/portfolio/image3.jpg" class="hover-zoom">
-                            <img src="images/portfolio/image3.jpg" class="img-responsive" alt="">
-                        </a>
-                    </figure>
-                </div>
-
-                <!-- Portfolio Item -->
-                <div class="element col-md-4 col-sm-6 col-xs-6 portfolio-cat4">
-                    <figure>
-                        <a href="images/portfolio/image4.jpg" class="hover-zoom">
-                            <img src="images/portfolio/image4.jpg" class="img-responsive" alt="">
-                        </a>
-                    </figure>
-                </div>
-
-                <!-- Portfolio Item -->
-                <div class="element col-md-4 col-sm-6 col-xs-6 portfolio-cat1">
-                    <figure>
-                        <a href="images/portfolio/image5.jpg" class="hover-zoom">
-                            <img src="images/portfolio/image5.jpg" class="img-responsive" alt="">
-                        </a>
-                    </figure>
-                </div>
-
-                <!-- Portfolio Item -->
-                <div class="element col-md-4 col-sm-6 col-xs-6 portfolio-cat2">
-                    <figure>
-                        <a href="images/portfolio/image6.jpg" class="hover-zoom">
-                            <img src="images/portfolio/image6.jpg" class="img-responsive" alt="">
-                        </a>
-                    </figure>
-                </div>
-
-            </div>
-            <!-- End of Portfolio Grid -->
-
-            <div class="row">
-                <div class="col-md-12 text-center mt20">
-                    <a href="#" class="btn btn-blue btn-effect">show more</a>
-                </div>
-            </div>
-
-        </div>
-    </section>
-    <!-- ===== End of Portfolio Section ===== -->
-
-
-
-
-
-    <!-- ===== Start of Education Section ===== -->
-    <section class="education ptb80">
-        <div class="container">
-
-            <div class="col-md-12 text-center">
-                <h3 class="pb60">Education</h3>
-            </div>
-
-            <!-- Start of Education Column -->
-            <div class="col-md-12">
-                <div class="item-block shadow-hover">
-
-                    <!-- Start of Education Header -->
-                    <div class="education-header clearfix">
-                        <img src="images/companies/envato.svg" alt="">
-                        <div>
-                            <h4>Master <small>- Computer Science</small></h4>
-                            <h5>Massachusetts Institute of Technology</h5>
-                        </div>
-                        <h6 class="time">2014 - 2016</h6>
-                    </div>
-                    <!-- End of Education Header -->
-
-                    <!-- Start of Education Body -->
-                    <div class="education-body">
-                        <p>The mission of MIT is to advance knowledge and educate students in science, technology, and other
-                            areas of scholarship that will best serve the nation and the world in the 21st century. The
-                            Institute is committed to generating, disseminating, and preserving knowledge, and to working
-                            with others to bring this knowledge to bear on the world's great challenges.</p>
-                    </div>
-                    <!-- End of Education Body -->
-
-                </div>
-            </div>
-            <!-- End of Education Column -->
-
-
-            <!-- Start of Education Column -->
-            <div class="col-md-12 mt40">
-                <div class="item-block shadow-hover">
-
-                    <!-- Start of Education Header -->
-                    <div class="education-header clearfix">
-                        <img src="images/companies/envato.svg" alt="">
-                        <div>
-                            <h4>Bachelor <small>- Computer Science</small></h4>
-                            <h5>Massachusetts Institute of Technology</h5>
-                        </div>
-                        <h6 class="time">2009 - 2013</h6>
-                    </div>
-                    <!-- End of Education Header -->
-
-                    <!-- Start of Education Body -->
-                    <div class="education-body">
-                        <p>The mission of MIT is to advance knowledge and educate students in science, technology, and other
-                            areas of scholarship that will best serve the nation and the world in the 21st century. The
-                            Institute is committed to generating, disseminating, and preserving knowledge, and to working
-                            with others to bring this knowledge to bear on the world's great challenges.</p>
-                    </div>
-                    <!-- End of Education Body -->
-
-                </div>
-            </div>
-            <!-- End of Education Column -->
-
-        </div>
-    </section>
-    <!-- ===== End of Education Section ===== -->
-
-
-
-
-
-    <!-- ===== Start of Work Experience Section ===== -->
-    <section class="work-experience ptb80">
-        <div class="container">
-
-            <div class="col-md-12 text-center">
-                <h3 class="pb60">Work Experience</h3>
-            </div>
-
-            <!-- Start of Work Experience Column -->
-            <div class="col-md-12">
-                <div class="item-block shadow-hover">
-
-                    <!-- Start of Work Experience Header -->
-                    <div class="experience-header clearfix">
-                        <img src="images/companies/envato.svg" alt="">
-                        <div>
-                            <h4>Envato</h4>
-                            <h5><small>Theme Developer</small></h5>
-                        </div>
-                        <h6 class="time">2014 - present</h6>
-                    </div>
-                    <!-- End of Work Experience Header -->
-
-                    <!-- Start of Work Experience Body -->
-                    <div class="experience-body">
-                        <p>Responsibilities:</p>
-                        <ul class="list mt10">
-                            <li>Designing modern and minimal PSD Templates</li>
-
-                            <li>Converting PSD into HTML5 & CSS3</li>
-
-                            <li>WordPress Theme Development</li>
-
-                            <li>Troubleshooting, testing and maintaining web Themes</li>
-                        </ul>
-                    </div>
-                    <!-- End of Work Experience Body -->
-
-                </div>
-            </div>
-            <!-- End of Work Experience Column -->
-
-
-            <!-- Start of Work Experience Column -->
-            <div class="col-md-12 mt40">
-                <div class="item-block shadow-hover">
-
-                    <!-- Start of Work Experience Header -->
-                    <div class="experience-header clearfix">
-                        <img src="images/companies/envato.svg" alt="">
-                        <div>
-                            <h4>Envato</h4>
-                            <h5><small>Theme Developer</small></h5>
-                        </div>
-                        <h6 class="time">2010 - 2014</h6>
-                    </div>
-                    <!-- End of Work Experience Header -->
-
-                    <!-- Start of Work Experience Body -->
-                    <div class="experience-body">
-                        <p>Responsibilities:</p>
-                        <ul class="list mt10">
-                            <li>Designing modern and minimal PSD Templates</li>
-
-                            <li>Converting PSD into HTML5 & CSS3</li>
-                        </ul>
-                    </div>
-                    <!-- End of Work Experience Body -->
-
-                </div>
-            </div>
-            <!-- End of Work Experience Column -->
-
-        </div>
-    </section>
-    <!-- ===== End of Work Experience Section ===== -->
-
-
-
-
-
-    <!-- ===== Start of Get Started Section ===== -->
-    <section class="get-started ptb40">
-        <div class="container">
-            <div class="row ">
-
-                <!-- Column -->
-                <div class="col-md-10 col-sm-9 col-xs-12">
-                    <h3 class="text-white">20,000+ People trust Cariera! Be one of them today.</h3>
-                </div>
-
-                <!-- Column -->
-                <div class="col-md-2 col-sm-3 col-xs-12">
-                    <a href="#" class="btn btn-blue btn-effect">get start now</a>
-                </div>
-
-            </div>
-        </div>
-    </section>
-    <!-- ===== End of Get Started Section ===== -->
+    @include('frontend.home.sections.get-started-section')
 @endsection

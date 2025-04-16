@@ -83,15 +83,8 @@ Route::get('blog/{slug}', [FrontendBlogPageController::class, 'show'])->name('bl
  * Candidates Frontend Pages
  */
 Route::get('candidates', [FrontendCandidatePageController::class, 'index'])->name('candidates.index');
-Route::get('candidates/{slug}', [FrontendCandidatePageController::class, 'show'])->name('candidates.show');
-
-/**
- * Candidate Frontend Portfolio Page
- *
- */
-
 Route::get('candidates/{slug}/portfolio', [PortfolioHomeController::class, 'show'])->name('candidates.portfolio.show');
-
+Route::get('candidates/{slug}', [FrontendCandidatePageController::class, 'show'])->name('candidates.show');
 
 /***  Candidate Dashboard Routes */
 Route::group(
