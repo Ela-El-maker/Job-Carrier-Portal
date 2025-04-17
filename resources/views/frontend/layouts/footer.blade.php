@@ -52,6 +52,7 @@
                     ->take(3)
                     ->get();
             @endphp
+
             <div class="col-md-3 col-sm-6 col-xs-6 footer-posts">
                 <h3>popular posts</h3>
                 @forelse ($popularBlogs as $blog)

@@ -129,6 +129,9 @@
                             href="{{ route('admin.hero.index') }}">Hero</a></li>
                     <li class="{{ setSidebarActive(['admin.blog-section-setting.*']) }}"><a class="nav-link"
                             href="{{ route('admin.blog-section-setting.index') }}">Blog</a></li>
+
+                    <li class="{{ setSidebarActive(['admin.custom-section.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.custom-section.index') }}">Custom Section</a></li>
                 </ul>
             </li>
 

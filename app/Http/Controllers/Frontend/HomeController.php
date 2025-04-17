@@ -7,6 +7,7 @@ use App\Models\Blog;
 use App\Models\BlogSectionSetting;
 use App\Models\Company;
 use App\Models\Country;
+use App\Models\CustomSection;
 use App\Models\Hero;
 use App\Models\Job;
 use App\Models\JobCategory;
@@ -67,8 +68,9 @@ class HomeController extends Controller
 
         $blogs = Blog::where('status', 1)->latest()->take(5)->get();
         $blogTitle = BlogSectionSetting::first();
+        $customSection = CustomSection::first();
 
 
-        return view('frontend.home.index', compact('plans', 'heroes', 'countries', 'jobCount', 'jobCategories', 'popularJobCategories', 'featuredCategories', 'popularCompanies', 'topJobs', 'goldenJobs', 'blogs', 'blogTitle'));
+        return view('frontend.home.index', compact('plans', 'heroes', 'countries', 'jobCount', 'jobCategories', 'popularJobCategories', 'featuredCategories', 'popularCompanies', 'topJobs', 'goldenJobs', 'blogs', 'blogTitle','customSection'));
     }
 }

@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\BlogSectionSettingController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\CustomSectionController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EducationController;
 use App\Http\Controllers\Admin\HeroController;
@@ -158,12 +159,14 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin', 'as' => 'admi
      */
 
     Route::resource('blogs', BlogController::class);
-    Route::resource('blog-section-setting', BlogSectionSettingController::class);
+
 
     /**
-     * Hero Section Route
+     * Home Frontend Route
      */
     Route::resource('hero', HeroController::class);
+    Route::resource('blog-section-setting', BlogSectionSettingController::class);
+    Route::resource('custom-section', CustomSectionController::class);
 
     /**
      * Upload Controller Route
