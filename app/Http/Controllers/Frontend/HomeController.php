@@ -37,6 +37,28 @@ class HomeController extends Controller
             ->get();
 
 
+        // $popularCompanies = Company::query()
+        //     ->select('companies.*')
+        //     ->join('jobs', 'jobs.company_id', '=', 'companies.id')
+        //     ->join('applied_jobs', 'applied_jobs.job_id', '=', 'jobs.id')
+        //     ->where('jobs.status', 'active')
+        //     ->where('jobs.deadline', '>=', now())
+        //     ->groupBy('companies.id')
+        //     ->orderByRaw('COUNT(applied_jobs.id) DESC')
+        //     ->take(10)
+        //     ->get();
+        // $popularCompanies = Company::query()
+        //     ->select('companies.*')
+        //     ->join('jobs', 'jobs.company_id', '=', 'companies.id')
+        //     ->join('applied_jobs', 'applied_jobs.job_id', '=', 'jobs.id')
+        //     ->where('jobs.status', 'active')
+        //     ->where('jobs.deadline', '>=', now())
+        //     ->groupBy('companies.id')
+        //     ->havingRaw('COUNT(applied_jobs.id) > 2')  // Filter companies with more than 10 applications
+        //     ->orderByRaw('COUNT(applied_jobs.id) DESC')
+        //     ->take(10)
+        //     ->get();
+
         $popularCompanies = Company::query()
             ->select('companies.*')
             ->join('jobs', 'jobs.company_id', '=', 'companies.id')
@@ -44,17 +66,22 @@ class HomeController extends Controller
             ->where('jobs.status', 'active')
             ->where('jobs.deadline', '>=', now())
             ->groupBy('companies.id')
+            ->havingRaw('COUNT(DISTINCT jobs.id) > 10')  // Filter companies with more than 15 active jobs
+            ->havingRaw('COUNT(applied_jobs.id) > 10')   // Filter companies with more than 15 applications
             ->orderByRaw('COUNT(applied_jobs.id) DESC')
             ->take(10)
             ->get();
 
-        $topJobs = Job::with('company')
+
+        $topJobs = Job::withCount('applications')  // Count applications for each job
+            ->with('company')  // Load the company associated with the job
             ->where('status', 'active')
             ->where('deadline', '>=', now())
+            ->having('applications_count', '>', 10)  // Filter jobs with more than 15 applications
+            ->orderBy('applications_count', 'desc')  // Order by the number of applications in descending order
             ->orderBy('created_at', 'desc')
             ->orderBy('updated_at', 'desc')
-            // ->orderBy('views', 'desc') // Assuming you have a 'views' column to determine popularity
-            ->take(5)
+            ->take(5)  // Limit to the top 5 jobs
             ->get();
 
         $goldenJobs = Job::with('company')
@@ -71,6 +98,6 @@ class HomeController extends Controller
         $customSection = CustomSection::first();
 
 
-        return view('frontend.home.index', compact('plans', 'heroes', 'countries', 'jobCount', 'jobCategories', 'popularJobCategories', 'featuredCategories', 'popularCompanies', 'topJobs', 'goldenJobs', 'blogs', 'blogTitle','customSection'));
+        return view('frontend.home.index', compact('plans', 'heroes', 'countries', 'jobCount', 'jobCategories', 'popularJobCategories', 'featuredCategories', 'popularCompanies', 'topJobs', 'goldenJobs', 'blogs', 'blogTitle', 'customSection'));
     }
 }

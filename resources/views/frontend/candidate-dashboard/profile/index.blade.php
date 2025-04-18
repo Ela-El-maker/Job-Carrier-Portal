@@ -72,48 +72,60 @@
                 <div class="col-md-8 col-xs-12 job-post-main">
                     <h4>Welcome {{ auth()->user()->name }}!</h4>
 
-                    <!-- Start of Job Post Wrapper -->
-                    <div class="job-post-wrapper mt20">
-                        <!-- Start of Row -->
-                        <div class="row candidate-profile">
-                            <div class="col-md-12 col-xs-12">
-                                <!-- Card Container for Candidate Details -->
-                                <div class="card-container">
-                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                        <li class="active">
-                                            <a href="#home" data-toggle="tab" role="tab" aria-controls="home"
-                                                aria-selected="true">Basic</a>
-                                        </li>
-                                        <li>
-                                            <a href="#profile" data-toggle="tab" role="tab" aria-controls="profile"
-                                                aria-selected="false">Profile</a>
-                                        </li>
-                                        <li>
-                                            <a href="#experience" data-toggle="tab" role="tab"
-                                                aria-controls="experience" aria-selected="false">Experience & Education</a>
-                                        </li>
+<!-- Start of Row -->
+<div class="row">
+    <!-- Start of Product Wrapper -->
+    <div class="col-md-12 product-wrapper">
+        <!-- ===== Start of Row ===== -->
+        <div class="row mt60">
+            <div class="col-md-12">
 
-                                        <li>
-                                            <a href="#account" data-toggle="tab" role="tab" aria-controls="account"
-                                                aria-selected="false">Account Setting</a>
-                                        </li>
-                                    </ul>
+                <!-- Start of Tabs Product -->
+                <div class="tabs tabs-product">
 
-                                    <div class="tab-content" id="myTabContent">
+                    <!-- Start of Nav Tabs -->
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#home" data-toggle="tab" role="tab" aria-expanded="true" aria-controls="home">
+                                <h6>Home</h6>
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="#profile" data-toggle="tab" role="tab" aria-expanded="true" aria-controls="profile">
+                                <h6>Profile</h6>
+                            </a>
+                        </li>
 
-                                        @include('frontend.candidate-dashboard.profile.sections.basic-section')
+                        <li>
+                            <a href="#experience" data-toggle="tab" role="tab" aria-expanded="false" aria-controls="experience">
+                                <h6>Education & Experience</h6>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#account" data-toggle="tab" role="tab" aria-expanded="false" aria-controls="account">
+                                <h6>Account</h6>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- End of Nav Tabs -->
 
-                                        @include('frontend.candidate-dashboard.profile.sections.profile-section')
+                    <!-- Start of Tab Content -->
+                    <div class="tab-content">
+                        @include('frontend.candidate-dashboard.profile.sections.basic-section')
 
-                                        @include('frontend.candidate-dashboard.profile.sections.experience-section')
+                        @include('frontend.candidate-dashboard.profile.sections.profile-section')
 
-                                        @include('frontend.candidate-dashboard.profile.sections.account-section')
+                        @include('frontend.candidate-dashboard.profile.sections.experience-section')
 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @include('frontend.candidate-dashboard.profile.sections.account-section')
                     </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
                 </div>
             </div>
         </div>

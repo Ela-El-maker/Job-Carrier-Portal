@@ -293,18 +293,20 @@
                             <!-- End of Job Post Header -->
 
                             <!-- Start of Job Post Body -->
-                            <div class="job-post-body">
+                            <div class="job-post-body" style="padding: 1px">
                                 <ul>
-                                    <li class="skills" style="padding-bottom: 10px;">
-                                        @foreach ($job?->skills->shuffle() as $jobSkill)
-                                            @if ($loop->iteration < 6)
-                                                <a href="" class="btn btn-blue btn-effect mt20">
+                                    <li class="skills" style="padding-bottom: 5px; margin-bottom: 5px;">
+                                        @foreach ($job?->skills->shuffle() as $index => $jobSkill)
+                                            @if ($index < 5)
+                                                <a href="" class="btn btn-blue btn-effect mt20"
+                                                    style="font-size: 0.85rem; padding: 5px 10px;">
                                                     {{ $jobSkill?->skill?->name }}
                                                 </a>
-                                            @elseif ($loop->iteration == 6)
+                                            @elseif ($index == 5)
                                                 <a class="btn btn-blue btn-effect mt20 job-skill" data-toggle="modal"
-                                                    data-target="#skillsModal" href="javascript:void(0)">
-                                                    More ...
+                                                    data-target="#skillsModal" href="javascript:void(0)"
+                                                    style="font-size: 0.85rem; padding: 5px 10px;">
+                                                    {{ count($job->skills) - 5 }} more
                                                 </a>
                                             @endif
                                         @endforeach
@@ -312,7 +314,6 @@
                                 </ul>
                             </div>
                             <!-- End of Job Post Body -->
-
                             <div
                                 style="
                                     display: flex;

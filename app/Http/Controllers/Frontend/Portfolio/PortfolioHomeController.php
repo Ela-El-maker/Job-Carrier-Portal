@@ -27,7 +27,7 @@ class PortfolioHomeController extends Controller
 
         if (!$candidatePortfolio) {
             // Show a custom "not found" view
-            return view('frontend.portfolio.not-found', compact('candidate'));
+            return view('frontend.portfolio.portfolio-not-found', compact('candidate'));
         }
 
         return view('frontend.portfolio.show', compact('candidatePortfolio'));

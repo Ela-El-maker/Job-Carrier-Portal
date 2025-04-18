@@ -240,14 +240,22 @@
 
                                         <!-- Skills -->
                                         <div class="skills">
-                                            @foreach ($candidate->skills as $candidateSkill)
-                                                @if ($loop->index <= 5)
+                                            @foreach ($candidate->skills as $index => $candidateSkill)
+                                                @if ($index < 4)
                                                     <span class="badge badge-secondary">
                                                         {{ $candidateSkill->skill?->name }}
                                                     </span>
                                                 @endif
                                             @endforeach
+
+                                            <!-- Check if there are more than 4 skills -->
+                                            @if ($candidate->skills->count() > 4)
+                                                <span class="badge badge-secondary">+{{ $candidate->skills->count() - 4 }}
+                                                    more</span>
+                                            @endif
                                         </div>
+
+
                                     </div>
 
                                     <!-- Candidate Info -->
