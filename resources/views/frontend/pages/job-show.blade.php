@@ -17,10 +17,42 @@
                     </a>
                 </div>
 
+
                 <div class="col-md-6 col-xs-12 clearfix">
-                    <a href="#" class="btn btn-blue btn-effect pull-right mt15"><i class="fa fa-star"></i>add to
-                        favorites</a>
+                    <div class="pull-right mt15" style="display: flex; align-items: center; gap: 12px;">
+                        <!-- Vacancy Badge -->
+                        <div style="
+                            display: flex;
+                            align-items: center;
+                            background: linear-gradient(to right, #17a2b8, #138496);
+                            color: #fff;
+                            padding: 6px 14px;
+                            border-radius: 50px;
+                            font-size: 13px;
+                            font-weight: 500;
+                            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+                            ">
+                            <i class="fa fa-user" style="margin-right: 6px;"></i>
+                            {{ $job->vacancies ?? 1 }} Vacanc{{ ($job->vacancies ?? 1) > 1 ? 'ies' : 'y' }}
+                        </div>
+
+                        <!-- Print Button -->
+                        <a href="javascript:window.print()" class="btn btn-blue btn-effect" style="
+                            border-radius: 8px;
+                            padding: 8px 14px;
+                            font-weight: 500;
+                            display: inline-flex;
+                            align-items: center;
+                            gap: 6px;
+                            ">
+                            <i class="fa fa-print"></i> Print Job
+                        </a>
+
+
+                    </div>
                 </div>
+
+
 
 
             </div>
@@ -50,9 +82,8 @@
                         <!-- Job Company Image -->
                         <div class="col-md-3">
                             <div class="job-company">
-                                <a href="{{ route('companies.show', $job?->company?->slug) }}">
-                                    <img src="{{ asset($job?->company?->logo) }}" style="height: 50%; object-fit:cover;"
-                                        alt="">
+                                <a href="">
+                                    <img src="{{ asset($job?->company?->logo) }}" class="img-responsive" alt="">
                                 </a>
                             </div>
                         </div>
@@ -65,8 +96,7 @@
                                 <ul class="list-inline mt10">
                                     <li><a href="{{ $job?->company?->website }}"><i class="fa fa-link"
                                                 aria-hidden="true"></i>Website</a></li>
-                                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i>Facebook</a></li>
-                                    <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i>Twitter</a></li>
+
                                 </ul>
                             </div>
                         </div>
@@ -155,7 +185,7 @@
                             <!-- Div wrapper -->
                             <div class="pt40">
                                 <h5>Job Overview</h5>
-
+                                <hr>
                                 <p class="mt20">
                                     {!! $job?->description !!}
                                 </p>

@@ -22,31 +22,59 @@ class JobCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['required', 'string', 'max:255'],
+            'company' => ['required', 'integer', 'exists:companies,id'],
+            'category' => ['required', 'integer', 'exists:job_categories,id'],
+            'vacancies' => ['required', 'integer', 'min:1'],
+            'deadline' => ['required', 'date', 'after:today'],
 
-            'title' =>  ['required', 'max:255'],
-            'company' =>  ['required', 'integer'],
-            'category' =>  ['required', 'integer'],
-            'vacancies' =>  ['required', 'max:255'],
-            'deadline' =>  ['required', 'date'],
-            'country' =>  ['nullable', 'integer'],
-            'state' =>  ['nullable', 'integer'],
-            'city' =>  ['nullable', 'integer'],
-            'address' => ['nullable', 'max:255'],
+            'country' => ['nullable', 'integer', 'exists:countries,id'],
+            'state' => ['nullable', 'integer', 'exists:states,id'],
+            'city' => ['nullable', 'integer', 'exists:cities,id'],
+            'address' => ['nullable', 'string', 'max:255'],
+
             'salary_mode' => ['required', 'in:range,custom'],
-            'min_salary' => ['nullable', 'numeric'],
-            'max_salary' => ['nullable', 'numeric'],
-            'custom_salary' => ['nullable', 'string', 'max:255'],
-            'salary_type' => ['required', 'integer'],
-            'experience' => ['required', 'integer'],
-            'job_role' => ['required', 'integer'],
-            'education' => ['required', 'integer'],
-            'job_type' => ['required', 'integer'],
-            'tags' => ['required'],
-            'benefits' => ['required'],
-            'skills' => ['required'],
-            'receive_applications' => ['required'],
-            'description' => ['required'],
+            'min_salary' => ['required_if:salary_mode,range', 'nullable', 'numeric', 'min:0'],
+            'max_salary' => [
+                'required_if:salary_mode,range',
+                'nullable',
+                'numeric',
+                'min:0',
+                'gte:min_salary'
+            ],
+            'custom_salary' => [
+                'required_if:salary_mode,custom',
+                'nullable',
+                'string',
+                'max:255'
+            ],
+
+            'salary_type' => ['required', 'integer', 'exists:salary_types,id'],
+            'experience' => ['required', 'integer', 'exists:job_experiences,id'],
+            'job_role' => ['required', 'integer', 'exists:job_roles,id'],
+            'education' => ['required', 'integer', 'exists:education,id'],
+            'job_type' => ['required', 'integer', 'exists:job_types,id'],
+
+            'tags' => ['required', 'array', 'min:1'],
+            'tags.*' => ['integer', 'exists:tags,id'],
+            'benefits' => ['required', 'string'],
+            'skills' => ['required', 'array', 'min:1'],
+            'skills.*' => ['integer', 'exists:skills,id'],
+
+            'receive_applications' => ['required', 'in:email,custom_url'],
+            'description' => ['required', 'string', 'min:50'],
         ];
+    }
+
+
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation()
+    {
+        // Convert empty custom_salary to null when in range mode
+        if ($this->salary_mode === 'range') {
+            $this->merge(['custom_salary' => null]);
+        }
     }
 }

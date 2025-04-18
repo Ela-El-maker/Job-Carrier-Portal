@@ -13,20 +13,36 @@
 
             <!-- Start of Row -->
             <div class="row">
+                @php
+                    $mostCommonType = $company->jobs
+                        ->groupBy('jobType.name')
+                        ->sortByDesc(function ($group) {
+                            return $group->count();
+                        })
+                        ->keys()
+                        ->first();
+
+                    // Fetch class and label for the most common job type
+                    $jobType = getJobTypeClassAndLabel($mostCommonType);
+                @endphp
 
                 <div class="col-md-6 col-xs-12">
                     <h3>Welcome to {{ $company?->name }}</h3>
-                    <a href="#" class="btn btn-green btn-small btn-effect mt15">full time</a>
+
+                    @if ($mostCommonType)
+                        <a href="javascript:;" class="btn btn-small btn-effect {{ $jobType['class'] }} mt15">
+                            {{ ucfirst($mostCommonType) }}
+                        </a>
+                    @endif
                 </div>
 
-                <div class="col-md-6 col-xs-12 clearfix">
-                    <a href="javascript:;" onclick="document.getElementById('open-positions').scrollIntoView()"
-                        class="btn btn-blue btn-effect pull-right mt15"><i class="fa fa-star"></i>Open Positions</a>
-                </div>
-
-
+                <a href="javascript:;" onclick="document.getElementById('open-positions').scrollIntoView()"
+                    class="btn btn-blue btn-effect pull-right mt15">
+                    <i class="fa fa-briefcase"></i> View Openings ({{ $company->jobs->count() }})
+                </a>
             </div>
             <!-- End of Row -->
+
 
         </div>
     </section>
@@ -63,8 +79,7 @@
                                 <ul class="list-inline mt10">
                                     <li><a href="{{ $company?->website }}"><i class="fa fa-link"
                                                 aria-hidden="true"></i>Website</a></li>
-                                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i>Facebook</a></li>
-                                    <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i>Twitter</a></li>
+
                                 </ul>
                             </div>
                         </div>

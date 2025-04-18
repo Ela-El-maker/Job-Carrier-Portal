@@ -25,7 +25,12 @@
         </div>
     </section>
     <!-- =============== End of Page Header 1 Section =============== -->
-
+    @php
+        $bookmarked = \App\Models\JobBookmark::where('candidate_id', auth()->user()?->candidateProfile?->id)
+            ->pluck('job_id')
+            ->toArray();
+        // dd($bookmarked);
+    @endphp
 
     <!-- ===== Start of Main Wrapper Section ===== -->
     <section class="search-jobs ptb80" id="version4">
@@ -235,7 +240,7 @@
                                 </a>
                                 <div>
                                     <a href="{{ route('jobs.show', $job?->slug) }}">
-                                        <h4>{{ $job?->title }}</h4>
+                                        <h4>{{ Str::limit($job?->title, 27, '...') }}</h4>
                                     </a>
                                     <h5><small>{{ $job?->company?->name }}</small></h5>
                                     @php
@@ -245,6 +250,7 @@
                                         style="margin-top: 10px;">
                                         {{ $jobType['label'] }}
                                     </a>
+
                                 </div>
 
                                 <ul class="pull-right">
@@ -265,15 +271,7 @@
                                         </b>
                                     </li>
 
-                                    @php
-                                        $bookmarked = \App\Models\JobBookmark::where(
-                                            'candidate_id',
-                                            auth()->user()?->candidateProfile?->id,
-                                        )
-                                            ->pluck('job_id')
-                                            ->toArray();
-                                        // dd($bookmarked);
-                                    @endphp
+
 
                                     <li>
                                         <!-- Bookmark Icon -->

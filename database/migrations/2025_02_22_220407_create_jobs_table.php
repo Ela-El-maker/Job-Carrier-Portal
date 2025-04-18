@@ -25,7 +25,7 @@ return new class extends Migration
             $table->integer('vacancies'); // Use integer for number-based fields
             $table->double('min_salary')->default(0)->nullable(false);
             $table->double('max_salary')->default(0)->nullable(false);
-            $table->string('custom_salary', 255)->default('commutative'); // Fixed spelling
+            $table->string('custom_salary', 255)->nullable()->default('commutative');
             $table->date('deadline');
             $table->text('description');
             $table->enum('status', ['pending', 'active', 'inactive', 'expired'])->default('pending');

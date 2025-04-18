@@ -89,7 +89,8 @@ class JobController extends Controller
         $job->salary_mode = $request->salary_mode;
         $job->min_salary = $request->min_salary;
         $job->max_salary = $request->max_salary;
-        $job->custom_salary = $request->custom_salary;
+        // $job->custom_salary = $request->custom_salary;
+        $job->custom_salary = $request->salary_mode === 'custom' ? $request->custom_salary : 'Not Applicable';
         $job->salary_type_id = $request->salary_type;
 
         $job->job_experience_id = $request->experience;
