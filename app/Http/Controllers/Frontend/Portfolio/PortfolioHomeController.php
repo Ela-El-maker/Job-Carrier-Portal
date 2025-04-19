@@ -30,6 +30,9 @@ class PortfolioHomeController extends Controller
             return view('frontend.portfolio.portfolio-not-found', compact('candidate'));
         }
 
+        // dd($candidatePortfolio->candidate_id);
+
+        // dd($candidatePortfolio->portfolioServices);
         return view('frontend.portfolio.show', compact('candidatePortfolio'));
     }
 }

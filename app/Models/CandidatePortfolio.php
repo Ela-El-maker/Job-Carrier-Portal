@@ -57,12 +57,12 @@ class CandidatePortfolio extends Model
 
     function portfolioServices(): HasMany
     {
-        return $this->hasMany(PortfolioService::class, 'candidate_id', 'id')->orderBy('id', 'DESC');
+        return $this->hasMany(PortfolioService::class, 'candidate_id', 'candidate_id')->orderBy('id', 'DESC');
     }
 
     function portfolioClients(): HasMany
     {
-        return $this->hasMany(PortfolioClient::class, 'candidate_id', 'id')->orderBy('id', 'DESC');
+        return $this->hasMany(PortfolioClient::class, 'candidate_id', 'candidate_id')->orderBy('id', 'DESC');
     }
 
 

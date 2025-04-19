@@ -72,60 +72,64 @@
                 <div class="col-md-8 col-xs-12 job-post-main">
                     <h4>Welcome {{ auth()->user()->name }}!</h4>
 
-<!-- Start of Row -->
-<div class="row">
-    <!-- Start of Product Wrapper -->
-    <div class="col-md-12 product-wrapper">
-        <!-- ===== Start of Row ===== -->
-        <div class="row mt60">
-            <div class="col-md-12">
+                    <!-- Start of Row -->
+                    <div class="row">
+                        <!-- Start of Product Wrapper -->
+                        <div class="col-md-12 product-wrapper">
+                            <!-- ===== Start of Row ===== -->
+                            <div class="row mt60">
+                                <div class="col-md-12">
 
-                <!-- Start of Tabs Product -->
-                <div class="tabs tabs-product">
+                                    <!-- Start of Tabs Product -->
+                                    <div class="tabs tabs-product">
 
-                    <!-- Start of Nav Tabs -->
-                    <ul class="nav nav-tabs">
-                        <li class="active">
-                            <a href="#home" data-toggle="tab" role="tab" aria-expanded="true" aria-controls="home">
-                                <h6>Home</h6>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="#profile" data-toggle="tab" role="tab" aria-expanded="true" aria-controls="profile">
-                                <h6>Profile</h6>
-                            </a>
-                        </li>
+                                        <!-- Start of Nav Tabs -->
+                                        <ul class="nav nav-tabs">
+                                            <li class="active">
+                                                <a href="#home" data-toggle="tab" role="tab" aria-expanded="true"
+                                                    aria-controls="home">
+                                                    <h6>Home</h6>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#profile" data-toggle="tab" role="tab" aria-expanded="true"
+                                                    aria-controls="profile">
+                                                    <h6>Profile</h6>
+                                                </a>
+                                            </li>
 
-                        <li>
-                            <a href="#experience" data-toggle="tab" role="tab" aria-expanded="false" aria-controls="experience">
-                                <h6>Education & Experience</h6>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#account" data-toggle="tab" role="tab" aria-expanded="false" aria-controls="account">
-                                <h6>Account</h6>
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- End of Nav Tabs -->
+                                            <li>
+                                                <a href="#experience" data-toggle="tab" role="tab" aria-expanded="false"
+                                                    aria-controls="experience">
+                                                    <h6>Education & Experience</h6>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#account" data-toggle="tab" role="tab" aria-expanded="false"
+                                                    aria-controls="account">
+                                                    <h6>Account</h6>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <!-- End of Nav Tabs -->
 
-                    <!-- Start of Tab Content -->
-                    <div class="tab-content">
-                        @include('frontend.candidate-dashboard.profile.sections.basic-section')
+                                        <!-- Start of Tab Content -->
+                                        <div class="tab-content">
+                                            @include('frontend.candidate-dashboard.profile.sections.basic-section')
 
-                        @include('frontend.candidate-dashboard.profile.sections.profile-section')
+                                            @include('frontend.candidate-dashboard.profile.sections.profile-section')
 
-                        @include('frontend.candidate-dashboard.profile.sections.experience-section')
+                                            @include('frontend.candidate-dashboard.profile.sections.experience-section')
 
-                        @include('frontend.candidate-dashboard.profile.sections.account-section')
+                                            @include('frontend.candidate-dashboard.profile.sections.account-section')
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
                 </div>
             </div>
         </div>

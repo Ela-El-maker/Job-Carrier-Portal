@@ -180,6 +180,18 @@ class JobController extends Controller
         // Save the job
         $job->save();
 
+        // $category = JobCategory::withCount('jobs')->find($job->job_category_id);
+
+        // if ($category->jobs_count >= 3 && !$category->show_at_popular) {
+        //     $category->show_at_popular = true;
+        //     $category->save();
+        // }
+        $job->category->updatePopularStatus();
+
+        if ($job->is_featured) {
+            $job->category->updateFeaturedStatus();
+        }
+
         // Insert Tags
         foreach ($request->tags as $tag) {
             $createTag = new JobTag();
@@ -213,24 +225,7 @@ class JobController extends Controller
         }
 
 
-        // Decrement user plan limits
-        // if ($job) {
-        //     $userPlan = auth()->user()->company?->userPlan;
-        //     if ($userPlan) {
-        //         $userPlan->job_limit = $userPlan->job_limit - 1;
-        //         if ($job->is_featured == 1) {
-        //             $userPlan->featured_job_limit = $userPlan->featured_job_limit - 1;
-        //         }
-        //         if ($job->is_highlighted == 1) {
-        //             $userPlan->highlight_job_limit = $userPlan->highlight_job_limit - 1;
-        //         }
-        //         if ($job->is_golden == 1) {
-        //             $userPlan->golden_job = $userPlan->golden_job - 1;
-        //         }
-        //         $userPlan->save();
-        //         storePlanInformation();
-        //     }
-        // }
+
         // 6. Decrement ONLY used features
         $userPlan->decrement('job_limit');
         if ($job->is_featured) $userPlan->decrement('featured_job_limit');
@@ -365,6 +360,25 @@ class JobController extends Controller
         $job->save();
 
 
+        // $category = JobCategory::withCount('jobs')->find($job->job_category_id);
+
+        // if ($category->jobs_count >= 3 && !$category->show_at_popular) {
+        //     $category->show_at_popular = true;
+        //     $category->save();
+        // }
+
+        $oldCategoryId = $job->job_category_id;
+        // $job->update($request->all());
+
+        if ($oldCategoryId != $job->job_category_id) {
+            JobCategory::find($oldCategoryId)?->updateFeaturedStatus();
+            JobCategory::find($job->job_category_id)?->updateFeaturedStatus();
+        } else {
+            $job->category->updateFeaturedStatus(); // In case status changed
+        }
+
+// dd($oldCategoryId);
+
         // Insert Tags
         JobTag::where('job_id', $id)->delete();
         foreach ($request->tags as $tag) {
@@ -437,9 +451,28 @@ class JobController extends Controller
     public function destroy(string $id)
     {
         //
+        // try {
+        //     Job::findorfail($id)->delete();
+        //     Notify::deletedNotification();
+        //     return response(['message' => 'success'], 200);
+        // } catch (\Exception $e) {
+        //     logger($e);
+
+        //     return response(['message' => 'Something Went Wrong! Please Try Again'], 500);
+        // }
+
         try {
-            Job::findorfail($id)->delete();
+            $job = Job::findOrFail($id);
+            $categoryId = $job->job_category_id;
+            $job->delete();
+
+            JobCategory::find($categoryId)?->updatePopularStatus();
+            JobCategory::find($categoryId)?->updateFeaturedStatus();
+
+
+
             Notify::deletedNotification();
+
             return response(['message' => 'success'], 200);
         } catch (\Exception $e) {
             logger($e);

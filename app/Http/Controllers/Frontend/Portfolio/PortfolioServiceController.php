@@ -36,7 +36,7 @@ class PortfolioServiceController extends Controller
         $request->validate([
             'service_name' => ['required', 'max:255'],
             'service_description' => ['required', 'max:500'],
-            'service_url' => ['required', 'url'],
+            'service_url' => ['nullable', 'url'],
             'service_icon' => ['required', 'max:255'],
             'service_visible' => ['required', 'boolean'],
         ]);
@@ -90,7 +90,7 @@ class PortfolioServiceController extends Controller
         $request->validate([
             'service_name' => ['required', 'max:255'],
             'service_description' => ['required', 'max:500'],
-            'service_url' => ['required', 'url'],
+            'service_url' => ['nullable', 'url'],
             'service_visible' => ['required', 'boolean'],
         ]);
         $service->service_name = $request->service_name;

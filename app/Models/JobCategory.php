@@ -24,4 +24,19 @@ class JobCategory extends Model
     {
         return $this->hasMany(Job::class, 'job_category_id', 'id');
     }
+
+    public function updateFeaturedStatus(): void
+    {
+        $totalJobs = $this->jobs()->count();
+        $featuredJobs = $this->jobs()->where('is_featured', true)->count();
+
+        $this->show_at_featured = ($totalJobs > 2 && $featuredJobs === $totalJobs);
+        $this->save();
+    }
+    public function updatePopularStatus(): void
+    {
+        $this->loadCount('jobs');
+        $this->show_at_popular = $this->jobs_count >= 3;
+        $this->save();
+    }
 }

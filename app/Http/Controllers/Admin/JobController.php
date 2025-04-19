@@ -109,6 +109,18 @@ class JobController extends Controller
         $job->status = 'active';
         $job->save();
 
+        $oldCategoryId = $job->job_category_id;
+        $job->update($request->all());
+
+        if ($oldCategoryId != $job->job_category_id) {
+            JobCategory::find($oldCategoryId)?->updateFeaturedStatus();
+            JobCategory::find($job->job_category_id)?->updateFeaturedStatus();
+        } else {
+            $job->category->updateFeaturedStatus(); // In case status changed
+        }
+
+dd($oldCategoryId);
+
         // dd($job); // Uncomment this line to debug if needed
         // Insert Tags
         foreach ($request->tags as $tag) {
@@ -221,6 +233,18 @@ class JobController extends Controller
         $job->save();
 
 
+        $oldCategoryId = $job->job_category_id;
+        // $job->update($request->all());
+
+        if ($oldCategoryId != $job->job_category_id) {
+            JobCategory::find($oldCategoryId)?->updateFeaturedStatus();
+            JobCategory::find($job->job_category_id)?->updateFeaturedStatus();
+        } else {
+            $job->category->updateFeaturedStatus(); // In case status changed
+        }
+
+// dd($oldCategoryId);
+
         // Insert Tags
         JobTag::where('job_id', $id)->delete();
         foreach ($request->tags as $tag) {
@@ -276,8 +300,17 @@ class JobController extends Controller
     {
         //
         try {
-            Job::findorfail($id)->delete();
+            $job = Job::findOrFail($id);
+            $categoryId = $job->job_category_id;
+            $job->delete();
+
+            JobCategory::find($categoryId)?->updatePopularStatus();
+            JobCategory::find($categoryId)?->updateFeaturedStatus();
+
+
+
             Notify::deletedNotification();
+
             return response(['message' => 'success'], 200);
         } catch (\Exception $e) {
             logger($e);

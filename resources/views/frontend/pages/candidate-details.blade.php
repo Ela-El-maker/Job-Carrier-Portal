@@ -53,6 +53,7 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
+                        <hr>
 
                         <!-- Start of Social Media Buttons -->
                         <ul class="social-btns list-inline mt-4">
@@ -116,7 +117,7 @@
                         <hr>
                         <!-- Profile Details -->
                         <div class="profile-details mt40">
-                            <h5 class="capitalize">My Biography</h5>
+                            {{-- <h5 class="capitalize">My Biography</h5> --}}
                             <br>
                             <p>{!! $candidate?->bio !!}</p>
                         </div>

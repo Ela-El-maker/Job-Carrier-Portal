@@ -70,165 +70,165 @@
                 <div class="col-md-8 col-xs-12 job-post-main">
                     <h4>Welcome {{ auth()->user()->name }}!</h4>
 
-                    <!-- Start of Job Post Wrapper -->
-                    <div class="job-post-wrapper mt20">
-                        <!-- Start of Row -->
-                        <div class="row candidate-profile">
-                            <!-- Start of Profile Description and Dashboard Cards -->
-                            <div class="col-md-12 col-xs-12">
-                                <!-- Card Container for Candidate Details -->
+                    <!-- Start of Row -->
+                    <div class="row">
+                        <!-- Product Wrapper -->
+                        <div class="col-md-12 product-wrapper">
+                            <div style="width: 100%; padding: 15px; margin-bottom: 20px;">
+                                <!-- Header with title and actions -->
                                 <div
-                                    style="background-color: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 20px;">
-                                    <div
-                                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                                        <h2 style="color: #2c3e50; margin: 0;">All Job Posts</h2>
-                                        <div style="display: flex; align-items: center;">
-                                            <form action="{{ route('company.jobs.index') }}" method="GET"
-                                                style="margin-right: 15px;">
-                                                <div style="display: flex; align-items: center;">
-                                                    <input type="text" name="search" placeholder="Search Jobs"
-                                                        style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; margin-right: 10px;">
-                                                    <button type="submit"
-                                                        style="background-color: #3498db; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">
-                                                        <i class="fas fa-search"></i>
-                                                    </button>
-                                                </div>
-                                            </form>
-                                            <a href="{{ route('company.jobs.create') }}"
-                                                style="background-color: #2ecc71; color: white; text-decoration: none; padding: 8px 12px; border-radius: 4px; display: flex; align-items: center;">
-                                                <i class="fas fa-plus-circle" style="margin-right: 5px;"></i> Create New
-                                            </a>
-                                        </div>
+                                    style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+                                    <h2 style="color: #2c3e50; margin: 0; font-size: 1.5rem;">All Job Posts</h2>
+                                    <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px;">
+                                        <form action="{{ route('company.jobs.index') }}" method="GET">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="search" placeholder="Search Jobs"
+                                                    style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; margin-right: 5px; max-width: 100%;">
+                                                <button type="submit"
+                                                    style="background-color: #3498db; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </form>
+                                        <a href="{{ route('company.jobs.create') }}"
+                                            style="background-color: #2ecc71; color: white; text-decoration: none; padding: 8px 12px; border-radius: 4px; display: flex; align-items: center; white-space: nowrap;">
+                                            <i class="fas fa-plus-circle" style="margin-right: 5px;"></i> Create New
+                                        </a>
                                     </div>
+                                </div>
 
-                                    <div
-                                        style="background-color: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                                        <table style="width: 100%; border-collapse: collapse;">
-                                            <thead style="background: linear-gradient(to right, #4361ee, #3a0ca3);">
-                                                <tr>
-                                                    <th
-                                                        style="padding: 8px; color: white; font-weight: 600; text-align: left; text-transform: uppercase; letter-spacing: 0.5px; font-size: 13px;">
-                                                        #</th>
-                                                    <th
-                                                        style="padding: 8px; color: white; font-weight: 600; text-align: left; text-transform: uppercase; letter-spacing: 0.5px; font-size: 13px;">
-                                                        Job</th>
-                                                    <th
-                                                        style="padding: 8px; color: white; font-weight: 600; text-align: left; text-transform: uppercase; letter-spacing: 0.5px; font-size: 13px;">
-                                                        Category/Role</th>
-                                                    <th
-                                                        style="padding: 8px; color: white; font-weight: 600; text-align: left; text-transform: uppercase; letter-spacing: 0.5px; font-size: 13px;">
-                                                        Applications</th>
-                                                    <th
-                                                        style="padding: 8px; color: white; font-weight: 600; text-align: left; text-transform: uppercase; letter-spacing: 0.5px; font-size: 13px;">
-                                                        Deadline</th>
-                                                    <th
-                                                        style="padding: 8px; color: white; font-weight: 600; text-align: left; text-transform: uppercase; letter-spacing: 0.5px; font-size: 13px;">
-                                                        Status</th>
-                                                    <th
-                                                        style="padding: 8px; color: white; font-weight: 600; text-align: left; text-transform: uppercase; letter-spacing: 0.5px; font-size: 13px;">
-                                                        Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @forelse ($jobs as $job)
-                                                    <tr style="border-bottom: 1px solid #e9ecef;">
-                                                        <td
-                                                            style="padding: 8px; vertical-align: middle; color: #6c757d; font-weight: 500; font-size: 14px;">
-                                                            {{ $loop->iteration }}
-                                                        </td>
-                                                        <td style="padding: 8px; vertical-align: middle;">
-                                                            <div
-                                                                style="font-weight: 700; color: #2d3748; font-size: 15px; margin-bottom: 4px; max-width: 250px; overflow: hidden; text-overflow: ellipsis;">
-                                                                {{ $job?->title }}
-                                                            </div>
-                                                            <div
-                                                                style="color: #718096; font-size: 13px; display: flex; align-items: center;">
-                                                                <span
-                                                                    style="background-color: #e6f2ff; color: #3182ce; padding: 2px 6px; border-radius: 4px; margin-right: 8px; font-size: 11px; max-width: 150px; overflow: hidden; text-overflow: ellipsis;">
-                                                                    {{ $job?->company?->name }}
-                                                                </span>
-                                                                {{ $job?->jobType?->name }}
-                                                            </div>
-                                                        </td>
-                                                        <td style="padding: 8px; vertical-align: middle;">
-                                                            <div
-                                                                style="font-weight: 600; color: #2d3748; font-size: 14px; max-width: 150px; overflow: hidden; text-overflow: ellipsis;">
-                                                                {{ $job?->category?->name }}
-                                                            </div>
-                                                            <div
-                                                                style="color: #718096; font-size: 13px; background-color: #f0f4f8; display: inline-block; padding: 2px 6px; border-radius: 4px; max-width: 150px; overflow: hidden; text-overflow: ellipsis;">
-                                                                {{ $job?->jobRole?->name }}
-                                                            </div>
-                                                        </td>
-                                                        <td style="padding: 8px; vertical-align: middle;">
+                                <!-- Job listings table -->
+                                <div
+                                    style="background-color: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); overflow-x: auto;">
+                                    <table style="width: 100%; border-collapse: collapse; min-width: 600px;">
+                                        <thead style="background: linear-gradient(to right, #4361ee, #3a0ca3);">
+                                            <tr>
+                                                <th
+                                                    style="padding: 12px 8px; color: white; font-weight: 600; text-align: left; text-transform: uppercase; letter-spacing: 0.5px; font-size: 13px;">
+                                                    #</th>
+                                                <th
+                                                    style="padding: 12px 8px; color: white; font-weight: 600; text-align: left; text-transform: uppercase; letter-spacing: 0.5px; font-size: 13px;">
+                                                    Job</th>
+                                                <th
+                                                    style="padding: 12px 8px; color: white; font-weight: 600; text-align: left; text-transform: uppercase; letter-spacing: 0.5px; font-size: 13px;">
+                                                    Category/Role</th>
+                                                <th
+                                                    style="padding:  5px 5px; color: white; font-weight: 600; text-align: left; text-transform: uppercase; letter-spacing: 0.5px; font-size: 13px;">
+                                                    Applications</th>
+                                                <th
+                                                    style="padding:  5px 5px; color: white; font-weight: 600; text-align: left; text-transform: uppercase; letter-spacing: 0.5px; font-size: 13px;">
+                                                    Deadline</th>
+                                                <th
+                                                    style="padding: 12px 8px; color: white; font-weight: 600; text-align: left; text-transform: uppercase; letter-spacing: 0.5px; font-size: 13px;">
+                                                    Status</th>
+                                                <th
+                                                    style="padding: 12px 8px; color: white; font-weight: 600; text-align: left; text-transform: uppercase; letter-spacing: 0.5px; font-size: 13px;">
+                                                    Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @forelse ($jobs as $job)
+                                                <tr style="border-bottom: 1px solid #e9ecef;">
+                                                    <td
+                                                        style="padding: 12px 8px; vertical-align: middle; color: #6c757d; font-weight: 500; font-size: 14px;">
+                                                        {{ $loop->iteration }}
+                                                    </td>
+                                                    <td style="padding: 12px 8px; vertical-align: middle;">
+                                                        <div
+                                                            style="font-weight: 700; color: #2d3748; font-size: 15px; margin-bottom: 4px; max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                                            {{ Str::limit($job?->title,15,'...') }}
+                                                        </div>
+                                                        <div
+                                                            style="color: #718096; font-size: 13px; display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
                                                             <span
-                                                                style="background-color: #e6f2ff; color: #3182ce; padding: 4px 8px; border-radius: 4px; font-size: 13px;">
-                                                                {{ $job?->applications_count }} Total
+                                                                style="background-color: #e6f2ff; color: #3182ce; padding: 2px 6px; border-radius: 4px; font-size: 11px; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                                                {{ $job?->company?->name }}
                                                             </span>
-                                                        </td>
-                                                        <td
-                                                            style="padding: 8px; vertical-align: middle; color: #4a5568; font-weight: 500;">
-                                                            {{ formatDate($job?->deadline) }}
-                                                        </td>
-                                                        <td style="padding: 8px; vertical-align: middle;">
-                                                            @if ($job?->status === 'pending')
-                                                                <span
-                                                                    style="display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; background-color: rgba(255, 152, 0, 0.15); color: #ed8936;">Pending</span>
-                                                            @elseif ($job?->deadline > date('Y-m-d'))
-                                                                <span
-                                                                    style="display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; background-color: rgba(76, 175, 80, 0.15); color: #48bb78;">Active</span>
-                                                            @else
-                                                                <span
-                                                                    style="display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; background-color: rgba(244, 67, 54, 0.15); color: #f56565;">Expired</span>
-                                                            @endif
-                                                        </td>
-                                                        <td style="padding: 8px; vertical-align: middle;">
-                                                            <div style="display: flex; gap: 8px;">
-                                                                <a href="{{ route('company.job.applications', $job?->id) }}"
-                                                                    style="display: inline-flex; align-items: center; justify-content: center; height: 36px; width: 36px; background-color: #3182ce; color: white; border-radius: 6px; text-decoration: none; transition: all 0.3s ease;">
-                                                                    <i class="fas fa-list"></i>
-                                                                </a>
-                                                                <a href="{{ route('company.jobs.edit', $job?->id) }}"
-                                                                    style="display: inline-flex; align-items: center; justify-content: center; height: 36px; width: 36px; background-color: #48bb78; color: white; border-radius: 6px; text-decoration: none; transition: all 0.3s ease;">
-                                                                    <i class="fas fa-edit"></i>
-                                                                </a>
-                                                                <a href="{{ route('company.jobs.destroy', $job?->id) }}"
-                                                                    class="delete-item"
-                                                                    style="display: inline-flex; align-items: center; justify-content: center; height: 36px; width: 36px; background-color: #e53e3e; color: white; border-radius: 6px; text-decoration: none; transition: all 0.3s ease;">
-                                                                    <i class="fas fa-trash-alt"></i>
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                @empty
-                                                    <tr>
-                                                        <td colspan="7"
-                                                            style="padding: 40px; text-align: center; background-color: #f7fafc;">
-                                                            <div
-                                                                style="font-size: 24px; color: #2d3748; margin-bottom: 10px; font-weight: 600;">
-                                                                No Jobs Found
-                                                            </div>
-                                                            <div
-                                                                style="font-size: 16px; color: #718096; margin-bottom: 20px;">
-                                                                Create a new job posting to get started
-                                                            </div>
-                                                            <a href="{{ route('company.jobs.create') }}"
-                                                                style="display: inline-block; padding: 10px 20px; background-color: #3182ce; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-                                                                Create New Job
+                                                            <span>{{ $job?->jobType?->name }}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td style="padding: 12px 8px; vertical-align: middle;">
+                                                        <div
+                                                            style="font-weight: 600; color: #2d3748; font-size: 14px; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                                            {{ Str::limit($job?->category?->name,15,'...') }}
+                                                        </div>
+                                                        <div
+                                                            style="color: #718096; font-size: 13px; background-color: #f0f4f8; display: inline-block; padding: 2px 6px; border-radius: 4px; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                                            {{ Str::limit($job?->jobRole?->name ,15,'...')}}
+                                                        </div>
+                                                    </td>
+                                                    <td style="padding: 5px 5px; vertical-align: middle;">
+                                                        <span
+                                                            style="background-color: #e6f2ff; color: #3182ce; padding: 4px 8px; border-radius: 4px; font-size: 13px; white-space: nowrap;">
+                                                            {{ $job?->applications_count }} Total
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        style="padding: 5px 5px; vertical-align: middle; color: #4a5568; font-weight: 500; white-space: nowrap;">
+                                                        {{ relativeTime($job?->deadline) }}
+                                                    </td>
+                                                    <td
+                                                        style="padding: 12px 8px; vertical-align: middle; white-space: nowrap;">
+                                                        @if ($job?->status === 'pending')
+                                                            <span
+                                                                style="display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; background-color: rgba(255, 152, 0, 0.15); color: #ed8936;">Pending</span>
+                                                        @elseif ($job?->deadline > date('Y-m-d'))
+                                                            <span
+                                                                style="display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; background-color: rgba(76, 175, 80, 0.15); color: #48bb78;">Active</span>
+                                                        @else
+                                                            <span
+                                                                style="display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; background-color: rgba(244, 67, 54, 0.15); color: #f56565;">Expired</span>
+                                                        @endif
+                                                    </td>
+                                                    <td style="padding: 12px 8px; vertical-align: middle;">
+                                                        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                                                            <a href="{{ route('company.job.applications', $job?->id) }}"
+                                                                title="View Applications"
+                                                                style="display: inline-flex; align-items: center; justify-content: center; height: 32px; width: 32px; background-color: #3182ce; color: white; border-radius: 4px; text-decoration: none; transition: all 0.2s ease;">
+                                                                <i class="fas fa-list"></i>
                                                             </a>
-                                                        </td>
-                                                    </tr>
-                                                @endforelse
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div style="padding: 15px; border-top: 1px solid #eaedf2; text-align: right;">
-                                        <nav style="display: inline-block;">
-                                            @if ($jobs->hasPages())
-                                                {{ $jobs->withQueryString()->links() }}
-                                            @endif
-                                        </nav>
-                                    </div>
+                                                            <a href="{{ route('company.jobs.edit', $job?->id) }}"
+                                                                title="Edit Job"
+                                                                style="display: inline-flex; align-items: center; justify-content: center; height: 32px; width: 32px; background-color: #48bb78; color: white; border-radius: 4px; text-decoration: none; transition: all 0.2s ease;">
+                                                                <i class="fas fa-edit"></i>
+                                                            </a>
+                                                            <a href="{{ route('company.jobs.destroy', $job?->id) }}"
+                                                                class="delete-item" title="Delete Job"
+                                                                style="display: inline-flex; align-items: center; justify-content: center; height: 32px; width: 32px; background-color: #e53e3e; color: white; border-radius: 4px; text-decoration: none; transition: all 0.2s ease;">
+                                                                <i class="fas fa-trash-alt"></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="7"
+                                                        style="padding: 40px 20px; text-align: center; background-color: #f7fafc;">
+                                                        <div
+                                                            style="font-size: 20px; color: #2d3748; margin-bottom: 10px; font-weight: 600;">
+                                                            No Jobs Found
+                                                        </div>
+                                                        <div style="font-size: 16px; color: #718096; margin-bottom: 20px;">
+                                                            Create a new job posting to get started
+                                                        </div>
+                                                        <a href="{{ route('company.jobs.create') }}"
+                                                            style="display: inline-block; padding: 10px 20px; background-color: #3182ce; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                                            Create New Job
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- Pagination container -->
+                                <div style="padding: 15px 0; text-align: right;">
+                                    <nav style="display: inline-block;">
+                                        @if ($jobs->hasPages())
+                                            {{ $jobs->withQueryString()->links() }}
+                                        @endif
+                                    </nav>
                                 </div>
                             </div>
                         </div>

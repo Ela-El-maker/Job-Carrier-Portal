@@ -23,11 +23,11 @@ class CandidatePortfolioAboutRequest extends FormRequest
     {
         return [
             'portfolio_about' => 'required|string',
-            'github_url' => 'nullable|active_url',
-            'linkedin_url' => 'nullable|active_url',
-            'whatsapp_url' => 'nullable|active_url',
-            'instagram_url' => 'nullable|active_url',
-            'portfolio_url' => 'nullable|active_url',
+            'github_url' => 'nullable',
+            'linkedin_url' => 'nullable',
+            'whatsapp_url' => 'nullable',
+            'instagram_url' => 'nullable',
+            'portfolio_url' => 'nullable',
 
             // 'socials' => 'nullable|array',
             // 'socials.*.type' => 'nullable|string|exists:social_platforms,type',

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\AppliedJob;
+use App\Models\Candidate;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Job;
@@ -119,24 +120,59 @@ class FrontendJobPageController extends Controller
     }
 
 
+    //     function show(string $slug): View
+    //     {
+    //         $candidate = Candidate::where('user_id', auth()->id())->first();
+    //         $job = Job::where('slug', $slug)->firstOrFail();
+    //         $openJobs = Job::where('company_id', $job->company->id)
+    //             ->where('deadline', '>=', date('Y-m-d'))
+    //             ->where('status', 'active')
+    //             ->count();
+    //         $alreadyAppliedJob = AppliedJob::where(['job_id' => $job?->id, 'user_id' => auth()->user()?->id])->exists();
+    // // dd($alreadyAppliedJob);Candidate::where('user_id', auth()->id())->first();
+    //         // Fetch similar jobs (same category and active with future deadlines)
+    //         $similarJobs = Job::where('job_category_id', $job->job_category_id)
+    //             ->where('id', '!=', $job->id)
+    //             ->where('status', 'active') // Only fetch active jobs
+    //             ->where('deadline', '>=', now()) // Ensure the deadline is in the future
+    //             ->limit(5)
+    //             ->get();
+
+    //         return view('frontend.pages.job-show', compact('job', 'openJobs', 'similarJobs', 'alreadyAppliedJob'));
+    //     }
+
     function show(string $slug): View
     {
         $job = Job::where('slug', $slug)->firstOrFail();
+
         $openJobs = Job::where('company_id', $job->company->id)
             ->where('deadline', '>=', date('Y-m-d'))
             ->where('status', 'active')
             ->count();
-        $alreadyAppliedJob = AppliedJob::where(['job_id' => $job?->id, 'candidate_id' => auth()->user()?->id])->exists();
 
-        // Fetch similar jobs (same category and active with future deadlines)
+        $candidate = Candidate::where('user_id', auth()->id())->first();
+        $alreadyAppliedJob = false;
+
+        if ($candidate) {
+            $alreadyAppliedJob = AppliedJob::where([
+                'job_id' => $job->id,
+                'candidate_id' => $candidate->id,
+            ])->exists();
+        }
+
         $similarJobs = Job::where('job_category_id', $job->job_category_id)
             ->where('id', '!=', $job->id)
-            ->where('status', 'active') // Only fetch active jobs
-            ->where('deadline', '>=', now()) // Ensure the deadline is in the future
+            ->where('status', 'active')
+            ->where('deadline', '>=', now()) 
             ->limit(5)
             ->get();
 
-        return view('frontend.pages.job-show', compact('job', 'openJobs', 'similarJobs', 'alreadyAppliedJob'));
+        return view('frontend.pages.job-show', compact(
+            'job',
+            'openJobs',
+            'similarJobs',
+            'alreadyAppliedJob'
+        ));
     }
 
     // function applyJob(string $id)
@@ -161,32 +197,35 @@ class FrontendJobPageController extends Controller
     //     );
     // }
 
+
     function applyJob(string $id)
     {
-        // 1. Check if user is authenticated
         if (!auth()->check()) {
             throw ValidationException::withMessages(['Please login to apply for this job']);
         }
 
-        // 2. Verify the user is a candidate
-        if (auth()->user()->role !== 'candidate') { // Adjust based on your role system
+        if (auth()->user()->role !== 'candidate') {
             throw ValidationException::withMessages(['Only candidates can apply for jobs']);
         }
 
-        // 3. Check for duplicate applications
+        $candidate = Candidate::where('user_id', auth()->id())->first();
+
+        if (!$candidate) {
+            throw ValidationException::withMessages(['Candidate profile not found.']);
+        }
+
         $alreadyAppliedJob = AppliedJob::where([
             'job_id' => $id,
-            'candidate_id' => auth()->user()->id
+            'candidate_id' => $candidate->id
         ])->exists();
 
         if ($alreadyAppliedJob) {
             throw ValidationException::withMessages(['You have already applied for this job']);
         }
 
-        // 4. Create the application
         $applyJob = new AppliedJob();
         $applyJob->job_id = $id;
-        $applyJob->candidate_id = auth()->user()->id;
+        $applyJob->candidate_id = $candidate->id;
         $applyJob->save();
 
         return response(
@@ -194,4 +233,39 @@ class FrontendJobPageController extends Controller
             200
         );
     }
+
+
+    //     function applyJob(string $id)
+    //     {
+    //         // 1. Check if user is authenticated
+    //         if (!auth()->check()) {
+    //             throw ValidationException::withMessages(['Please login to apply for this job']);
+    //         }
+
+    //         // 2. Verify the user is a candidate
+    //         if (auth()->user()->role !== 'candidate') { // Adjust based on your role system
+    //             throw ValidationException::withMessages(['Only candidates can apply for jobs']);
+    //         }
+
+    //         // 3. Check for duplicate applications
+    //         $alreadyAppliedJob = AppliedJob::where([
+    //             'job_id' => $id,
+    //             'candidate_id' => auth()->user()->id
+    //         ])->exists();
+    // // dd($alreadyAppliedJob);
+    //         if ($alreadyAppliedJob) {
+    //             throw ValidationException::withMessages(['You have already applied for this job']);
+    //         }
+
+    //         // 4. Create the application
+    //         $applyJob = new AppliedJob();
+    //         $applyJob->job_id = $id;
+    //         $applyJob->candidate_id = auth()->user()->id;
+    //         $applyJob->save();
+
+    //         return response(
+    //             ['message' => 'Job application submitted successfully.'],
+    //             200
+    //         );
+    //     }
 }

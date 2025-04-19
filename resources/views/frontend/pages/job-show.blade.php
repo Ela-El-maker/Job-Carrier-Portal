@@ -184,7 +184,6 @@
 
                             <!-- Div wrapper -->
                             <div class="pt40">
-                                <h5>Job Overview</h5>
                                 <hr>
                                 <p class="mt20">
                                     {!! $job?->description !!}
@@ -384,7 +383,7 @@
                             </div>
                         @else
                             <div class="mt20">
-                                <a href="javascrip:;" class="apply-now"
+                                <a href="javascript:;" class="apply-now"
                                     style="
                                             background-color: #0fe6ee; /* Green background */
                                             border: none; /* No border */

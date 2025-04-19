@@ -97,14 +97,14 @@
 
                             <!-- Div wrapper -->
                             <div class="pt40">
-                                <h5>About US</h5>
+                                {{-- <h5>About US</h5> --}}
 
                                 <p class="mt20">{!! $company->bio !!}</p>
                             </div>
 
                             <!-- Div wrapper -->
                             <div class="pt40">
-                                <h5>Our Vision</h5>
+                                {{-- <h5>Our Vision</h5> --}}
 
                                 <p class="mt20">{!! $company->vision !!}</p>
                             </div>
