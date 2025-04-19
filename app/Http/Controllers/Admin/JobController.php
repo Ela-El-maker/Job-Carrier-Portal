@@ -109,17 +109,13 @@ class JobController extends Controller
         $job->status = 'active';
         $job->save();
 
-        $oldCategoryId = $job->job_category_id;
-        $job->update($request->all());
 
-        if ($oldCategoryId != $job->job_category_id) {
-            JobCategory::find($oldCategoryId)?->updateFeaturedStatus();
-            JobCategory::find($job->job_category_id)?->updateFeaturedStatus();
-        } else {
-            $job->category->updateFeaturedStatus(); // In case status changed
-        }
 
-dd($oldCategoryId);
+        $job->category->updatePopularStatus();
+
+        $job->category->updateFeaturedStatus();
+
+        // dd($oldCategoryId);
 
         // dd($job); // Uncomment this line to debug if needed
         // Insert Tags
@@ -201,6 +197,8 @@ dd($oldCategoryId);
         $job = Job::findOrFail($id);
         $job->title = $request->title;
         $job->company_id = $request->company;
+        // $job->job_category_id = $request->category;
+        $oldCategoryId = $job->job_category_id;
         $job->job_category_id = $request->category;
         $job->vacancies = $request->vacancies;
         $job->deadline = $request->deadline;
@@ -232,18 +230,18 @@ dd($oldCategoryId);
         $job->description = $request->description;
         $job->save();
 
-
-        $oldCategoryId = $job->job_category_id;
-        // $job->update($request->all());
-
+        // Now, check if category changed:
         if ($oldCategoryId != $job->job_category_id) {
             JobCategory::find($oldCategoryId)?->updateFeaturedStatus();
             JobCategory::find($job->job_category_id)?->updateFeaturedStatus();
+
+            JobCategory::find($oldCategoryId)?->updatePopularStatus();
+            JobCategory::find($job->job_category_id)?->updatePopularStatus();
         } else {
-            $job->category->updateFeaturedStatus(); // In case status changed
+            $job->category->updateFeaturedStatus();
+            $job->category->updatePopularStatus();
         }
 
-// dd($oldCategoryId);
 
         // Insert Tags
         JobTag::where('job_id', $id)->delete();

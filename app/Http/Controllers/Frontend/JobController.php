@@ -188,9 +188,8 @@ class JobController extends Controller
         // }
         $job->category->updatePopularStatus();
 
-        if ($job->is_featured) {
-            $job->category->updateFeaturedStatus();
-        }
+        $job->category->updateFeaturedStatus();
+
 
         // Insert Tags
         foreach ($request->tags as $tag) {
@@ -312,24 +311,60 @@ class JobController extends Controller
         $newHighlighted = $request->highlight ?? 0;
         $newGolden = $request->golden_job ?? 0;
 
-        // Check for upgrades to premium features
-        if (!$wasFeatured && $newFeatured && $userPlan->featured_job_limit < 1) {
-            Notify::errorNotification('Featured job limit reached. Please upgrade.');
-            return back()->with('error', 'Featured job limit reached');
+        // // Check for upgrades to premium features
+        // if (!$wasFeatured && $newFeatured && $userPlan->featured_job_limit < 1) {
+        //     Notify::errorNotification('Featured job limit reached. Please upgrade.');
+        //     return back()->with('error', 'Featured job limit reached');
+        // }
+
+        // Adjust plan limits with proper checks
+        if ($wasFeatured && !$newFeatured) {
+            $userPlan->increment('featured_job_limit');
+        } elseif (!$wasFeatured && $newFeatured) {
+            if ($userPlan->featured_job_limit < 1) {
+                Notify::errorNotification('Featured job limit reached. Please upgrade.');
+                return back()->with('error', 'Featured job limit reached');
+            }
+            $userPlan->decrement('featured_job_limit');
         }
 
-        if (!$wasHighlighted && $newHighlighted && $userPlan->highlight_job_limit < 1) {
-            Notify::errorNotification('Highlighted job limit reached. Please upgrade.');
-            return back()->with('error', 'Highlighted job limit reached');
+        // Repeat similar checks for other premium features
+
+        // if (!$wasHighlighted && $newHighlighted && $userPlan->highlight_job_limit < 1) {
+        //     Notify::errorNotification('Highlighted job limit reached. Please upgrade.');
+        //     return back()->with('error', 'Highlighted job limit reached');
+        // }
+
+        if ($wasHighlighted && !$newHighlighted) {
+            $userPlan->increment('highlight_job_limit');
+        } elseif (!$wasHighlighted && $newHighlighted) {
+            if ($userPlan->highlight_job_limit < 1) {
+                Notify::errorNotification('Highlight job limit reached. Please upgrade.');
+                return back()->with('error', 'Highlight job limit reached');
+            }
+            $userPlan->decrement('highlight_job_limit');
         }
 
-        if (!$wasGolden && $newGolden && $userPlan->golden_job < 1) {
-            Notify::errorNotification('Golden job limit reached. Please upgrade.');
-            return back()->with('error', 'Golden job limit reached');
+        // if (!$wasGolden && $newGolden && $userPlan->golden_job < 1) {
+        //     Notify::errorNotification('Golden job limit reached. Please upgrade.');
+        //     return back()->with('error', 'Golden job limit reached');
+        // }
+
+        if ($wasGolden && !$newGolden) {
+            $userPlan->increment('golden_job');
+        } elseif (!$wasGolden && $newGolden) {
+            if ($userPlan->golden_job < 1) {
+                Notify::errorNotification('Golden job limit reached. Please upgrade.');
+                return back()->with('error', 'Golden job limit reached');
+            }
+            $userPlan->decrement('golden_job');
         }
 
         $job->title = $request->title;
-        $job->job_category_id = $request->category;
+        // $job->job_category_id = $request->category;
+        $oldCategoryId = $job->job_category_id; // ✅ Save current value BEFORE change
+
+        $job->job_category_id = $request->category; // ✅ Now we override it
         $job->vacancies = $request->vacancies;
         $job->deadline = $request->deadline;
 
@@ -359,25 +394,20 @@ class JobController extends Controller
         $job->description = $request->description;
         $job->save();
 
-
-        // $category = JobCategory::withCount('jobs')->find($job->job_category_id);
-
-        // if ($category->jobs_count >= 3 && !$category->show_at_popular) {
-        //     $category->show_at_popular = true;
-        //     $category->save();
-        // }
-
-        $oldCategoryId = $job->job_category_id;
-        // $job->update($request->all());
-
+        // Now, check if category changed:
         if ($oldCategoryId != $job->job_category_id) {
             JobCategory::find($oldCategoryId)?->updateFeaturedStatus();
             JobCategory::find($job->job_category_id)?->updateFeaturedStatus();
+
+            JobCategory::find($oldCategoryId)?->updatePopularStatus();
+            JobCategory::find($job->job_category_id)?->updatePopularStatus();
         } else {
-            $job->category->updateFeaturedStatus(); // In case status changed
+            $job->category->updateFeaturedStatus();
+            $job->category->updatePopularStatus();
         }
 
-// dd($oldCategoryId);
+
+
 
         // Insert Tags
         JobTag::where('job_id', $id)->delete();
@@ -463,6 +493,7 @@ class JobController extends Controller
 
         try {
             $job = Job::findOrFail($id);
+
             $categoryId = $job->job_category_id;
             $job->delete();
 
