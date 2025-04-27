@@ -229,7 +229,7 @@
 
                 <!-- ===== Start of Job Listings ===== -->
                 <div class="col-md-8 col-xs-12">
-                    @forelse ($jobs as $job)
+                    {{-- @forelse ($jobs as $job)
                         <!-- ===== Start of Job Post Column 1 ===== -->
                         <div class="item-block shadow-hover mt20">
 
@@ -371,7 +371,125 @@
 
                         </div>
                         <!-- ===== End of Job Post Column 1 ===== -->
-                    @empty
+                    @empty --}}
+                    @forelse ($jobs as $job)
+    <!-- ===== Start of Job Post Column 1 ===== -->
+    <div class="item-block shadow-hover mt20"
+         @if($job->is_golden)
+             style="border: 2px solid #FFD700; background-color: #FFF9E6;"
+         @endif>
+
+        <!-- Golden job ribbon (only shown if job is golden) -->
+        @if($job->is_golden)
+            <div style="position: absolute; top: 0; right: 0; background-color: #FFD700; color: #000; padding: 3px 10px; font-weight: bold; font-size: 12px; z-index: 1;">
+                Golden Job
+            </div>
+        @endif
+
+        <!-- Start of Job Post Header -->
+        <div class="job-post-header clearfix">
+            <a href="{{ route('companies.show', $job?->company?->slug) }}">
+                <img src="{{ asset($job?->company?->logo) }}" alt="">
+            </a>
+            <div>
+                <a href="{{ route('jobs.show', $job?->slug) }}">
+                    <h4 @if($job->is_golden) style="color: #D4AF37;" @endif>
+                        {{ Str::limit($job?->title, 27, '...') }}
+                    </h4>
+                </a>
+                <h5><small>{{ $job?->company?->name }}</small></h5>
+                @php
+                    $jobType = getJobTypeClassAndLabel($job?->jobType?->name);
+                @endphp
+                <a href="javascript:;" class="btn btn-small btn-effect {{ $jobType['class'] }}"
+                    style="margin-top: 10px;">
+                    {{ $jobType['label'] }}
+                </a>
+            </div>
+
+            <ul class="pull-right">
+                <li>
+                    <h6 class="time"><i class="fa fa-clock"></i>
+                        {{ $job->created_at->diffForHumans() }}</h6>
+                </li>
+                <li>
+                    <b>
+                        @if ($job?->is_featured)
+                            <a href="#" class="btn-small btn-effect featured"
+                                style="padding: 10px; border-radius:5px;">Featured</a>
+                        @endif
+                        @if ($job?->is_highlighted)
+                            <a href="#" class="btn-small btn-effect highlighted"
+                                style="padding: 10px; border-radius:5px;">Highlighted</a>
+                        @endif
+                    </b>
+                </li>
+
+                <li>
+                    <!-- Bookmark Icon -->
+                    <a href="javascript:;" class="bookmark-icon job-bookmark"
+                        data-id="{{ $job?->id }}">
+                        @if (in_array($job?->id, $bookmarked))
+                            <i class="fas fa-bookmark"></i>
+                        @else
+                            <i class="far fa-bookmark"></i>
+                        @endif
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- End of Job Post Header -->
+
+        <!-- Start of Job Post Body -->
+        <div class="job-post-body" style="padding: 1px">
+            <ul>
+                <li class="skills" style="padding-bottom: 5px; margin-bottom: 5px;">
+                    @foreach ($job?->skills->shuffle() as $index => $jobSkill)
+                        @if ($index < 5)
+                            <a href="" class="btn btn-blue btn-effect mt20"
+                                style="font-size: 0.85rem; padding: 5px 10px;">
+                                {{ $jobSkill?->skill?->name }}
+                            </a>
+                        @elseif ($index == 5)
+                            <a class="btn btn-blue btn-effect mt20 job-skill" data-toggle="modal"
+                                data-target="#skillsModal" href="javascript:void(0)"
+                                style="font-size: 0.85rem; padding: 5px 10px;">
+                                {{ count($job->skills) - 5 }} more
+                            </a>
+                        @endif
+                    @endforeach
+                </li>
+            </ul>
+        </div>
+        <!-- End of Job Post Body -->
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-top: 1px solid #eee; margin-top: 15px; font-size: 14px; color: #555; flex-wrap: wrap;">
+            <!-- Location - Left Side -->
+            <div style="flex: 1; min-width: 120px; padding: 0 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                <i class="fa fa-map-marker" style="color: #38b2ac; margin-right: 5px;"></i>
+                <span>{{ formatLocation($job?->company?->companyCountry?->name, $job?->company?->companyState?->name, $job?->company?->companyCity?->name) }}</span>
+            </div>
+
+            <!-- Years of Experience - Center -->
+            <div style="flex: 1; min-width: 120px; padding: 0 5px; text-align: center; white-space: nowrap;">
+                <i class="fa fa-briefcase" style="color: #38b2ac; margin-right: 5px;"></i>
+                <span>{{ $job?->jobExperience?->name }}</span>
+            </div>
+
+            <!-- Salary - Right Side -->
+            <div style="flex: 1; min-width: 120px; padding: 0 5px; text-align: right; white-space: nowrap;">
+                @if ($job?->salary_mode === 'range')
+                    <i class="fa fa-money" style="color: #38b2ac; margin-right: 5px;"></i>
+                    <span>{{ $job?->min_salary }} - {{ $job?->max_salary }} /
+                        {{ $job?->salaryType?->name }}</span>
+                @else
+                    <i class="fa fa-money" style="color: #38b2ac; margin-right: 5px;"></i>
+                    <span>{{ $job?->custom_salary }} / {{ $job?->salaryType?->name }}</span>
+                @endif
+            </div>
+        </div>
+    </div>
+    <!-- ===== End of Job Post Column 1 ===== -->
+@empty
                         <div class="col-12">
                             <div class="empty-jobs-container text-center py-5 my-4">
                                 <div class="empty-state-icon mb-4">
