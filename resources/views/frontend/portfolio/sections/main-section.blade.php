@@ -1,4 +1,13 @@
-<section id='intro' class='section section-main active'>
+<section id='intro' class='section section-main active' style="
+    @if($candidatePortfolio?->background_image)
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{{ asset($candidatePortfolio->background_image) }}');
+    @else
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{{ asset('images/default-bg.jpg') }}');
+    @endif
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;">
 
     <div class='container-fluid'>
 

@@ -81,7 +81,7 @@
 
             <div class='section-header'>
 
-                <h2>My <strong class='color'>Services</strong></h2>
+                <h2>My <strong class='color'>Work</strong></h2>
 
             </div>
 
@@ -94,7 +94,7 @@
                             {{-- Icon wrapped in a link --}}
                             <div class='icon'>
                                 <a href="{{ $service?->service_url  }}" target="_blank" style="text-decoration: none;">
-                                  
+
                                     <i class="{{ $service?->service_icon }}" style="font-size: 50px;"></i>
                                 </a>
                             </div>
