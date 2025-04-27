@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\AppliedJob;
 use App\Models\Blog;
 use App\Models\BlogSectionSetting;
+use App\Models\Candidate;
 use App\Models\Company;
 use App\Models\Country;
 use App\Models\CustomSection;
@@ -97,7 +99,33 @@ class HomeController extends Controller
         $blogTitle = BlogSectionSetting::first();
         $customSection = CustomSection::first();
 
+        $totalCandidates = Candidate::where(['profile_complete' => 1, 'visibility' => 1])->count();
+        $totalCompanies = Company::where('profile_completion', 1)->where('visibility', 1)->count();
+        $totalMembers = $totalCandidates + $totalCompanies;
 
-        return view('frontend.home.index', compact('plans', 'heroes', 'countries', 'jobCount', 'jobCategories', 'popularJobCategories', 'featuredCategories', 'popularCompanies', 'topJobs', 'goldenJobs', 'blogs', 'blogTitle', 'customSection'));
+        $totalApplications = AppliedJob::count();
+        $totalJobs = Job::where('deadline', '>=', date('Y-m-d'))->where('status', 'active')->count();
+
+        return view('frontend.home.index',
+        compact(
+            'plans',
+            'heroes',
+            'countries',
+            'jobCount',
+            'jobCategories',
+            'popularJobCategories',
+            'featuredCategories',
+            'popularCompanies',
+            'topJobs',
+            'goldenJobs',
+            'blogs',
+            'blogTitle',
+            'customSection',
+            'totalJobs',
+            'totalJobs',
+            'totalMembers',
+            'totalCompanies',
+            'totalApplications'
+        ));
     }
 }
