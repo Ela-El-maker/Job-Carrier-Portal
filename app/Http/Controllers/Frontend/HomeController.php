@@ -7,6 +7,7 @@ use App\Models\AppliedJob;
 use App\Models\Blog;
 use App\Models\BlogSectionSetting;
 use App\Models\Candidate;
+use App\Models\ClientReview;
 use App\Models\Company;
 use App\Models\Country;
 use App\Models\CustomSection;
@@ -106,6 +107,7 @@ class HomeController extends Controller
         $totalApplications = AppliedJob::count();
         $totalJobs = Job::where('deadline', '>=', date('Y-m-d'))->where('status', 'active')->count();
 
+        $reviews = ClientReview::where('is_approved', 1)->get();
         return view('frontend.home.index',
         compact(
             'plans',
@@ -125,7 +127,8 @@ class HomeController extends Controller
             'totalJobs',
             'totalMembers',
             'totalCompanies',
-            'totalApplications'
+            'totalApplications',
+            'reviews'
         ));
     }
 }

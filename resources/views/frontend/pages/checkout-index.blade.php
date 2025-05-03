@@ -42,6 +42,12 @@
                                 src="{{ asset('default-uploads/payment/paypal1.png') }}" alt="Payment Method 1">
                             </a>
                         </div>
+                        {{-- <div class="col-md-6 col-xs-12 mb-4">
+                            <a href="{{ route('company.payment.mpesa') }}">
+                                <img class="img-fluid" style="border-radius: 5px; border: 3px solid #1ca774; max-width: 150px; height: auto;"
+                                     src="https://placehold.co/500x500" alt="Payment Method 2">
+                            </a>
+                        </div> --}}
                         <div class="col-md-6 col-xs-12 mb-4">
                             <a href="">
                                 <img class="img-fluid" style="border-radius: 5px; border: 3px solid #1ca774; max-width: 150px; height: auto;"

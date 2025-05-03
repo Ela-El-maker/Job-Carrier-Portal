@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\BlogSectionSettingController;
 use App\Http\Controllers\Admin\CityController;
+use App\Http\Controllers\Admin\ClientReviewController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\CustomSectionController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -167,6 +168,9 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin', 'as' => 'admi
     Route::resource('hero', HeroController::class);
     Route::resource('blog-section-setting', BlogSectionSettingController::class);
     Route::resource('custom-section', CustomSectionController::class);
+    Route::resource('reviews', ClientReviewController::class);
+    Route::post('review-status/{id}', [ClientReviewController::class, 'changeStatus'])->name('review-status.update');
+
 
     /**
      * Upload Controller Route

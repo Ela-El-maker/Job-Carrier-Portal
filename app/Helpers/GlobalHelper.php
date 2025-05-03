@@ -461,3 +461,32 @@ if (!function_exists('calculateAge')) {
     }
 }
 
+if (!function_exists('formatPhoneNumber')) {
+    /**
+     * Format phone number for M-Pesa (convert to 254 format)
+     *
+     * @param string $phone Raw phone number input
+     * @return string Formatted 254... number
+     */
+    function formatPhoneNumber($phone)
+    {
+        // Remove all non-digit characters
+        $phone = preg_replace('/\D/', '', $phone);
+
+        // Convert to 254 format
+        if (str_starts_with($phone, '0')) {
+            return '254' . substr($phone, 1);
+        }
+
+        if (str_starts_with($phone, '7') && strlen($phone) == 9) {
+            return '254' . $phone;
+        }
+
+        if (str_starts_with($phone, '+254')) {
+            return substr($phone, 1);
+        }
+
+        // Return as-is if already in 254 format
+        return $phone;
+    }
+}

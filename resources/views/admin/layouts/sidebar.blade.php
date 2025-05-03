@@ -132,6 +132,9 @@
 
                     <li class="{{ setSidebarActive(['admin.custom-section.*']) }}"><a class="nav-link"
                             href="{{ route('admin.custom-section.index') }}">Custom Section</a></li>
+
+                            <li class="{{ setSidebarActive(['admin.reviews.*']) }}"><a class="nav-link"
+                                href="{{ route('admin.reviews.index') }}">Client Reviews</a></li>
                 </ul>
             </li>
 

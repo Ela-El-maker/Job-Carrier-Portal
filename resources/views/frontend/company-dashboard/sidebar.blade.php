@@ -25,6 +25,9 @@
                 <a class="nav-link btn btn-link" href="{{ route('company.jobs.index') }}">My Jobs</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link btn btn-link" href="{{ route('client-reviews.index') }}">My Reviews</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link btn btn-link" href="candidate-profile-save-jobs.html">Saved Jobs</a>
             </li>
         </ul>

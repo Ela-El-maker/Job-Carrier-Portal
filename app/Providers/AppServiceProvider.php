@@ -22,5 +22,9 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Paginator::useBootstrap();
+        // Check if the current request is from ngrok by looking for "ngrok.io" in the host
+        if (str_contains(request()->getHost(), 'ngrok.io')) {
+            config(['app.url' => request()->getSchemeAndHttpHost()]);
+        }
     }
 }

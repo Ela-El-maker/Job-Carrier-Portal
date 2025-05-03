@@ -94,6 +94,16 @@
                             style="margin-left: auto; background-color: rgba(67, 97, 238, 0.1); color: #4361ee; font-size: 12px; padding: 2px 8px; border-radius: 20px; font-weight: 600;">12</span>
                     </a>
                 </li>
+                <li class="nav-item" style="margin-bottom: 8px;">
+                    <a class="nav-link btn btn-link" href="{{ route('client-reviews.index') }}"
+                        style="display: flex; align-items: center; text-align: left; color: #4a5568; padding: 12px 16px; border-radius: 10px; font-weight: 500; transition: all 0.2s; text-decoration: none; border: none;">
+                        <i class="fas fa-bookmark"
+                            style="margin-right: 12px; font-size: 16px; width: 20px; text-align: center; color: #718096;"></i>
+                        <span>Review</span>
+                        <span
+                            style="margin-left: auto; background-color: rgba(67, 97, 238, 0.1); color: #4361ee; font-size: 12px; padding: 2px 8px; border-radius: 20px; font-weight: 600;">12</span>
+                    </a>
+                </li>
             </ul>
         </div>
 

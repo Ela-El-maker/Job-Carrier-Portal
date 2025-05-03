@@ -9,6 +9,7 @@ use App\Http\Controllers\Frontend\CandidateMyJobController;
 use App\Http\Controllers\Frontend\CandidatePortfolioController;
 use App\Http\Controllers\Frontend\CandidateProfileController;
 use App\Http\Controllers\Frontend\CheckoutPageController;
+use App\Http\Controllers\Frontend\ClientReviewController;
 use App\Http\Controllers\Frontend\CommentController;
 use App\Http\Controllers\Frontend\CompanyDashboardController;
 use App\Http\Controllers\Frontend\CompanyProfileController;
@@ -138,6 +139,13 @@ Route::group(
         Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
     }
 );
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::resource('client-reviews', ClientReviewController::class)->only([
+        'index', 'create','show', 'store', 'edit', 'update', 'destroy'
+    ]);
+
+});
 
 
 /***  Company Dashboard Routes */

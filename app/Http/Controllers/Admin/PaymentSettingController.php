@@ -15,17 +15,17 @@ use Illuminate\View\View;
 class PaymentSettingController extends Controller
 {
     //
-    function index() : View
+    function index(): View
     {
 
         return view('admin.payment-setting.index');
     }
 
-    function updatePaypalSetting(PaypalSettingUpdateRequest $request) : RedirectResponse
+    function updatePaypalSetting(PaypalSettingUpdateRequest $request): RedirectResponse
     {
 
         // dd($request->all());
-        $validatedData = $request -> validated();
+        $validatedData = $request->validated();
         // dd($validatedData);
         foreach ($validatedData as $key => $value) {
             # code...
@@ -36,7 +36,7 @@ class PaymentSettingController extends Controller
         }
 
         $settingService = app(PaymentGatewaySettingService::class);
-        $settingService ->clearCacheSettings();
+        $settingService->clearCacheSettings();
 
         Notify::updatedNotification();
         return redirect()->back();
