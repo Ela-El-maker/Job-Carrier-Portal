@@ -464,7 +464,7 @@ Author URI: gnodesign.com
         // Initializing Owl Slider for Testimonial Section on the Home Version 1
         $(testimonial).owlCarousel({
             center: true,
-            loop: true,
+            loop: false,
             nav: false,
             dots: false,
             autoplay: true, // set to "false" if you want to deactivate autoplay
@@ -484,7 +484,7 @@ Author URI: gnodesign.com
 
         // Initializing Owl Slider for Partners Section
         $(partnerSlider).owlCarousel({
-            loop: true,
+            loop: false,
             nav: false,
             dots: false,
             autoplay: true, // set to "false" if you want to deactive autoplay
@@ -513,7 +513,7 @@ Author URI: gnodesign.com
         // Initializing Owl Slider for Blog Post - Thumbnail
         $(post_thumbnail_slider).owlCarousel({
             items: 1,
-            loop: true,
+            loop: false,
             autoplay: false,
 
             //Navigation
@@ -542,7 +542,7 @@ Author URI: gnodesign.com
 
         // Initializing Owl Slider for Partners Section
         $(relatedJobs).owlCarousel({
-            loop: true,
+            loop: false,
             nav: false,
             dots: true,
             autoplay: false, // set to "false" if you want to deactive autoplay
@@ -607,7 +607,7 @@ Author URI: gnodesign.com
 
         $(mailChimp).ajaxChimp({
             callback: mailchimpFunction,
-            url: "your-mailchimp-url-here" // <==== Replace this with your own mailchimp list URL.  
+            url: "your-mailchimp-url-here" // <==== Replace this with your own mailchimp list URL.
         });
 
         // Mailchimp Callback function
@@ -1045,8 +1045,8 @@ Author URI: gnodesign.com
         script.src = "js/google-analytics.js";
         document.body.appendChild(script);
 
-        
-        
+
+
     }); //end of document ready function
 
 })(jQuery);

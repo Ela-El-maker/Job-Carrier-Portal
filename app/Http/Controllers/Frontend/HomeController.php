@@ -96,7 +96,7 @@ class HomeController extends Controller
             ->take(1)
             ->get();
 
-        $blogs = Blog::where('status', 1)->latest()->take(5)->get();
+        $blogs = Blog::where('status', 1)->latest()->take(3)->get();
         $blogTitle = BlogSectionSetting::first();
         $customSection = CustomSection::first();
 

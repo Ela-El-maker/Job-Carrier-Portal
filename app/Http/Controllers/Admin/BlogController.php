@@ -22,7 +22,8 @@ class BlogController extends Controller
         //
         $query = Blog::query();
         $this->search($query, ['title', 'slug', 'created_at', 'updated_at']);
-        $blogs = $query->where('status', 1)->latest()->paginate(10);
+        $blogs = $query->latest()->paginate(10);
+        // dd($blogs);
         return view('admin.blogs.index', compact('blogs'));
     }
 
@@ -62,6 +63,8 @@ class BlogController extends Controller
     public function show(string $id)
     {
         //
+        $blog = Blog::findOrFail($id);
+        return view('admin.blogs.show', compact('blog'));
     }
 
     /**
@@ -80,7 +83,7 @@ class BlogController extends Controller
     public function update(BlogUpdateRequest $request, string $id)
     {
         $imagePath = $this->uploadFile($request, 'image');
-        $blog = Blog::findorfail($id);
+        $blog = Blog::findOrFail($id);
         if ($imagePath) $blog->image = $imagePath;
         $blog->title = $request->title;
         $blog->author_id = auth()->user()->id;
@@ -99,7 +102,7 @@ class BlogController extends Controller
     public function destroy(string $id)
     {
         try {
-            Blog::findorfail($id)->delete();
+            Blog::findOrFail($id)->delete();
             Notify::deletedNotification();
             return response(['message' => 'success'], 200);
         } catch (\Exception $e) {

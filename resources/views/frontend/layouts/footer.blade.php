@@ -61,9 +61,9 @@
 
                         <!-- Thumbnail -->
                         <div class="thumbnail-post">
-                            <a href="{{ route('blogs.show', $blog?->slug) }}">
-                                <img src="{{ asset($blog?->image) }}"
-                                    alt="{{ Str::limit(strip_tags($blog?->title), 5, '...') }}">
+                            <a href="{{ route('blogs.show', $blog?->slug) }}" class="hover-link">
+                                <img src="{{ asset($blog && $blog->image ? $blog->image : 'frontend/default-uploads/default-blog.png') }}"
+                                    alt="{{ $blog?->title ?? 'Blog image' }}">
                             </a>
                         </div>
 

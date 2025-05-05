@@ -32,8 +32,8 @@
                     <table class="table table-striped">
                         <tr>
                             <th>#</th>
-                            <th>Title</th>
-                            <th>Description</th>
+                            <th style="width: 40%">Title</th>
+                            {{-- <th>Description</th> --}}
                             <th>Image</th>
                             <th>Status</th>
                             <th style="width: 15%">IsPopular</th>
@@ -45,10 +45,10 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     {{-- Title --}}
-                                    <td>{{ Str::limit(strip_tags($blog?->title), 10, '...') }}</td>
+                                    <td>{{ Str::limit(strip_tags($blog?->title), 50, '...') }}</td>
 
                                     {{-- Description (limited to 80 chars) --}}
-                                    <td>{{ Str::limit(strip_tags($blog?->description), 80, '...') }}</td>
+                                    {{-- <td>{{ Str::limit(strip_tags($blog?->description), 80, '...') }}</td> --}}
 
                                     {{-- Image Preview --}}
                                     <td>
@@ -104,16 +104,22 @@
                                     </td>
 
                                     {{-- Action Buttons --}}
+                                    {{-- Action Buttons --}}
                                     <td>
+                                        <a href="{{ route('admin.blogs.show', $blog?->id) }}" class="btn-small btn btn-info"
+                                            title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
                                         <a href="{{ route('admin.blogs.edit', $blog?->id) }}"
-                                            class="btn-small btn btn-primary">
+                                            class="btn-small btn btn-primary" title="Edit">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <a href="{{ route('admin.blogs.destroy', $blog?->id) }}"
-                                            class="btn-small btn btn-danger delete-item">
+                                            class="btn-small btn btn-danger delete-item" title="Delete">
                                             <i class="fas fa-trash-alt"></i>
                                         </a>
                                     </td>
+
                                 </tr>
                             @empty
                                 <tr>

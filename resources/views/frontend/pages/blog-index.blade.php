@@ -39,8 +39,10 @@
                                 <article class="blog-single shadow-hover pb30">
                                     <!-- Post Thumbnail -->
                                     <div class="blog-post-thumbnail normal-post">
-                                        <a href="{{ route('blogs.show', $blog?->slug) }}" class="hover-link"><img
-                                                src="{{ asset($blog?->image) }}" alt=""></a>
+                                        <a href="{{ route('blogs.show', $blog?->slug) }}" class="hover-link">
+                                            <img src="{{ asset($blog && $blog->image ? $blog->image : 'frontend/default-uploads/default-blog.png') }}"
+                                                alt="{{ $blog?->title ?? 'Blog image' }}">
+                                        </a>
                                     </div>
 
                                     <!-- Post Detail -->
@@ -98,8 +100,9 @@
                             <div class="sidebar-blog-post">
                                 <!-- Thumbnail -->
                                 <div class="thumbnail-post">
-                                    <a href="{{ route('blogs.show', $post?->slug) }}">
-                                        <img src="{{ asset($post?->image) }}" alt="">
+                                    <a href="{{ route('blogs.show', $post?->slug) }}" class="hover-link">
+                                        <img src="{{ asset($post && $post->image ? $post->image : 'frontend/default-uploads/default-blog.png') }}"
+                                            alt="{{ $post?->title ?? 'Blog image' }}">
                                     </a>
                                 </div>
 
@@ -136,8 +139,9 @@
                             <div class="sidebar-blog-post">
                                 <!-- Thumbnail -->
                                 <div class="thumbnail-post">
-                                    <a href="{{ route('blogs.show', $post?->slug) }}">
-                                        <img src="{{ asset($post?->image) }}" alt="">
+                                    <a href="{{ route('blogs.show', $post?->slug) }}" class="hover-link">
+                                        <img src="{{ asset($post && $post->image ? $post->image : 'frontend/default-uploads/default-blog.png') }}"
+                                            alt="{{ $post?->title ?? 'Blog image' }}">
                                     </a>
                                 </div>
 
