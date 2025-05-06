@@ -110,6 +110,8 @@
             </li>
 
             <li class="menu-header">Starter</li>
+            <li class="{{ setSidebarActive(['admin.users.*']) }}"><a class="nav-link"
+                href="{{ route('admin.users.index') }}"><i class="far fa-square"></i> <span>Users</span></a></li>
 
             <li class="{{ setSidebarActive(['admin.orders.*']) }}"><a class="nav-link"
                     href="{{ route('admin.orders.index') }}"><i class="far fa-square"></i> <span>Orders</span></a></li>
@@ -133,8 +135,8 @@
                     <li class="{{ setSidebarActive(['admin.custom-section.*']) }}"><a class="nav-link"
                             href="{{ route('admin.custom-section.index') }}">Custom Section</a></li>
 
-                            <li class="{{ setSidebarActive(['admin.reviews.*']) }}"><a class="nav-link"
-                                href="{{ route('admin.reviews.index') }}">Client Reviews</a></li>
+                    <li class="{{ setSidebarActive(['admin.reviews.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.reviews.index') }}">Client Reviews</a></li>
                 </ul>
             </li>
 

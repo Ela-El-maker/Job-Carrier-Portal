@@ -297,34 +297,34 @@ class JobController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
-{
-    try {
-        $job = Job::findOrFail($id);
-        $categoryId = $job->job_category_id;
-        $job->delete();
+    {
+        try {
+            $job = Job::findOrFail($id);
+            $categoryId = $job->job_category_id;
+            $job->delete();
 
-        JobCategory::find($categoryId)?->updatePopularStatus();
-        JobCategory::find($categoryId)?->updateFeaturedStatus();
+            JobCategory::find($categoryId)?->updatePopularStatus();
+            JobCategory::find($categoryId)?->updateFeaturedStatus();
 
-        Notify::deletedNotification();
+            Notify::deletedNotification();
 
-        // If the request expects JSON (e.g. AJAX)
-        if (request()->expectsJson()) {
-            return response(['message' => 'success'], 200);
+            // If the request expects JSON (e.g. AJAX)
+            if (request()->expectsJson()) {
+                return response(['message' => 'success'], 200);
+            }
+
+            // Otherwise, assume it's a regular form request
+            return redirect()->route('admin.jobs.index')->with('success', 'Job deleted successfully.');
+        } catch (\Exception $e) {
+            logger($e);
+
+            if (request()->expectsJson()) {
+                return response(['message' => 'Something Went Wrong! Please Try Again'], 500);
+            }
+
+            return redirect()->route('admin.jobs.index')->with('error', 'Something went wrong. Please try again.');
         }
-
-        // Otherwise, assume it's a regular form request
-        return redirect()->route('admin.jobs.index')->with('success', 'Job deleted successfully.');
-    } catch (\Exception $e) {
-        logger($e);
-
-        if (request()->expectsJson()) {
-            return response(['message' => 'Something Went Wrong! Please Try Again'], 500);
-        }
-
-        return redirect()->route('admin.jobs.index')->with('error', 'Something went wrong. Please try again.');
     }
-}
 
 
     function changeStatus(string $id): Response

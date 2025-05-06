@@ -35,6 +35,7 @@ use App\Http\Controllers\Admin\SalaryTypeController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\StateController;
+use App\Http\Controllers\Admin\SystemUserController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UploadController;
 use Illuminate\Support\Facades\Route;
@@ -160,6 +161,19 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin', 'as' => 'admi
      */
 
     Route::resource('blogs', BlogController::class);
+
+    // ✅ Custom (specific) routes first
+    Route::get('users/candidates', [SystemUserController::class, 'candidates'])->name('users.candidates');
+    Route::get('users/companies', [SystemUserController::class, 'companies'])->name('users.companies');
+
+    // ✅ Then general CRUD routes
+    Route::get('users', [SystemUserController::class, 'index'])->name('users.index');
+    Route::get('users/create', [SystemUserController::class, 'create'])->name('users.create');
+    Route::post('users', [SystemUserController::class, 'store'])->name('users.store');
+    Route::get('users/{user}', [SystemUserController::class, 'show'])->name('users.show');
+    Route::get('users/{user}/edit', [SystemUserController::class, 'edit'])->name('users.edit');
+    Route::put('users/{user}', [SystemUserController::class, 'update'])->name('users.update');
+    Route::delete('users/{user}', [SystemUserController::class, 'destroy'])->name('users.destroy');
 
 
     /**
