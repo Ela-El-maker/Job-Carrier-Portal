@@ -67,6 +67,7 @@
             display: block;
             margin: 10px 0;
         }
+
         .job-badge {
             display: inline-block;
             padding: 5px 10px;
@@ -315,7 +316,7 @@
                                     <div class="col-md-6">
                                         <div class="job-info-item">
                                             <i class="job-info-icon fa fa-calendar"></i>
-                                            <span>Deadline: {{ date('M d, Y', strtotime($job->deadline)) }}</span>
+                                            <span>Deadline: {{ date('M d, Y', strtotime($job->deadline)) }} : {{ relativeTime($job?->deadline) }}</span>
                                         </div>
                                         <div class="job-info-item">
                                             <i class="job-info-icon fa fa-clock-o"></i>
@@ -367,7 +368,7 @@
                             <h3 class="job-detail-section-title">Benefits</h3>
                             <ul class="job-benefits">
                                 @foreach ($job?->benefits->shuffle() as $jobBenefit)
-                                    <li>{{ $jobBenefit?->benefit?->name }}</li>
+                                    <span class="badge badge-info">{{ $jobBenefit?->benefit?->name }}</span>
                                 @endforeach
 
                             </ul>

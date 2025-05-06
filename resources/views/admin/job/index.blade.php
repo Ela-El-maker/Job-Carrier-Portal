@@ -35,8 +35,8 @@
                                     <th style="width: 5%">#</th>
                                     <th style="width: 25%">Job</th>
                                     <th style="width: 12%">Category/Role</th>
-                                    <th style="width: 12%">Salary</th>
-                                    <th style="width: 10%">Deadline</th>
+                                    {{-- <th style="width: 12%">Salary</th> --}}
+                                    {{-- <th style="width: 10%">Deadline</th> --}}
                                     <th style="width: 8%">Status</th>
                                     <th style="width: 12%">Type</th>
                                     <th style="width: 8%">Approve</th>
@@ -73,7 +73,7 @@
                                                     style="font-size: 12px; color: #6c757d;">{{ $job?->jobRole?->name }}</span>
                                             </div>
                                         </td>
-                                        <td class="align-middle">
+                                        {{-- <td class="align-middle">
                                             <div>
                                                 <div style="font-weight: 600; font-size: 13px;">
                                                     @if ($job?->salary_mode === 'range')
@@ -89,7 +89,7 @@
                                         </td>
                                         <td class="align-middle">
                                             <span style="font-size: 13px;">{{ formatDate($job?->deadline) }}</span>
-                                        </td>
+                                        </td> --}}
                                         <td class="align-middle">
                                             @if ($job?->status === 'pending')
                                                 <span class="badge badge-warning"
@@ -150,16 +150,26 @@
                                         </td>
                                         <td class="align-middle text-center">
                                             <div class="d-flex justify-content-center">
+                                                <!-- Edit Button -->
                                                 <a href="{{ route('admin.jobs.edit', $job?->id) }}"
                                                     class="btn btn-primary btn-sm mr-1" style="padding: 4px 8px;">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
+
+                                                <!-- Show Button -->
+                                                <a href="{{ route('admin.jobs.show', $job?->id) }}"
+                                                    class="btn btn-info btn-sm mr-1" style="padding: 4px 8px;">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+
+                                                <!-- Delete Button -->
                                                 <a href="{{ route('admin.jobs.destroy', $job?->id) }}"
                                                     class="btn btn-danger btn-sm delete-item" style="padding: 4px 8px;">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </a>
                                             </div>
                                         </td>
+
                                     </tr>
                                 @empty
                                     <tr>
