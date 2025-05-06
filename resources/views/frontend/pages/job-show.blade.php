@@ -63,35 +63,38 @@
     <!-- ===== End of Job Header Section ===== --> --}}
 
     <!-- ===== Start of Job Header Section ===== -->
-<section class="job-header ptb60" @if($job->is_golden) style="background: linear-gradient(to right, #FFF9E6, #FFF0C2); border-bottom: 2px solid #FFD700;" @endif>
-    <div class="container">
+    <section class="job-header ptb60"
+        @if ($job->is_golden) style="background: linear-gradient(to right, #FFF9E6, #FFF0C2); border-bottom: 2px solid #FFD700;" @endif>
+        <div class="container">
 
-        <!-- Start of Row -->
-        <div class="row">
+            <!-- Start of Row -->
+            <div class="row">
 
-            <div class="col-md-6 col-xs-12">
-                <!-- Golden Job Badge (only shown if job is golden) -->
-                @if($job->is_golden)
-                    <div style="display: inline-block; background-color: #FFD700; color: #000; padding: 4px 12px; border-radius: 4px; font-weight: bold; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                        <i class="fa fa-star" style="margin-right: 5px;"></i> Golden Job
-                    </div>
-                @endif
+                <div class="col-md-6 col-xs-12">
+                    <!-- Golden Job Badge (only shown if job is golden) -->
+                    @if ($job->is_golden)
+                        <div
+                            style="display: inline-block; background-color: #FFD700; color: #000; padding: 4px 12px; border-radius: 4px; font-weight: bold; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <i class="fa fa-star" style="margin-right: 5px;"></i> Golden Job
+                        </div>
+                    @endif
 
-                <h3 @if($job->is_golden) style="color: #D4AF37;" @endif>{{ $job?->title }}</h3>
-                @php
-                    $jobType = getJobTypeClassAndLabel($job?->jobType?->name);
-                @endphp
-                <a href="#" class="btn btn-small btn-effect {{ $jobType['class'] }}" style="margin-top: 10px;">
-                    {{ $jobType['label'] }}
-                </a>
-            </div>
+                    <h3 @if ($job->is_golden) style="color: #D4AF37;" @endif>{{ $job?->title }}</h3>
+                    @php
+                        $jobType = getJobTypeClassAndLabel($job?->jobType?->name);
+                    @endphp
+                    <a href="#" class="btn btn-small btn-effect {{ $jobType['class'] }}" style="margin-top: 10px;">
+                        {{ $jobType['label'] }}
+                    </a>
+                </div>
 
 
-            <div class="col-md-6 col-xs-12 clearfix">
-                <div class="pull-right mt15" style="display: flex; align-items: center; gap: 12px;">
-                    <!-- Golden Job Premium Badge (only shown if job is golden) -->
-                    @if($job->is_golden)
-                        <div style="
+                <div class="col-md-6 col-xs-12 clearfix">
+                    <div class="pull-right mt15" style="display: flex; align-items: center; gap: 12px;">
+                        <!-- Golden Job Premium Badge (only shown if job is golden) -->
+                        @if ($job->is_golden)
+                            <div
+                                style="
                             display: flex;
                             align-items: center;
                             background: linear-gradient(to right, #D4AF37, #FFD700);
@@ -102,13 +105,14 @@
                             font-weight: 600;
                             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
                             ">
-                            <i class="fa fa-crown" style="margin-right: 6px;"></i>
-                            Premium Listing
-                        </div>
-                    @endif
+                                <i class="fa fa-crown" style="margin-right: 6px;"></i>
+                                Premium Listing
+                            </div>
+                        @endif
 
-                    <!-- Vacancy Badge -->
-                    <div style="
+                        <!-- Vacancy Badge -->
+                        <div
+                            style="
                         display: flex;
                         align-items: center;
                         background: linear-gradient(to right, #17a2b8, #138496);
@@ -119,12 +123,13 @@
                         font-weight: 500;
                         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
                         ">
-                        <i class="fa fa-user" style="margin-right: 6px;"></i>
-                        {{ $job->vacancies ?? 1 }} Vacanc{{ ($job->vacancies ?? 1) > 1 ? 'ies' : 'y' }}
-                    </div>
+                            <i class="fa fa-user" style="margin-right: 6px;"></i>
+                            {{ $job->vacancies ?? 1 }} Vacanc{{ ($job->vacancies ?? 1) > 1 ? 'ies' : 'y' }}
+                        </div>
 
-                    <!-- Print Button -->
-                    <a href="javascript:window.print()" class="btn btn-blue btn-effect" style="
+                        <!-- Print Button -->
+                        <a href="javascript:window.print()" class="btn btn-blue btn-effect"
+                            style="
                         border-radius: 8px;
                         padding: 8px 14px;
                         font-weight: 500;
@@ -132,16 +137,16 @@
                         align-items: center;
                         gap: 6px;
                         ">
-                        <i class="fa fa-print"></i> Print Job
-                    </a>
+                            <i class="fa fa-print"></i> Print Job
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- End of Row -->
+            <!-- End of Row -->
 
-    </div>
-</section>
-<!-- ===== End of Job Header Section ===== -->
+        </div>
+    </section>
+    <!-- ===== End of Job Header Section ===== -->
 
 
 

@@ -22,7 +22,7 @@ class FrontendBlogPageController extends Controller
 
         $featured = Blog::where('status', 1)->where('featured', 1)->orderBy('id', 'DESC')->take(10)->get();
         $popularPosts = Blog::where('status', 1)
-            ->where('featured', 0)  // Exclude posts that are already featured
+            ->where('show_at_popular', 1)  // Exclude posts that are already featured
             ->latest()  // Most recent first
             ->take(5)
             ->get();

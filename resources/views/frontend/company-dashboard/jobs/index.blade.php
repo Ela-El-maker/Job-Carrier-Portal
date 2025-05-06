@@ -136,7 +136,7 @@
                                                     <td style="padding: 12px 8px; vertical-align: middle;">
                                                         <div
                                                             style="font-weight: 700; color: #2d3748; font-size: 15px; margin-bottom: 4px; max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                                            {{ Str::limit($job?->title,15,'...') }}
+                                                            {{ Str::limit($job?->title, 15, '...') }}
                                                         </div>
                                                         <div
                                                             style="color: #718096; font-size: 13px; display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
@@ -150,11 +150,11 @@
                                                     <td style="padding: 12px 8px; vertical-align: middle;">
                                                         <div
                                                             style="font-weight: 600; color: #2d3748; font-size: 14px; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                                            {{ Str::limit($job?->category?->name,15,'...') }}
+                                                            {{ Str::limit($job?->category?->name, 15, '...') }}
                                                         </div>
                                                         <div
                                                             style="color: #718096; font-size: 13px; background-color: #f0f4f8; display: inline-block; padding: 2px 6px; border-radius: 4px; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                                            {{ Str::limit($job?->jobRole?->name ,15,'...')}}
+                                                            {{ Str::limit($job?->jobRole?->name, 15, '...') }}
                                                         </div>
                                                     </td>
                                                     <td style="padding: 5px 5px; vertical-align: middle;">
@@ -192,13 +192,20 @@
                                                                 style="display: inline-flex; align-items: center; justify-content: center; height: 32px; width: 32px; background-color: #48bb78; color: white; border-radius: 4px; text-decoration: none; transition: all 0.2s ease;">
                                                                 <i class="fas fa-edit"></i>
                                                             </a>
+                                                            <a href="{{ route('company.jobs.show', $job?->id) }}"
+                                                                title="Show Job"
+                                                                style="display: inline-flex; align-items: center; justify-content: center; height: 32px; width: 32px; background-color: #805ad5; color: white; border-radius: 4px; text-decoration: none; transition: all 0.2s ease;">
+                                                                <i class="fas fa-eye"></i>
+                                                            </a>
                                                             <a href="{{ route('company.jobs.destroy', $job?->id) }}"
                                                                 class="delete-item" title="Delete Job"
                                                                 style="display: inline-flex; align-items: center; justify-content: center; height: 32px; width: 32px; background-color: #e53e3e; color: white; border-radius: 4px; text-decoration: none; transition: all 0.2s ease;">
                                                                 <i class="fas fa-trash-alt"></i>
                                                             </a>
+
                                                         </div>
                                                     </td>
+
                                                 </tr>
                                             @empty
                                                 <tr>

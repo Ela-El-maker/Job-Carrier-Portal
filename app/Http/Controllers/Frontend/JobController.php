@@ -244,7 +244,24 @@ class JobController extends Controller
      */
     public function show(string $id)
     {
-        //
+
+        $job = Job::findOrFail($id);
+
+        // Ensure only the owner company can view this job
+        if ($job->company_id !== auth()->user()->company?->id) {
+            abort(403, 'Unauthorized access to this job.');
+        }
+
+        // (Optional) You may want to show related jobs too – adjust if needed
+        $similarJobs = Job::where('job_category_id', $job->job_category_id)
+            ->where('id', '!=', $job?->id)
+            ->where('company_id', auth()->user()->company?->id) // ensure only their own jobs
+            ->where('status', 'active')
+            ->where('deadline', '>=', now())
+            ->limit(5)
+            ->get();
+
+        return view('frontend.company-dashboard.jobs.show', compact('job', 'similarJobs'));
     }
 
     /**
