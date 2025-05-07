@@ -1,3 +1,4 @@
+@include('frontend.home.sections.get-started-section')
 <footer class="footer1">
 
     <!-- ===== Start of Footer Information & Links Section ===== -->
@@ -20,8 +21,8 @@
                 <!-- Info -->
                 <ul class="nopadding">
                     <li><i class="fa fa-map-marker"></i>New York City, USA</li>
-                    <li><i class="fa fa-phone"></i>(123) 456 789 0012</li>
-                    <li><i class="fa fa-envelope-o"></i>youremail@cariera.com</li>
+                    <li><i class="fa fa-phone"></i>{{ config('settings.site_phone') }}</li>
+                    <li><i class="fa fa-envelope-o"></i>{{ config('settings.site_email') }}</li>
                 </ul>
             </div>
 
@@ -31,15 +32,14 @@
 
                 <!-- Links -->
                 <ul class="nopadding">
-                    <li><a href="post-job.html"><i class="fa fa-angle-double-right"></i>add job</a></li>
-                    <li><a href="blog-right-sidebar-v1.html"><i class="fa fa-angle-double-right"></i>blog</a></li>
-                    <li><a href="search-jobs-1.html"><i class="fa fa-angle-double-right"></i>find jobs</a></li>
+                    <li><a href="{{ route('company.jobs.create') }}"><i class="fa fa-angle-double-right"></i>add job</a></li>
+                    <li><a href="{{ route('blogs.index') }}"><i class="fa fa-angle-double-right"></i>blog</a></li>
+                    <li><a href="{{ route('jobs.index') }}"><i class="fa fa-angle-double-right"></i>find jobs</a></li>
                     <li><a href="faq.html"><i class="fa fa-angle-double-right"></i>FAQ</a></li>
-                    <li><a href="login.html"><i class="fa fa-angle-double-right"></i>login</a></li>
+                    <li><a href="{{ route('login') }}"><i class="fa fa-angle-double-right"></i>login</a></li>
                     <li><a href="privacy-policy.html"><i class="fa fa-angle-double-right"></i>privacy policy</a></li>
-                    <li><a href="register.html"><i class="fa fa-angle-double-right"></i>register</a></li>
-                    <li><a href="shop-right-sidebar.html"><i class="fa fa-angle-double-right"></i>shop</a></li>
-                    <li><a href="submit-resume.html"><i class="fa fa-angle-double-right"></i>submit resume</a></li>
+                    <li><a href="{{ route('register') }}"><i class="fa fa-angle-double-right"></i>register</a></li>
+
                 </ul>
             </div>
 
@@ -88,16 +88,16 @@
             <!-- 4th Footer Column -->
             <div class="col-md-3 col-sm-6 col-xs-6 footer-newsletter">
                 <h3>newsletter</h3>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                    industry's standard dummy text ever since the 1500s.</p>
+                <p></p>
 
                 <!-- Subscribe Form -->
-                <form action="#" class="form-inline mailchimp mtb30" novalidate>
+                <form action="" class="form-inline form-newsletter mailchimp mtb30" novalidate>
 
+                        @csrf
                     <!-- Form -->
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="email" name="EMAIL" class="form-control" id="mc-email"
+                            <input type="text" name="email" class="form-control" id="mc-email"
                                 placeholder="Your Email" autocomplete="off">
                             <label for="mc-email"></label>
                             <button type="submit" class="btn btn-blue btn-effect">Submit</button>
@@ -116,7 +116,7 @@
                     </div>
 
                     <!-- Chat details -->
-                    <div class="col-md-8">
+                    {{-- <div class="col-md-8">
                         <div class="chat-details">
                             <span>Helpline Center</span>
 
@@ -130,7 +130,7 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <!-- End of Live Chat -->
             </div>
@@ -219,3 +219,62 @@
     <!-- ===== End of Footer Copyright Section ===== -->
 
 </footer>
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.form-newsletter').on('submit', function(e) {
+                e.preventDefault();
+
+                let formData = $(this).serialize();
+                let form = $(this);
+                let button = form.find('button');
+
+                $.ajax({
+                    method: 'POST',
+                    url: '{{ route('newsletter.store') }}',
+                    data: formData,
+                    beforeSend: function() {
+                        button.text('Processing...').prop('disabled', true);
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            button.text('Subscribed!');
+                            setTimeout(() => {
+                                button.text('Subscribe');
+                            }, 2000);
+                            form.trigger('reset');
+                            notyf.success(response.message);
+                        } else {
+                            notyf.error(response.message ||
+                                'Subscription failed. Please try again.');
+                            button.text('Subscribe');
+                        }
+                    },
+                    error: function(xhr) {
+                        let message = 'An error occurred. Please try again.';
+                        if (xhr.responseJSON) {
+                            if (xhr.responseJSON.errors) {
+                                $.each(xhr.responseJSON.errors, function(index, value) {
+                                    notyf.error(value[0]);
+                                });
+                                return;
+                            }
+                            if (xhr.responseJSON.message) {
+                                message = xhr.responseJSON.message;
+                            }
+                        }
+                        notyf.error(message);
+                    },
+                    complete: function() {
+                        // If not already handled in success/error
+                        if (button.text() === 'Processing...') {
+                            button.text('Subscribe').prop('disabled', false);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+@endpush
+

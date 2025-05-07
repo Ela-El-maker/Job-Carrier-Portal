@@ -24,6 +24,7 @@ use App\Http\Controllers\Frontend\FrontendContactController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\JobController;
 use App\Http\Controllers\Frontend\LocationController;
+use App\Http\Controllers\Frontend\NewsletterController;
 use App\Http\Controllers\Frontend\Portfolio\PortfolioClientController;
 use App\Http\Controllers\Frontend\Portfolio\PortfolioHomeController;
 use App\Http\Controllers\Frontend\Portfolio\PortfolioServiceController;
@@ -79,6 +80,18 @@ Route::get('job-bookmark/{id}', [CandidateJobBookmarkController::class, 'save'])
  */
 Route::get('blogs', [FrontendBlogPageController::class, 'index'])->name('blogs.index');
 Route::get('blog/{slug}', [FrontendBlogPageController::class, 'show'])->name('blogs.show');
+
+
+/***
+ * Custom Pages Route
+ */
+
+ Route::get('page/{slug}',[HomeController::class,'customPage'])->name('custom-page');
+
+ /**
+  * Newsletter Route
+  */
+ Route::post('newsletter',[NewsletterController::class,'store'])->name('newsletter.store');
 
 /**
  * About Us

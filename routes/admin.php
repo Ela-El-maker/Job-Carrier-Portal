@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\BlogSectionSettingController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\ClientReviewController;
 use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\CustomPageBuilderController;
 use App\Http\Controllers\Admin\CustomSectionController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EducationController;
@@ -27,6 +28,7 @@ use App\Http\Controllers\Admin\JobRoleController;
 use App\Http\Controllers\Admin\JobTypeController;
 use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\LocationController;
+use App\Http\Controllers\Admin\NewsletterController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\OrganizationTypeController;
 use App\Http\Controllers\Admin\PaymentSettingController;
@@ -99,6 +101,16 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin', 'as' => 'admi
     Route::get('order/{order}', [OrderController::class, 'show'])->name('orders.show');
     Route::get('order/invoice/{id}', [OrderController::class, 'invoice'])->name('orders.invoice');
 
+    /**
+     * Page Builder
+     */
+    Route::resource('page-builder', CustomPageBuilderController::class);
+    Route::post('page-builder-status/{id}', [CustomPageBuilderController::class, 'changeStatus'])->name('page-builder-status.update');
+
+
+    Route::get('newsletter', [NewsletterController::class,'index'])->name('newsletter.index');
+    Route::delete('newsletter/{id}', [NewsletterController::class,'destroy'])->name('newsletter.destroy');
+    Route::post('newsletter', [NewsletterController::class,'sendMail'])->name('newsletter.send-mail');
 
 
     /**

@@ -10,11 +10,13 @@ use App\Models\Candidate;
 use App\Models\ClientReview;
 use App\Models\Company;
 use App\Models\Country;
+use App\Models\CustomPageBuilder;
 use App\Models\CustomSection;
 use App\Models\Hero;
 use App\Models\Job;
 use App\Models\JobCategory;
 use App\Models\Plan;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -108,27 +110,43 @@ class HomeController extends Controller
         $totalJobs = Job::where('deadline', '>=', date('Y-m-d'))->where('status', 'active')->count();
 
         $reviews = ClientReview::where('is_approved', 1)->get();
-        return view('frontend.home.index',
-        compact(
-            'plans',
-            'heroes',
-            'countries',
-            'jobCount',
-            'jobCategories',
-            'popularJobCategories',
-            'featuredCategories',
-            'popularCompanies',
-            'topJobs',
-            'goldenJobs',
-            'blogs',
-            'blogTitle',
-            'customSection',
-            'totalJobs',
-            'totalJobs',
-            'totalMembers',
-            'totalCompanies',
-            'totalApplications',
-            'reviews'
-        ));
+        return view(
+            'frontend.home.index',
+            compact(
+                'plans',
+                'heroes',
+                'countries',
+                'jobCount',
+                'jobCategories',
+                'popularJobCategories',
+                'featuredCategories',
+                'popularCompanies',
+                'topJobs',
+                'goldenJobs',
+                'blogs',
+                'blogTitle',
+                'customSection',
+                'totalJobs',
+                'totalJobs',
+                'totalMembers',
+                'totalCompanies',
+                'totalApplications',
+                'reviews'
+            )
+        );
+    }
+
+
+    public function customPage(string $slug)
+    {
+        try {
+            $page = CustomPageBuilder::where(['slug' => $slug, 'status' => 'published', 'show' => 1])->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            // Handle the error (e.g., show a custom 404 page)
+            abort(404, 'Page not found');
+        }
+
+
+        return view('frontend.pages.custom-page', compact('page'));
     }
 }
