@@ -113,6 +113,15 @@
             <li class="{{ setSidebarActive(['admin.users.*']) }}"><a class="nav-link"
                 href="{{ route('admin.users.index') }}"><i class="far fa-square"></i> <span>Users</span></a></li>
 
+                <li class="dropdown {{ setSidebarActive(['admin.about-us.*']) }} ">
+                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                            class="fas fa-columns"></i>
+                        <span>Pages</span></a>
+                    <ul class="dropdown-menu">
+                        <li class="{{ setSidebarActive(['admin.about-us.*']) }}"><a class="nav-link"
+                                href="{{ route('admin.about-us.index') }}">About Us</a></li>
+                    </ul>
+                </li>
             <li class="{{ setSidebarActive(['admin.orders.*']) }}"><a class="nav-link"
                     href="{{ route('admin.orders.index') }}"><i class="far fa-square"></i> <span>Orders</span></a></li>
             <li class="{{ setSidebarActive(['admin.job-categories.*']) }}"><a class="nav-link"

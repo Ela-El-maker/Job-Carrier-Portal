@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\GeneralSettingUpdateRequest;
 use App\Models\SiteSetting;
 use App\Services\Notify;
+use App\Services\SiteSettingService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -31,6 +32,8 @@ class SiteSettingController extends Controller
             );
         }
 
+        $siteSetting = app()->make(SiteSettingService::class);
+        $siteSetting->clearCacheSettings();
 
         Notify::updatedNotification();
         return redirect()->back();

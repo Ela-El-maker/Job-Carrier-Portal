@@ -57,6 +57,13 @@
                         <x-input-error :messages="$errors->get('site_currency_icon')" class="mt-2" />
                     </div>
                 </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="">Site Map</label>
+                        <textarea name="site_map" class="form-control {{ $errors->has('site_map') ? 'is-invalid' : '' }}" rows="4">{{ config('settings.site_map') }}</textarea>
+                        <x-input-error :messages="$errors->get('site_map')" class="mt-2" />
+                    </div>
+                </div>
 
 
             </div>

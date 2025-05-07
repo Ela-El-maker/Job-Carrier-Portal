@@ -15,10 +15,12 @@ use App\Http\Controllers\Frontend\CompanyDashboardController;
 use App\Http\Controllers\Frontend\CompanyProfileController;
 use App\Http\Controllers\Frontend\CompanyOrderController;
 use App\Http\Controllers\Frontend\CompanyOrdersController;
+use App\Http\Controllers\Frontend\FrontendAboutController;
 use App\Http\Controllers\Frontend\FrontendBlogPageController;
 use App\Http\Controllers\Frontend\FrontendCandidatePageController;
 use App\Http\Controllers\Frontend\FrontendJobPageController;
 use App\Http\Controllers\Frontend\FrontendCompanyPageController;
+use App\Http\Controllers\Frontend\FrontendContactController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\JobController;
 use App\Http\Controllers\Frontend\LocationController;
@@ -78,8 +80,12 @@ Route::get('job-bookmark/{id}', [CandidateJobBookmarkController::class, 'save'])
 Route::get('blogs', [FrontendBlogPageController::class, 'index'])->name('blogs.index');
 Route::get('blog/{slug}', [FrontendBlogPageController::class, 'show'])->name('blogs.show');
 
-
-
+/**
+ * About Us
+ */
+Route::get('about-us', [FrontendAboutController::class,'index'])->name('about.index');
+Route::get('contact-us',[FrontendContactController::class,'index'])->name('contact.index');
+Route::post('contact-us',[FrontendContactController::class,'sendMail'])->name('send-mail');
 /**
  * Candidates Frontend Pages
  */

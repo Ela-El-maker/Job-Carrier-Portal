@@ -28,6 +28,7 @@ class GeneralSettingUpdateRequest extends FormRequest
             'site_phone' => ['required','max:100'],
             'site_default_currency' => ['required'],
             'site_currency_icon' => ['required'],
+            'site_map' => ['nullable'],
         ];
     }
 }

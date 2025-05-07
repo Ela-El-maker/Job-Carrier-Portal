@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AboutController;
 use App\Http\Controllers\Admin\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Admin\Auth\EmailVerificationNotificationController;
@@ -179,6 +180,7 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin', 'as' => 'admi
     /**
      * Home Frontend Route
      */
+    Route::resource('about-us',AboutController::class);
     Route::resource('hero', HeroController::class);
     Route::resource('blog-section-setting', BlogSectionSettingController::class);
     Route::resource('custom-section', CustomSectionController::class);
