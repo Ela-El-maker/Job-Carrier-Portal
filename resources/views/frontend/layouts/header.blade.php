@@ -83,7 +83,10 @@
                         <span class="icon-bar"></span>
                     </button>
                 </div>
-
+                @php
+                    $navigationMenu = \Menu::getByName('Navigation Menu');
+                    // dd($navigationMenu);
+                @endphp
                 <!-- Start of Main Nav -->
                 <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="main-nav">
                     <ul class="nav navbar-nav pull-right">
@@ -92,47 +95,27 @@
                         <li class="mobile-title">
                             <h4>main menu</h4>
                         </li>
+                        @foreach ($navigationMenu as $menu)
+                            @if ($menu['child'])
+                             <!-- Simple Menu Item -->
+<li class="dropdown simple-menu">
+    <a href="{{ $menu['link'] }}" class="dropdown-toggle" data-toggle="dropdown" role="button">{{ $menu['label'] }}<i class="fa fa-angle-down"></i></a>
+    <ul class="dropdown-menu" role="menu">
+        @foreach ($menu['child'] as $child)
 
-                        <!-- Simple Menu Item -->
-                        <li class="dropdown simple-menu">
-                            <a href="{{ url('/') }}" role="button" data-toggle="" class="">home</a>
+        <li><a href="{{ $child['link'] }}">{{ $child['label'] }}</a></li>
 
-                        </li>
+        @endforeach
+    </ul>
+</li>
 
-                        <!-- Simple Menu Item -->
-                        <li class="dropdown simple-menu">
-                            <a href="{{ route('jobs.index') }}" role="button" data-toggle="" class="">Find a
-                                Job</a>
+                            @else
+                            <li class="dropdown simple-menu">
+                                <a href="{{ $menu['link'] }}" role="button" data-toggle="" class="">{{ $menu['label'] }}</a>
 
-                        </li>
-
-                        <!-- Simple Menu Item -->
-                        <li class="dropdown simple-menu">
-                            <a href="{{ route('candidates.index') }}" role="button" data-toggle=""
-                                class="">Candidates</a>
-
-                        </li>
-
-                        <!-- Simple Menu Item -->
-                        <li class="dropdown simple-menu">
-                            <a href="{{ route('companies.index') }}" role="button" data-toggle=""
-                                class="">Employers</a>
-
-                        </li>
-
-                        <!-- Simple Menu Item -->
-                        <li class="dropdown simple-menu">
-                            <a href="{{ url('/') }}" role="button" data-toggle="" class="">Blog</a>
-
-                        </li>
-                        {{-- <li class="dropdown simple-menu"><a href="{{ route('login') }}">login</a></li> --}}
-                        <!-- Simple Menu Item -->
-                        <li class="dropdown simple-menu">
-                            <a href="{{ url('/') }}" role="button" data-toggle="" class="">Shop</a>
-
-                        </li>
-
-
+                            </li>
+                            @endif
+                        @endforeach
 
 
                         <!-- Login Menu Item -->

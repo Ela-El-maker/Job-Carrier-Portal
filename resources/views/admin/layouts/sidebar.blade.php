@@ -110,8 +110,12 @@
             </li>
 
             <li class="menu-header">Starter</li>
+
             <li class="{{ setSidebarActive(['admin.users.*']) }}"><a class="nav-link"
                     href="{{ route('admin.users.index') }}"><i class="far fa-square"></i> <span>Users</span></a></li>
+            <li class="{{ setSidebarActive(['admin.menu-builder.*']) }}"><a class="nav-link"
+                    href="{{ route('admin.menu-builder.index') }}"><i class="far fa-square"></i> <span>Menu
+                        Builder</span></a></li>
 
             <li class="dropdown {{ setSidebarActive(['admin.about-us.*']) }} ">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
