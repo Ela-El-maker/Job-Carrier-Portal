@@ -1,28 +1,53 @@
 @include('frontend.home.sections.get-started-section')
 <footer class="footer1">
+    @php
+        $popularBlogs = \App\Models\Blog::where('status', 1)
+            ->where('show_at_popular', 1)
+            ->inRandomOrder()
+            ->latest()
+            ->take(3)
+            ->get();
 
+        $footerOne = \Menu::getByName('Footer Menu One');
+
+        $footer = \App\Models\Footer::first();
+        $footerSocials = \App\Models\SocialIcon::where(['show'=>1])->take(5)->get();
+    @endphp
     <!-- ===== Start of Footer Information & Links Section ===== -->
-    <div class="footer-info ptb80">
+    <div class="footer-info ptb80" style="background: url({{ asset($footer?->background_footer) }}) no-repeat;position: relative; background-size: cover;">
         <div class="container">
 
             <!-- 1st Footer Column -->
             <div class="col-md-3 col-sm-6 col-xs-6 footer-about">
 
                 <!-- Your Logo Here -->
-                <a href="index.html">
-                    <img src="images/logo-white.svg" alt="">
+                <a href="{{ url('/') }}">
+                    <img src="{{ asset($footer?->logo) }}" alt="">
                 </a>
 
                 <!-- Small Description -->
-                <p class="pt40">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                    has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-                    galley of type changed.</p>
+                <p class="pt40">
+                    {!! $footer?->details !!}
+                </p>
 
                 <!-- Info -->
                 <ul class="nopadding">
-                    <li><i class="fa fa-map-marker"></i>New York City, USA</li>
-                    <li><i class="fa fa-phone"></i>{{ config('settings.site_phone') }}</li>
-                    <li><i class="fa fa-envelope-o"></i>{{ config('settings.site_email') }}</li>
+                    <li><i class="fa fa-map-marker"></i>{{ $footer?->address }}</li>
+                    <li><i class="fa fa-phone"></i>
+                        @if ($footer->phone)
+                            {{ $footer?->phone }}
+                        @else
+                            {{ config('settings.site_phone') }}
+                        @endif
+
+                    </li>
+                    <li><i class="fa fa-envelope-o"></i>
+                        @if ($footer->email)
+                            {{ $footer?->email }}
+                        @else
+                            {{ config('settings.site_email') }}
+                        @endif
+                       </li>
                 </ul>
             </div>
 
@@ -32,26 +57,18 @@
 
                 <!-- Links -->
                 <ul class="nopadding">
-                    <li><a href="{{ route('company.jobs.create') }}"><i class="fa fa-angle-double-right"></i>add job</a></li>
-                    <li><a href="{{ route('blogs.index') }}"><i class="fa fa-angle-double-right"></i>blog</a></li>
-                    <li><a href="{{ route('jobs.index') }}"><i class="fa fa-angle-double-right"></i>find jobs</a></li>
-                    <li><a href="faq.html"><i class="fa fa-angle-double-right"></i>FAQ</a></li>
-                    <li><a href="{{ route('login') }}"><i class="fa fa-angle-double-right"></i>login</a></li>
-                    <li><a href="privacy-policy.html"><i class="fa fa-angle-double-right"></i>privacy policy</a></li>
-                    <li><a href="{{ route('register') }}"><i class="fa fa-angle-double-right"></i>register</a></li>
+                    @foreach ($footerOne as $menu)
+                    <li><a href="{{ $menu['link']}}"><i class="fa fa-angle-double-right"></i>{{ $menu['label'] }}</a>
+                    @endforeach
+
+
+
 
                 </ul>
             </div>
 
             <!-- 3rd Footer Column -->
-            @php
-                $popularBlogs = \App\Models\Blog::where('status', 1)
-                    ->where('show_at_popular', 1)
-                    ->inRandomOrder()
-                    ->latest()
-                    ->take(3)
-                    ->get();
-            @endphp
+
 
             <div class="col-md-3 col-sm-6 col-xs-6 footer-posts">
                 <h3>popular posts</h3>
@@ -93,7 +110,7 @@
                 <!-- Subscribe Form -->
                 <form action="" class="form-inline form-newsletter mailchimp mtb30" novalidate>
 
-                        @csrf
+                    @csrf
                     <!-- Form -->
                     <div class="form-group">
                         <div class="input-group">
@@ -145,71 +162,24 @@
         <div class="container">
 
             <div class="col-md-6 col-sm-6 col-xs-12">
-                <span>Copyright &copy; <a href="#">cariera</a>. All Rights Reserved</span>
+                <span>{{ $footer?->copyright }}</span>
             </div>
 
             <div class="col-md-6 col-sm-6 col-xs-12">
                 <!-- Start of Social Media Buttons -->
                 <ul class="social-btns list-inline text-right">
                     <!-- Social Media -->
-                    <li>
-                        <a href="#" class="social-btn-roll facebook">
+                    @foreach ($footerSocials as $link)
+                        <li>
+                        <a href="{{ $link?->url }}" class="social-btn-roll facebook">
                             <div class="social-btn-roll-icons">
-                                <i class="social-btn-roll-icon fa fa-facebook"></i>
-                                <i class="social-btn-roll-icon fa fa-facebook"></i>
+                                <i class="social-btn-roll-icon {{ $link?->icon }}"></i>
+                                <i class="social-btn-roll-icon {{ $link?->icon }}"></i>
                             </div>
                         </a>
                     </li>
+                    @endforeach
 
-                    <!-- Social Media -->
-                    <li>
-                        <a href="#" class="social-btn-roll twitter">
-                            <div class="social-btn-roll-icons">
-                                <i class="social-btn-roll-icon fa fa-twitter"></i>
-                                <i class="social-btn-roll-icon fa fa-twitter"></i>
-                            </div>
-                        </a>
-                    </li>
-
-                    <!-- Social Media -->
-                    <li>
-                        <a href="#" class="social-btn-roll google-plus">
-                            <div class="social-btn-roll-icons">
-                                <i class="social-btn-roll-icon fa fa-google-plus"></i>
-                                <i class="social-btn-roll-icon fa fa-google-plus"></i>
-                            </div>
-                        </a>
-                    </li>
-
-                    <!-- Social Media -->
-                    <li>
-                        <a href="#" class="social-btn-roll instagram">
-                            <div class="social-btn-roll-icons">
-                                <i class="social-btn-roll-icon fa fa-instagram"></i>
-                                <i class="social-btn-roll-icon fa fa-instagram"></i>
-                            </div>
-                        </a>
-                    </li>
-
-                    <!-- Social Media -->
-                    <li>
-                        <a href="#" class="social-btn-roll linkedin">
-                            <div class="social-btn-roll-icons">
-                                <i class="social-btn-roll-icon fa fa-linkedin"></i>
-                                <i class="social-btn-roll-icon fa fa-linkedin"></i>
-                            </div>
-                        </a>
-                    </li>
-
-                    <!-- Social Media -->
-                    <li>
-                        <a href="#" class="social-btn-roll rss">
-                            <div class="social-btn-roll-icons">
-                                <i class="social-btn-roll-icon fa fa-rss"></i>
-                                <i class="social-btn-roll-icon fa fa-rss"></i>
-                            </div>
-                        </a>
-                    </li>
                 </ul>
                 <!-- End of Social Media Buttons -->
             </div>
@@ -277,4 +247,3 @@
         });
     </script>
 @endpush
-

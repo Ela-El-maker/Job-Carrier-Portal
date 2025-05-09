@@ -1,6 +1,12 @@
 <!-- =============== Start of Header 3 Navigation =============== -->
 <header class="header3">
+    @php
+        $navigationMenu = \Menu::getByName('Navigation Menu');
+        // dd($navigationMenu);
 
+        $headerSocials = \App\Models\SocialIcon::where(['show'=>1])->take(4)->get();
+        $header = \App\Models\Footer::first();
+    @endphp
     <!-- ===== Start of Top Bar ===== -->
     <div class="top-bar">
         <div class="container">
@@ -14,44 +20,18 @@
                     <!-- Start of Social Media Buttons -->
                     <ul class="social-btns list-inline text-right">
                         <!-- Social Media -->
-                        <li>
-                            <a href="#" class="social-btn-roll facebook transparent">
-                                <div class="social-btn-roll-icons">
-                                    <i class="social-btn-roll-icon fa fa-facebook"></i>
-                                    <i class="social-btn-roll-icon fa fa-facebook"></i>
-                                </div>
-                            </a>
-                        </li>
 
-                        <!-- Social Media -->
-                        <li>
-                            <a href="#" class="social-btn-roll twitter transparent">
-                                <div class="social-btn-roll-icons">
-                                    <i class="social-btn-roll-icon fa fa-twitter"></i>
-                                    <i class="social-btn-roll-icon fa fa-twitter"></i>
-                                </div>
-                            </a>
-                        </li>
 
-                        <!-- Social Media -->
-                        <li>
-                            <a href="#" class="social-btn-roll google-plus transparent">
+                       @foreach ($headerSocials as $link)
+                           <li>
+                            <a href="{{ $link?->url }}" class="social-btn-roll facebook transparent">
                                 <div class="social-btn-roll-icons">
-                                    <i class="social-btn-roll-icon fa fa-google-plus"></i>
-                                    <i class="social-btn-roll-icon fa fa-google-plus"></i>
+                                    <i class="social-btn-roll-icon {{ $link?->icon }}"></i>
+                                    <i class="social-btn-roll-icon {{ $link?->icon }}"></i>
                                 </div>
                             </a>
                         </li>
-
-                        <!-- Social Media -->
-                        <li>
-                            <a href="#" class="social-btn-roll instagram transparent">
-                                <div class="social-btn-roll-icons">
-                                    <i class="social-btn-roll-icon fa fa-instagram"></i>
-                                    <i class="social-btn-roll-icon fa fa-instagram"></i>
-                                </div>
-                            </a>
-                        </li>
+                       @endforeach
                     </ul>
                     <!-- End of Social Media Buttons -->
                 </div>
@@ -67,7 +47,7 @@
 
             <!-- Logo -->
             <div class="col-md-2 col-sm-6 col-xs-8 nopadding">
-                <a class="navbar-brand nomargin" href="{{ url('/') }}"><img src="images/logo.svg"
+                <a class="navbar-brand nomargin" href="{{ url('/') }}"><img src="{{ $header?->logo }}"
                         alt="logo"></a>
                 <!-- INSERT YOUR LOGO HERE -->
             </div>
@@ -83,10 +63,7 @@
                         <span class="icon-bar"></span>
                     </button>
                 </div>
-                @php
-                    $navigationMenu = \Menu::getByName('Navigation Menu');
-                    // dd($navigationMenu);
-                @endphp
+
                 <!-- Start of Main Nav -->
                 <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="main-nav">
                     <ul class="nav navbar-nav pull-right">
@@ -97,23 +74,22 @@
                         </li>
                         @foreach ($navigationMenu as $menu)
                             @if ($menu['child'])
-                             <!-- Simple Menu Item -->
-<li class="dropdown simple-menu">
-    <a href="{{ $menu['link'] }}" class="dropdown-toggle" data-toggle="dropdown" role="button">{{ $menu['label'] }}<i class="fa fa-angle-down"></i></a>
-    <ul class="dropdown-menu" role="menu">
-        @foreach ($menu['child'] as $child)
-
-        <li><a href="{{ $child['link'] }}">{{ $child['label'] }}</a></li>
-
-        @endforeach
-    </ul>
-</li>
-
+                                <!-- Simple Menu Item -->
+                                <li class="dropdown simple-menu">
+                                    <a href="{{ $menu['link'] }}" class="dropdown-toggle" data-toggle="dropdown"
+                                        role="button">{{ $menu['label'] }}<i class="fa fa-angle-down"></i></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        @foreach ($menu['child'] as $child)
+                                            <li><a href="{{ $child['link'] }}">{{ $child['label'] }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </li>
                             @else
-                            <li class="dropdown simple-menu">
-                                <a href="{{ $menu['link'] }}" role="button" data-toggle="" class="">{{ $menu['label'] }}</a>
+                                <li class="dropdown simple-menu">
+                                    <a href="{{ $menu['link'] }}" role="button" data-toggle=""
+                                        class="">{{ $menu['label'] }}</a>
 
-                            </li>
+                                </li>
                             @endif
                         @endforeach
 

@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\CustomPageBuilderController;
 use App\Http\Controllers\Admin\CustomSectionController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EducationController;
+use App\Http\Controllers\Admin\FooterController;
 use App\Http\Controllers\Admin\HeroController;
 use App\Http\Controllers\Admin\IndustryTypeController;
 use App\Http\Controllers\Admin\JobCategoryController;
@@ -38,6 +39,7 @@ use App\Http\Controllers\Admin\ProfessionController;
 use App\Http\Controllers\Admin\SalaryTypeController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\SkillController;
+use App\Http\Controllers\Admin\SocialIconController;
 use App\Http\Controllers\Admin\StateController;
 use App\Http\Controllers\Admin\SystemUserController;
 use App\Http\Controllers\Admin\TagController;
@@ -113,6 +115,15 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin', 'as' => 'admi
     Route::delete('newsletter/{id}', [NewsletterController::class,'destroy'])->name('newsletter.destroy');
     Route::post('newsletter', [NewsletterController::class,'sendMail'])->name('newsletter.send-mail');
 
+
+    Route::resource('social-icon', SocialIconController::class);
+    Route::post('social-icon-status/{id}', [SocialIconController::class, 'changeStatus'])->name('social-icon-status.update');
+
+
+    /**
+     * Footer Route
+     */
+    Route::resource('footer', FooterController::class);
 
     /***
      * MEnu Builder Route
