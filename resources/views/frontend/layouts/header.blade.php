@@ -9,14 +9,14 @@
 
 /* Top bar styling */
 .top-bar {
-    background-color: #f8f9fa;
+    background-color: #87c8e6;
     padding: 8px 0;
     font-size: 14px;
     border-bottom: 1px solid #e9ecef;
 }
 
 /* Social media buttons */
-.social-btns {
+/* .social-btns {
     margin: 0;
 }
 
@@ -39,8 +39,8 @@
 }
 
 .social-btn-roll:hover {
-    color: #007bff;
-    background-color: #f1f1f1;
+    color: #053bec;
+    background-color: #36e90a;
 }
 
 .social-btn-roll-icons {
@@ -53,7 +53,7 @@
     height: 100%;
     line-height: 32px;
     transition: all 0.3s ease;
-}
+} */
 
 /* Navigation bar */
 .fluid_header {
