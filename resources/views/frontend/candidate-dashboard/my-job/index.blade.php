@@ -24,9 +24,7 @@
         <div class="container">
             <div class="row">
                 <!-- Sidebar -->
-                <div class="col-lg-3" style="margin-bottom: 20px;">
                     @include('frontend.candidate-dashboard.sidebar')
-                </div>
 
                 <!-- Main Content -->
                 <div class="col-lg-9">

@@ -74,6 +74,16 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin', 'as' => 'admi
     /**** Dashboard Route */
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    Route::get('analytics/user-registrations', [DashboardController::class, 'userRegistrations'])->name('analytics.user-registrations');
+    Route::get('analytics/earnings', [DashboardController::class, 'earnings'])->name('analytics.earnings');
+    Route::get('analytics/growth-comparison', [DashboardController::class, 'growthComparison'])->name('analytics.growth-comparison');
+    Route::get('analytics/candidates', [DashboardController::class, 'candidateAnalytics'])->name('analytics.candidates');
+    Route::get('analytics/job-status', [DashboardController::class, 'jobStatusAnalytics'])->name('analytics.job-status');
+    Route::get('analytics/blogs', [DashboardController::class, 'blogAnalytics'])->name('analytics.blogs');
+
+
+
+
     /**** Industry Type Route */
     Route::resource('industry-types', IndustryTypeController::class);
     /**** Organization Type Route */
@@ -111,9 +121,9 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin', 'as' => 'admi
     Route::post('page-builder-status/{id}', [CustomPageBuilderController::class, 'changeStatus'])->name('page-builder-status.update');
 
 
-    Route::get('newsletter', [NewsletterController::class,'index'])->name('newsletter.index');
-    Route::delete('newsletter/{id}', [NewsletterController::class,'destroy'])->name('newsletter.destroy');
-    Route::post('newsletter', [NewsletterController::class,'sendMail'])->name('newsletter.send-mail');
+    Route::get('newsletter', [NewsletterController::class, 'index'])->name('newsletter.index');
+    Route::delete('newsletter/{id}', [NewsletterController::class, 'destroy'])->name('newsletter.destroy');
+    Route::post('newsletter', [NewsletterController::class, 'sendMail'])->name('newsletter.send-mail');
 
 
     Route::resource('social-icon', SocialIconController::class);
@@ -128,7 +138,7 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin', 'as' => 'admi
     /***
      * MEnu Builder Route
      */
-    Route::resource('menu-builder',MenuBuilderController::class);
+    Route::resource('menu-builder', MenuBuilderController::class);
 
     /**
      * Job Categories
@@ -209,7 +219,7 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin', 'as' => 'admi
     /**
      * Home Frontend Route
      */
-    Route::resource('about-us',AboutController::class);
+    Route::resource('about-us', AboutController::class);
     Route::resource('hero', HeroController::class);
     Route::resource('blog-section-setting', BlogSectionSettingController::class);
     Route::resource('custom-section', CustomSectionController::class);

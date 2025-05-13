@@ -14,7 +14,8 @@
         "laravel/tinker": "^2.8",
         "laraveldaily/laravel-invoices": "4.0",
         "php-flasher/flasher-notyf-laravel": "^1.15",
-        "srmklive/paypal": "~3.0"
+        "srmklive/paypal": "~3.0",
+        "torann/geoip": "^3.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.14",

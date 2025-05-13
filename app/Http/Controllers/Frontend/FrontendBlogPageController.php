@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
+use App\Services\ViewTracker;
 use App\Traits\Searchable;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -28,10 +29,11 @@ class FrontendBlogPageController extends Controller
             ->get();
         return view('frontend.pages.blog-index', compact('blogs', 'featured', 'popularPosts'));
     }
-    public function show(string $slug): View
+    public function show(string $slug, Request $request): View
     {
         // Implement your blog show logic here and return the view with the data
         $blog = Blog::where('slug', $slug)->where('status', 1)->first();
+        app(ViewTracker::class)->track($blog, $request);
         return view('frontend.pages.blog-details', compact('blog'));
     }
 }

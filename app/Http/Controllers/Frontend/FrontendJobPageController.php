@@ -11,6 +11,7 @@ use App\Models\Job;
 use App\Models\JobCategory;
 use App\Models\JobType;
 use App\Models\State;
+use App\Services\ViewTracker;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
@@ -141,7 +142,7 @@ class FrontendJobPageController extends Controller
     //         return view('frontend.pages.job-show', compact('job', 'openJobs', 'similarJobs', 'alreadyAppliedJob'));
     //     }
 
-    function show(string $slug): View
+    function show(string $slug, Request $request): View
     {
         $job = Job::where('slug', $slug)->firstOrFail();
 
@@ -163,10 +164,11 @@ class FrontendJobPageController extends Controller
         $similarJobs = Job::where('job_category_id', $job->job_category_id)
             ->where('id', '!=', $job->id)
             ->where('status', 'active')
-            ->where('deadline', '>=', now()) 
+            ->where('deadline', '>=', now())
             ->limit(5)
             ->get();
 
+        app(ViewTracker::class)->track($job, $request);
         return view('frontend.pages.job-show', compact(
             'job',
             'openJobs',

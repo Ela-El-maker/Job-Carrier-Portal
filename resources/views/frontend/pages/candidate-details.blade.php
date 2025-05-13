@@ -277,5 +277,4 @@
         </div>
     </section>
     <!-- ===== End of Candidate Profile Section ===== -->
-    @include('frontend.home.sections.get-started-section')
 @endsection

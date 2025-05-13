@@ -1,4 +1,5 @@
 import './bootstrap';
+import './views-tracker';
 
 import Alpine from 'alpinejs';
 

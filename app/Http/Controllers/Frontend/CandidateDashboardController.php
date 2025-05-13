@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\AppliedJob;
 use App\Models\Candidate;
+use App\Models\JobBookmark;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -12,11 +14,10 @@ class CandidateDashboardController extends Controller
     //
     function index(): View
     {
-        $candidateDashboard = Candidate::all();
-        $candidate = Candidate::with(['skills', 'languages'])
-            ->where('user_id', auth()->user()->id)
-            ->first();
+       $jobApplied = AppliedJob::where('candidate_id',auth()->user()->id)->count();
+        $userBookmarkedJobs = JobBookmark::where('candidate_id',auth()->user()?->candidateProfile?->id)->count();
+        $appliedJobs = AppliedJob::with('job')->where('candidate_id', auth()->user()->id)->orderBy('id','desc')->paginate(5);
 
-        return view('frontend.candidate-dashboard.dashboard', compact('candidateDashboard', 'candidate'));
+        return view('frontend.candidate-dashboard.dashboard', compact('jobApplied', 'appliedJobs','userBookmarkedJobs'));
     }
 }

@@ -67,7 +67,7 @@
             <div class="row">
                 @include('frontend.company-dashboard.sidebar')
                 <!-- ===== Start of Job Post Main ===== -->
-                <div class="col-md-8 col-xs-12 job-post-main">
+                <div class="col-md-9 col-xs-12 job-post-main">
                     <h4>Welcome {{ auth()->user()->name }}!</h4>
 
                     <!-- Start of Row -->
@@ -180,23 +180,24 @@
                                                                 style="display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; background-color: rgba(244, 67, 54, 0.15); color: #f56565;">Expired</span>
                                                         @endif
                                                     </td>
-                                                    <td style="padding: 12px 8px; vertical-align: middle;">
-                                                        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                                                    <td style="padding: 10px 8px; vertical-align: middle;">
+                                                        <div style="gap: 6px; flex-wrap: wrap;">
                                                             <a href="{{ route('company.job.applications', $job?->id) }}"
                                                                 title="View Applications"
                                                                 style="display: inline-flex; align-items: center; justify-content: center; height: 32px; width: 32px; background-color: #3182ce; color: white; border-radius: 4px; text-decoration: none; transition: all 0.2s ease;">
                                                                 <i class="fas fa-list"></i>
-                                                            </a>
-                                                            <a href="{{ route('company.jobs.edit', $job?->id) }}"
-                                                                title="Edit Job"
-                                                                style="display: inline-flex; align-items: center; justify-content: center; height: 32px; width: 32px; background-color: #48bb78; color: white; border-radius: 4px; text-decoration: none; transition: all 0.2s ease;">
-                                                                <i class="fas fa-edit"></i>
                                                             </a>
                                                             <a href="{{ route('company.jobs.show', $job?->id) }}"
                                                                 title="Show Job"
                                                                 style="display: inline-flex; align-items: center; justify-content: center; height: 32px; width: 32px; background-color: #805ad5; color: white; border-radius: 4px; text-decoration: none; transition: all 0.2s ease;">
                                                                 <i class="fas fa-eye"></i>
                                                             </a>
+                                                            <a href="{{ route('company.jobs.edit', $job?->id) }}"
+                                                                title="Edit Job"
+                                                                style="display: inline-flex; align-items: center; justify-content: center; height: 32px; width: 32px; background-color: #48bb78; color: white; border-radius: 4px; text-decoration: none; transition: all 0.2s ease;">
+                                                                <i class="fas fa-edit"></i>
+                                                            </a>
+
                                                             <a href="{{ route('company.jobs.destroy', $job?->id) }}"
                                                                 class="delete-item" title="Delete Job"
                                                                 style="display: inline-flex; align-items: center; justify-content: center; height: 32px; width: 32px; background-color: #e53e3e; color: white; border-radius: 4px; text-decoration: none; transition: all 0.2s ease;">

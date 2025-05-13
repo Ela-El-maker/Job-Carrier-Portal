@@ -30,7 +30,7 @@
             <div class="row">
                 <!-- Sidebar -->
                 <div class="col-lg-3" style="margin-bottom: 20px;">
-                    @include('frontend.candidate-dashboard.sidebar')
+                    @include('frontend.company-dashboard.sidebar')
                 </div>
 
                 <!-- Main Content -->
@@ -47,14 +47,14 @@
                             </div>
 
                             <!-- Search Form -->
-                            <form action="" method="GET" style="flex: 1; max-width: 280px; display: flex;">
-                                <input type="text" name="search" placeholder="Search Jobs"
+                            {{-- <form action="" method="GET" style="flex: 1; max-width: 280px; display: flex;">
+                                <input type="text" name="search" placeholder="Search Reviews"
                                     style="border: 1px solid #ced4da; border-right: none; padding: 8px 12px; border-radius: 4px 0 0 4px; width: 100%; outline: none;">
                                 <button type="submit"
                                     style="background-color: #4361ee; color: white; border: none; padding: 8px 12px; border-radius: 0 4px 4px 0; cursor: pointer;">
                                     <i class="fas fa-search"></i>
                                 </button>
-                            </form>
+                            </form> --}}
 
                             <!-- Create Review Button -->
                             <div style="flex-shrink: 0;">

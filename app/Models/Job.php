@@ -91,4 +91,9 @@ class Job extends Model
     {
         return $this->hasMany(AppliedJob::class, 'job_id', 'id');
     }
+
+    public function views()
+    {
+        return $this->morphMany(View::class, 'viewable');
+    }
 }

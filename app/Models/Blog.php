@@ -36,4 +36,9 @@ class Blog extends Model
     {
         return $this->hasMany(Comment::class)->latest();
     }
+
+    public function views()
+    {
+        return $this->morphMany(View::class, 'viewable');
+    }
 }

@@ -242,7 +242,7 @@
         <div class="container">
             <div class="row">
                 <!-- Main content column -->
-                <div class="col-md-8 col-sm-12 job-main-content">
+                <div class="col-md-9 col-sm-12 job-main-content">
                     <!-- Job Header -->
                     <div class="job-detail-header" style="position: relative;">
                         @php

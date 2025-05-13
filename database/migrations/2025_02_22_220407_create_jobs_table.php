@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('custom_salary', 255)->nullable()->default('commutative');
             $table->date('deadline');
             $table->text('description');
-            $table->enum('status', ['pending', 'active', 'inactive', 'expired'])->default('pending');
+            $table->enum('status', ['pending', 'active', 'draft', 'expired'])->default('pending');
             $table->enum('apply_on', ['app', 'email', 'custom_url']);
             $table->string('apply_email')->nullable();
             $table->text('apply_url')->nullable();
@@ -44,6 +44,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->enum('salary_mode', ['range', 'custom']);
             $table->string('company_name')->nullable();
+            $table->unsignedBigInteger('views')->default(0);
             $table->timestamps();
         });
     }

@@ -415,6 +415,7 @@
             font-size: 16px;
             opacity: 0.9;
         }
+
         .review-content img {
             max-width: 100%;
             max-height: 250px;
@@ -667,8 +668,7 @@
                             <div class="widget-content">
                                 <form action="" method="GET">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="q"
-                                            placeholder="Search...">
+                                        <input type="text" class="form-control" name="q" placeholder="Search...">
                                         <span class="input-group-btn">
                                             <button class="btn btn-primary" type="submit"><i
                                                     class="fa fa-search"></i></button>
@@ -796,3 +796,10 @@
     </section>
     <!-- ===== End of Call to Action Section ===== -->
 @endsection
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            trackView('blog', {{ $blog->id }});
+        });
+    </script>
+@endpush

@@ -671,5 +671,9 @@
             });
 
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            trackView('job', {{ $job->id }});
+        });
     </script>
 @endpush

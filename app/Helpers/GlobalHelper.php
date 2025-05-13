@@ -19,14 +19,48 @@ if (!function_exists('hasError')) {
 /*** Set sidebar active */
 
 if (!function_exists('setSidebarActive')) {
-    function setSidebarActive(array $routes): ?String
-    {
-        foreach ($routes as $route) {
-            if (request()->routeIs($route)) {
-                return 'active';
-            }
+    /**
+     * Determines if the current route matches any of the given routes
+     * and returns the active class if matched.
+     *
+     * @param array|string $routes Route name(s) to check against
+     * @param string $activeClass Class to return when active
+     * @param string $inactiveClass Class to return when inactive
+     * @param bool $exactMatch Whether to require exact route match
+     * @return string|null
+     */
+    function setSidebarActive(
+        $routes,
+        string $activeClass = 'active',
+        string $inactiveClass = '',
+        bool $exactMatch = false
+    ): ?string {
+        // Convert string input to array
+        $routes = is_array($routes) ? $routes : [$routes];
+
+        if (empty($routes)) {
+            return null;
         }
-        return null;
+
+        try {
+            foreach ($routes as $route) {
+                if ($exactMatch) {
+                    if (request()->routeIs($route) &&
+                        request()->route()->getName() === $route) {
+                        return $activeClass;
+                    }
+                } else {
+                    if (request()->routeIs($route)) {
+                        return $activeClass;
+                    }
+                }
+            }
+
+            return $inactiveClass;
+        } catch (\Exception $e) {
+            \Log::error('Sidebar active check failed: ' . $e->getMessage());
+            return null;
+        }
     }
 }
 
@@ -488,5 +522,19 @@ if (!function_exists('formatPhoneNumber')) {
 
         // Return as-is if already in 254 format
         return $phone;
+    }
+}
+
+
+if (!function_exists('calculateEarnings')) {
+    function calculateEarnings($amounts)
+    {
+        $total = 0;
+        foreach ($amounts as $value) {
+            // Remove anything except digits and decimal point
+            $clean = preg_replace('/[^0-9.]/', '', $value);
+            $total += (float)$clean;
+        }
+        return $total;
     }
 }
