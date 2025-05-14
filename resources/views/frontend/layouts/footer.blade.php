@@ -34,7 +34,7 @@
                 <ul class="nopadding">
                     <li><i class="fa fa-map-marker"></i>{{ $footer?->address }}</li>
                     <li><i class="fa fa-phone"></i>
-                        @if ($footer->phone)
+                        @if ($footer?->phone)
                             {{ $footer?->phone }}
                         @else
                             {{ config('settings.site_phone') }}
@@ -42,7 +42,7 @@
 
                     </li>
                     <li><i class="fa fa-envelope-o"></i>
-                        @if ($footer->email)
+                        @if ($footer?->email)
                             {{ $footer?->email }}
                         @else
                             {{ config('settings.site_email') }}
@@ -60,10 +60,6 @@
                     @foreach ($footerOne as $menu)
                     <li><a href="{{ $menu['link']}}"><i class="fa fa-angle-double-right"></i>{{ $menu['label'] }}</a>
                     @endforeach
-
-
-
-
                 </ul>
             </div>
 
