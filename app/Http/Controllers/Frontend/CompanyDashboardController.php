@@ -13,8 +13,8 @@ class CompanyDashboardController extends Controller
     public function index(): View
     {
         $user = auth()->user();
-        $company = $user->company;
-        $userPlan = UserPlan::where('company_id', auth()->user()->company->id)->first();
+        $company = $user?->company;
+        $userPlan = UserPlan::where('company_id', auth()->user()?->company?->id)->first();
         return view('frontend.company-dashboard.dashboard', [
             'company' => $company,
             'completionPercentage' => $this->calculateProfileCompletion($company),

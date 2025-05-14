@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\IndustryType;
 use App\Services\Notify;
 use App\Traits\Searchable;
@@ -98,6 +99,10 @@ class IndustryTypeController extends Controller
     {
         //
         // dd($id);
+        $company = Company::where('industry_type_id', $id)->exists();
+        if($company){
+            return response(['message'=> 'This item is already being used. Can\'t Delate'],500);
+        }
         try {
             IndustryType::findorfail($id)->delete();
             Notify::deletedNotification();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Candidate;
 use App\Models\Profession;
 use App\Services\Notify;
 use App\Traits\Searchable;
@@ -17,20 +18,20 @@ class ProfessionController extends Controller
      * Display a listing of the resource.
      */
     use Searchable;
-    public function index() : View
+    public function index(): View
     {
         //
-         // dd($request->search);
-         $query = Profession::query();
-         $this->search($query,['name']);
-         $professions = $query->paginate(10);
+        // dd($request->search);
+        $query = Profession::query();
+        $this->search($query, ['name']);
+        $professions = $query->paginate(10);
         return view('admin.professions.index', compact('professions'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create() : View
+    public function create(): View
     {
         //
         return view('admin.professions.create');
@@ -39,7 +40,7 @@ class ProfessionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) : RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         //
         // dd($request->all());
@@ -64,7 +65,7 @@ class ProfessionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id) : View
+    public function edit(string $id): View
     {
         //
         $profession = Profession::findOrFail($id);
@@ -74,7 +75,7 @@ class ProfessionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id) : RedirectResponse
+    public function update(Request $request, string $id): RedirectResponse
     {
         //
         // dd($request->all());
@@ -90,10 +91,12 @@ class ProfessionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id) : Response
+    public function destroy(string $id): Response
     {
-        //
-        // dd($id);
+        $candidateExists = Candidate::where('profession_id', $id)->exists();
+        if ($candidateExists) {
+            return response(['message' => 'This item is already being used. Can\'t Delate'], 500);
+        }
         try {
             Profession::findorfail($id)->delete();
             Notify::deletedNotification();

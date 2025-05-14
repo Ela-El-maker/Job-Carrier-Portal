@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Candidate;
+use App\Models\CandidateSkill;
+use App\Models\JobSkills;
 use App\Models\Skill;
 use App\Services\Notify;
 use App\Traits\Searchable;
@@ -17,13 +20,13 @@ class SkillController extends Controller
      * Display a listing of the resource.
      */
     use Searchable;
-    public function index() : View
+    public function index(): View
     {
         //
-         // dd($request->search);
-         $query = Skill::query();
-         $this->search($query,['name']);
-         $skills = $query->paginate(10);
+        // dd($request->search);
+        $query = Skill::query();
+        $this->search($query, ['name']);
+        $skills = $query->paginate(10);
         return view('admin.skills.index', compact('skills'));
     }
 
@@ -39,7 +42,7 @@ class SkillController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) : RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         //
         // dd($request->all());
@@ -64,7 +67,7 @@ class SkillController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id) : View
+    public function edit(string $id): View
     {
         //
         $skill = Skill::findOrFail($id);
@@ -90,10 +93,16 @@ class SkillController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id) : Response
+    public function destroy(string $id): Response
     {
         //
         // dd($id);
+        $skillExists = JobSkills::where('skill_id', $id)->exists();
+        $candidateSkillExists = CandidateSkill::where('skill_id', $id)->exists();
+
+        if ($skillExists || $candidateSkillExists) {
+            return response(['message' => 'This item is already being used. Can\'t Delete'], 500);
+        }
         try {
             Skill::findorfail($id)->delete();
             Notify::deletedNotification();

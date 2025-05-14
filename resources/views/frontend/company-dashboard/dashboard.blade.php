@@ -48,7 +48,7 @@
                                         <img src="{{ asset($profileImage) }}" alt="Profile Image" class="profile-image">
                                     </div>
 
-                                    <a href="{{ route('candidate.profile.index') }}" class="edit-profile-btn" style="padding-right: 30px;">
+                                    <a href="{{ route('company.profile') }}" class="edit-profile-btn" style="padding-right: 30px;">
                                         {{ $completionPercentage == 100 ? 'View Profile' : 'Edit Profile' }}
                                     </a>
                                 </div>
@@ -98,7 +98,7 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <h6 class="card-title">Active Jobs</h6>
-                                            <h3 class="mb-0">{{ $company->jobs()->where('status', 'active')->count() }}
+                                            <h3 class="mb-0">{{ $company?->jobs()->where('status', 'active')->count() }}
                                             </h3>
                                         </div>
                                         <div class="metric-icon bg-primary-light">
@@ -118,7 +118,7 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <h6 class="card-title">New Applications</h6>
-                                            <h3 class="mb-0">{{ $company->applications()->count() }}</h3>
+                                            <h3 class="mb-0">{{ $company?->applications()->count() }}</h3>
                                         </div>
                                         <div class="metric-icon bg-success-light">
                                             <i class="fas fa-file-alt text-success"></i>

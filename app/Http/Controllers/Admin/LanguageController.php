@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\CandidateLanguage;
 use App\Models\Language;
 use App\Services\Notify;
 use App\Traits\Searchable;
@@ -96,8 +97,10 @@ class LanguageController extends Controller
      */
     public function destroy(string $id): Response
     {
-        //
-        // dd($id);
+    $language = CandidateLanguage::where('language_id', $id)->exists();
+        if($language){
+            return response(['message'=> 'This item is already being used. Can\'t Delate'],500);
+        }
         try {
             Language::findorfail($id)->delete();
             Notify::deletedNotification();
