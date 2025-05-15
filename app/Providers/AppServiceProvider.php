@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,5 +27,9 @@ class AppServiceProvider extends ServiceProvider
         if (str_contains(request()->getHost(), 'ngrok.io')) {
             config(['app.url' => request()->getSchemeAndHttpHost()]);
         }
+
+        Gate::before(function ($user, $ability){
+            return $user->hasRole('Super Admin') ? true : null;
+        });
     }
 }

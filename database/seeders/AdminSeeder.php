@@ -20,5 +20,8 @@ class AdminSeeder extends Seeder
         $admin->email = 'superadmin@elakali.com';
         $admin->password = bcrypt('password');
         $admin->save();
+
+        // Assign Role
+        $admin->assignRole('Super Admin');
     }
 }
