@@ -14,6 +14,11 @@ use Illuminate\View\View;
 
 class OrganizationTypeController extends Controller
 {
+
+    function __construct()
+    {
+        $this->middleware(['permission:job attributes']);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -97,8 +102,8 @@ class OrganizationTypeController extends Controller
     {
         //
         $company = Company::where('organization_type_id', $id)->exists();
-        if($company){
-            return response(['message'=> 'This item is already being used. Can\'t Delate'],500);
+        if ($company) {
+            return response(['message' => 'This item is already being used. Can\'t Delate'], 500);
         }
         try {
             OrganizationType::findorfail($id)->delete();

@@ -14,6 +14,12 @@ use Illuminate\View\View;
 
 class IndustryTypeController extends Controller
 {
+
+    function __construct()
+    {
+        $this->middleware(['permission:job attributes']);
+    }
+
     /**
      * Display a listing of the resource.
      */

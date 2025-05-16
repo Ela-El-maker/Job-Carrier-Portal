@@ -10,6 +10,10 @@ use Illuminate\View\View;
 
 class BlogSectionSettingController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware(['permission:job sections']);
+    }
     /**
      * Display a listing of the resource.
      */

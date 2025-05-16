@@ -15,10 +15,15 @@ use Illuminate\View\View;
 
 class CityController extends Controller
 {
+    use Searchable;
+    function __construct()
+    {
+        $this->middleware(['permission:job locations']);
+    }
     /**
      * Display a listing of the resource.
      */
-    use Searchable;
+
     public function index(): View
     {
         //
@@ -46,14 +51,14 @@ class CityController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) : RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         //
         // dd($request->all());
         $request->validate([
             'country' => ['required', 'integer'],
             'state' => ['required', 'integer'],
-            'city' => ['required','string', 'max:255'],
+            'city' => ['required', 'string', 'max:255'],
         ]);
         $city = new City();
         $city->name = $request->city;
@@ -75,7 +80,7 @@ class CityController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id) : View
+    public function edit(string $id): View
     {
         //
         $city = City::findorfail($id);
@@ -88,14 +93,14 @@ class CityController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id) : RedirectResponse
+    public function update(Request $request, string $id): RedirectResponse
     {
         //
         // dd($request->all());
         $request->validate([
             'country' => ['required', 'integer'],
             'state' => ['required', 'integer'],
-            'city' => ['required','string', 'max:255'],
+            'city' => ['required', 'string', 'max:255'],
         ]);
         $city = City::findorfail($id);
         $city->name = $request->city;

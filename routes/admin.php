@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\IndustryTypeController;
 use App\Http\Controllers\Admin\JobCategoryController;
 use App\Http\Controllers\Admin\JobController;
 use App\Http\Controllers\Admin\JobExperienceController;
+use App\Http\Controllers\Admin\JobLocationController;
 use App\Http\Controllers\Admin\JobRoleController;
 use App\Http\Controllers\Admin\JobTypeController;
 use App\Http\Controllers\Admin\LanguageController;
@@ -227,6 +228,7 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin', 'as' => 'admi
     Route::resource('blog-section-setting', BlogSectionSettingController::class);
     Route::resource('custom-section', CustomSectionController::class);
     Route::resource('reviews', ClientReviewController::class);
+    Route::resource('job-location', JobLocationController::class);
     Route::post('review-status/{id}', [ClientReviewController::class, 'changeStatus'])->name('review-status.update');
 
 

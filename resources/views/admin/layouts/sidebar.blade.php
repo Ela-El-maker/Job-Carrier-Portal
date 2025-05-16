@@ -110,8 +110,6 @@
             </li>
 
             <li class="menu-header">Starter</li>
-            <li class="{{ setSidebarActive(['admin.users.*']) }}"><a class="nav-link"
-                    href="{{ route('admin.users.index') }}"><i class="far fa-square"></i> <span>Users</span></a></li>
 
             @if (canAccess(['orders listings']))
                 <li class="{{ setSidebarActive(['admin.orders.*']) }}"><a class="nav-link"
@@ -152,7 +150,8 @@
                 </li>
             @endif
             @if (canAccess(['job attributes']))
-                <li class="dropdown {{ setSidebarActive(['admin.industry-types.*', 'admin.organization-types.*']) }}">
+                <li
+                    class="dropdown {{ setSidebarActive(['admin.industry-types.*', 'admin.organization-types.*', 'admin.languages.*', 'admin.professions.*', 'admin.skills.*', 'admin.salary-type.*', 'admin.tag.*', 'admin.educations.*']) }}">
                     <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                             class="fas fa-columns"></i>
                         <span>Attributes</span></a>
@@ -167,9 +166,6 @@
                                 href="{{ route('admin.professions.index') }}">Professions</a></li>
                         <li class="{{ setSidebarActive(['admin.skills.*']) }}"><a class="nav-link"
                                 href="{{ route('admin.skills.index') }}">Skills</a></li>
-                        {{-- <li class="{{ setSidebarActive(['admin.job-categories.*']) }}"><a class="nav-link"
-                            href="{{ route('admin.job-categories.index') }}"> <span>Job
-                                Categories</span></a></li> --}}
 
 
 
@@ -200,12 +196,13 @@
                         <li class="{{ setSidebarActive(['admin.cities.*']) }}"><a class="nav-link"
                                 href="{{ route('admin.cities.index') }}">Cities</a></li>
 
+
                     </ul>
                 </li>
             @endif
             @if (canAccess(['sections']))
                 <li
-                    class="dropdown {{ setSidebarActive(['admin.hero.*', 'admin.blog-section-setting.*', 'admin.custom-section.*', 'admin.reviews.*']) }}">
+                    class="dropdown {{ setSidebarActive(['admin.hero.*', 'admin.blog-section-setting.*', 'admin.custom-section.*', 'admin.reviews.*', 'admin.job-location.*']) }}">
                     <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                             class="fas fa-columns"></i>
                         <span>Sections</span></a>
@@ -220,6 +217,10 @@
 
                         <li class="{{ setSidebarActive(['admin.reviews.*']) }}"><a class="nav-link"
                                 href="{{ route('admin.reviews.index') }}">Client Reviews</a></li>
+
+
+                        <li class="{{ setSidebarActive(['admin.job-location.*']) }}"><a class="nav-link"
+                                href="{{ route('admin.job-location.index') }}"> <span>Job Locations</span></a></li>
                     </ul>
                 </li>
             @endif
@@ -282,7 +283,7 @@
                             Builder</span></a></li>
             @endif
             @if (canAccess(['access management']))
-                <li class="dropdown {{ setSidebarActive(['admin.role.*', 'admin.role-user.*']) }} ">
+                <li class="dropdown {{ setSidebarActive(['admin.role.*', 'admin.role-user.*', 'admin.users.*']) }} ">
                     <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                             class="fas fa-columns"></i>
                         <span>Access Management</span></a>
@@ -292,6 +293,10 @@
 
                         <li class="{{ setSidebarActive(['admin.role-user.*']) }}"><a class="nav-link"
                                 href="{{ route('admin.role-user.index') }}">User Roles</a></li>
+                        <li class="{{ setSidebarActive(['admin.users.*']) }}"><a class="nav-link"
+                                href="{{ route('admin.users.index') }}">
+                                Users</a></li>
+
                     </ul>
                 </li>
             @endif
