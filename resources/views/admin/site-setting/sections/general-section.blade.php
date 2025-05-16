@@ -1,5 +1,5 @@
 <div class="tab-pane fade show active" id="home4" role="tabpanel" aria-labelledby="home-tab4">
-    <div class="card">
+
         <form action="{{ route('admin.general-settings.update') }}" method="post">
             @csrf
             <div class="row">
@@ -64,8 +64,6 @@
                         <x-input-error :messages="$errors->get('site_map')" class="mt-2" />
                     </div>
                 </div>
-
-
             </div>
 
             <div class="form-group">
@@ -73,5 +71,5 @@
             </div>
         </form>
 
-    </div>
+
 </div>
