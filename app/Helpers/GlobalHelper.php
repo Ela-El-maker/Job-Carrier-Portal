@@ -45,8 +45,10 @@ if (!function_exists('setSidebarActive')) {
         try {
             foreach ($routes as $route) {
                 if ($exactMatch) {
-                    if (request()->routeIs($route) &&
-                        request()->route()->getName() === $route) {
+                    if (
+                        request()->routeIs($route) &&
+                        request()->route()->getName() === $route
+                    ) {
                         return $activeClass;
                     }
                 } else {
@@ -536,5 +538,20 @@ if (!function_exists('calculateEarnings')) {
             $total += (float)$clean;
         }
         return $total;
+    }
+}
+
+
+if (!function_exists('canAccess')) {
+    function canAccess(array $permission): bool
+    {
+        $permission = auth()->guard('admin')->user()->hasAnyPermission($permission);
+        $superAdmin = auth()->guard('admin')->user()->hasRole('Super Admin');
+
+        if ($permission || $superAdmin) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
