@@ -119,8 +119,8 @@
                     <li class="{{ setSidebarActive(['admin.role.*']) }}"><a class="nav-link"
                             href="{{ route('admin.role.index') }}">Roles</a></li>
 
-                    <li class="{{ setSidebarActive(['admin.social-icon.*']) }}"><a class="nav-link"
-                            href="{{ route('admin.social-icon.index') }}">Socials</a></li>
+                    <li class="{{ setSidebarActive(['admin.role-user.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.role-user.index') }}">User Roles</a></li>
                 </ul>
             </li>
 
