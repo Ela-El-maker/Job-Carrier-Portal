@@ -31,11 +31,11 @@
     <!-- ===== Start of CountUp Section ===== -->
     @include('frontend.home.sections.counter-up-section')
     <!-- ===== End of CountUp Section ===== -->
-
-    <!-- ===== Start of Pricing Plan Section ===== -->
-    @include('frontend.home.sections.package-plan-section')
-    <!-- ===== End of Pricing Plan Section ===== -->
-
+    @if (auth()->user()?->role != 'candidate')
+        <!-- ===== Start of Pricing Plan Section ===== -->
+        @include('frontend.home.sections.package-plan-section')
+        <!-- ===== End of Pricing Plan Section ===== -->
+    @endif
     <!-- ===== Start of Testimonial Section ===== -->
     @include('frontend.home.sections.testimonial-section')
     <!-- ===== End of Testimonial Section ===== -->

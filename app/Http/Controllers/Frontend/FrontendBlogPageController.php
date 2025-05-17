@@ -31,9 +31,20 @@ class FrontendBlogPageController extends Controller
     }
     public function show(string $slug, Request $request): View
     {
-        // Implement your blog show logic here and return the view with the data
-        $blog = Blog::where('slug', $slug)->where('status', 1)->first();
+        $blog = Blog::where('slug', $slug)->where('status', 1)->firstOrFail();
+
         app(ViewTracker::class)->track($blog, $request);
-        return view('frontend.pages.blog-details', compact('blog'));
+
+        $previousPost = Blog::where('status', 1)
+            ->where('id', '<', $blog->id)
+            ->orderBy('id', 'desc')
+            ->first();
+
+        $nextPost = Blog::where('status', 1)
+            ->where('id', '>', $blog->id)
+            ->orderBy('id')
+            ->first();
+
+        return view('frontend.pages.blog-details', compact('blog', 'previousPost', 'nextPost'));
     }
 }

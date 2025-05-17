@@ -226,14 +226,13 @@
     <nav class="navbar navbar-default fluid_header">
         <div class="container">
             <div class="row">
-               <!-- Logo -->
-<div class="col-md-3 col-sm-6 col-xs-8 d-flex align-items-center">
-    <a class="navbar-brand" href="{{ url('/') }}" style="padding: 5px 0;">
-        <img src="{{ config('settings.site_logo') }}"
-             alt="Company Logo"
-             style="height: 70px; width: auto; max-width: 200px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));">
-    </a>
-</div>
+                <!-- Logo -->
+                <div class="col-md-3 col-sm-6 col-xs-8 d-flex align-items-center">
+                    <a class="navbar-brand" href="{{ url('/') }}" style="padding: 5px 0;">
+                        <img src="{{ config('settings.site_logo') }}" alt="Company Logo"
+                            style="height: 70px; width: auto; max-width: 200px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));">
+                    </a>
+                </div>
 
                 <!-- Navigation Menu -->
                 <div class="col-md-9 col-sm-6 col-xs-4">

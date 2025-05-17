@@ -313,19 +313,40 @@
                     </div>
                     <!-- End of Candidates Wrapper -->
 
-                    <!-- Start of Pagination -->
-                    <div class="col-md-12 mt10">
-                        @if ($candidates?->hasPages())
-                            {{ $candidates->withQueryString()->links() }}
-                        @endif
+                   <!-- Pagination -->
+                <div class="pagination-container">
+                    <div class="pagination-info">
+                        Showing <span>{{ $candidates->firstItem() ?? 0 }}-{{ $candidates->lastItem() ?? 0 }}</span> of
+                        <span>{{ $candidates->total() }}</span> candidates
                     </div>
-                    <!-- End of Pagination -->
+
+                    @if ($candidates->hasPages())
+                        <div class="pagination">
+                            {{-- Previous --}}
+                            <a href="{{ $candidates->previousPageUrl() ?? '#' }}"
+                                class="{{ $candidates->onFirstPage() ? 'disabled' : '' }}">&laquo;</a>
+
+                            {{-- Pages --}}
+                            @foreach ($candidates->getUrlRange(1, $candidates->lastPage()) as $page => $url)
+                                <a href="{{ $url }}"
+                                    class="{{ $page == $candidates->currentPage() ? 'active' : '' }}">{{ $page }}</a>
+                            @endforeach
+
+                            {{-- Next --}}
+                            <a href="{{ $candidates->nextPageUrl() ?? '#' }}"
+                                class="{{ !$candidates->hasMorePages() ? 'disabled' : '' }}">&raquo;</a>
+                        </div>
+                    @endif
+                </div>
 
                 </div>
                 <!-- End of Candidate Main -->
 
+
             </div>
             <!-- End of Row -->
+
+
 
         </div>
     </section>

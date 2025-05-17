@@ -32,6 +32,7 @@ class ClearDatabaseController extends Controller
             // Wipe DB data
             Artisan::call('migrate:fresh');
             // Seed default data
+            Artisan::call('db:seed', ['--class' => 'DatabaseSeeder']);
             Artisan::call('db:seed', ['--class' => 'RolePermissionSeeder']);
             Artisan::call('db:seed', ['--class' => 'AdminSeeder']);
             Artisan::call('db:seed', ['--class' => 'SiteSettingSeeder']);

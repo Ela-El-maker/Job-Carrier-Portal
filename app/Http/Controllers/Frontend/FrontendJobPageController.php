@@ -114,7 +114,7 @@ class FrontendJobPageController extends Controller
 
         $jobs = $query->orderBy('created_at', 'desc')
             ->orderBy('updated_at', 'desc')
-            ->paginate(18);
+            ->paginate(7);
 
 
         return view('frontend.pages.jobs-index', compact('jobs', 'countries', 'selectedStates', 'selectedCities', 'jobCategories', 'jobTypes', 'popularCategories', 'popularJobTypes'));

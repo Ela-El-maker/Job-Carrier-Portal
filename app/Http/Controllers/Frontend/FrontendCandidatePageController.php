@@ -63,7 +63,7 @@ class FrontendCandidatePageController extends Controller
         $totalCandidates = Candidate::where(['profile_complete' => 1, 'visibility' => 1])->count();
 
         // Paginate results
-        $candidates = $query->paginate(21);
+        $candidates = $query->paginate(7);
 
         return view('frontend.pages.candidate-index', compact('candidates', 'skills', 'experience', 'totalCandidates', 'countries', 'selectedStates', 'selectedCities'));
     }

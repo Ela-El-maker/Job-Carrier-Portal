@@ -16,7 +16,7 @@
     <meta name="author" content="GnoDesign">
 
     <!-- Website Title -->
-    <title>Cariera - Job Board HTML Template</title>
+    <title>{{ config('settings.site_name') }}</title>
     <link rel="shortcut icon" href="{{ config('settings.site_favicon') }}" type="image/x-icon">
     {{-- <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png"> --}}
 
@@ -37,7 +37,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/comments.css') }}">
 
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.10.0/dist/css/bootstrap-datepicker3.min.css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.10.0/dist/css/bootstrap-datepicker3.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <link rel="stylesheet" href="{{ asset('admin/assets/modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/assets/css/bootstrap-iconpicker.min.css') }}">
@@ -53,11 +54,13 @@
 </head>
 
 <body>
-    {{-- <div class="preloader_demo d-none">
+    <div class="preloader_demo"
+        style="position: fixed; top: 0; left: 0; z-index: 9999; background: white; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+
         <div class="img">
             <img src="{{ asset('frontend/assets/images/loading.gif') }}" alt="cariera">
         </div>
-    </div> --}}
+    </div>
     {{-- <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
             <div class="preloader-inner position-relative">
@@ -128,7 +131,15 @@
 
     @stack('scripts')
     @include('frontend.layouts.scripts')
-
+    <!-- Auto-hide preloader after 3 seconds -->
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const loader = document.querySelector('.preloader_demo');
+                if (loader) loader.style.display = 'none';
+            }, 2000); // 2000ms = 2 seconds
+        });
+    </script>
 </body>
 
 </html>
