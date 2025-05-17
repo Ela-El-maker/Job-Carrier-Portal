@@ -45,6 +45,7 @@ use App\Http\Controllers\Admin\SalaryTypeController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\SocialIconController;
+use App\Http\Controllers\Admin\SponserController;
 use App\Http\Controllers\Admin\StateController;
 use App\Http\Controllers\Admin\SystemUserController;
 use App\Http\Controllers\Admin\TagController;
@@ -242,6 +243,8 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin', 'as' => 'admi
     Route::resource('reviews', ClientReviewController::class);
     Route::resource('job-location', JobLocationController::class);
     Route::post('review-status/{id}', [ClientReviewController::class, 'changeStatus'])->name('review-status.update');
+    Route::resource('sponsors', SponserController::class);
+    Route::post('sponsor-status/{id}', [SponserController::class, 'changeStatus'])->name('sponsor-status.update');
 
 
 

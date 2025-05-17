@@ -296,7 +296,7 @@
 
 
     <!-- ===== Start of Get Started Section ===== -->
-    <section class="get-started ptb40">
+    {{-- <section class="get-started ptb40">
         <div class="container">
             <div class="row ">
 
@@ -312,6 +312,6 @@
 
             </div>
         </div>
-    </section>
+    </section> --}}
     <!-- ===== End of Get Started Section ===== -->
 @endsection

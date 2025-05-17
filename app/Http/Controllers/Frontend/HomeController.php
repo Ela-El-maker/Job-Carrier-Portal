@@ -16,6 +16,7 @@ use App\Models\Hero;
 use App\Models\Job;
 use App\Models\JobCategory;
 use App\Models\Plan;
+use App\Models\Sponsor;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -109,6 +110,7 @@ class HomeController extends Controller
         $totalApplications = AppliedJob::count();
         $totalJobs = Job::where('deadline', '>=', date('Y-m-d'))->where('status', 'active')->count();
 
+        $sponsors = Sponsor::where(['show'=>1])->inRandomOrder()->take(6)->get();
         $reviews = ClientReview::where('is_approved', 1)->get();
         return view(
             'frontend.home.index',
@@ -131,7 +133,8 @@ class HomeController extends Controller
                 'totalMembers',
                 'totalCompanies',
                 'totalApplications',
-                'reviews'
+                'reviews',
+                'sponsors'
             )
         );
     }

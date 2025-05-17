@@ -6,7 +6,7 @@
                         class="fas fa-search"></i></a></li>
         </ul>
     </form>
-   <ul class="navbar-nav navbar-right">
+    <ul class="navbar-nav navbar-right">
         <li class="dropdown"><a href="#" data-toggle="dropdown"
                 class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                 <img alt="image" src="{{ asset(auth()->guard('admin')->user()->image) }}" class="rounded-circle mr-3"
@@ -252,6 +252,10 @@
                 <li class="{{ setSidebarActive(['admin.site-settings.index']) }}"><a class="nav-link"
                         href="{{ route('admin.site-settings.index') }}"><i class="fas fa-cogs"></i> <span>Site
                             Settings</span></a>
+                </li>
+                <li class="{{ setSidebarActive(['admin.sponsors.index']) }}"><a class="nav-link"
+                        href="{{ route('admin.sponsors.index') }}"><i class="fas fa-donate"></i>
+                        <span>Sponsors</span></a>
                 </li>
             @endif
             @if (canAccess(['database clear']))

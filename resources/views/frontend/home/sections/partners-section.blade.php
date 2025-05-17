@@ -3,30 +3,14 @@
 
         <!-- Start of Owl Slider -->
         <div class="owl-carousel partners-slider">
-            <!-- Partner Logo -->
-            <div class="item">
-                <a href="#"><img src="frontend/assets/images/companies/themeforest.png" alt=""></a>
-            </div>
+            @foreach ($sponsors as $sponsor)
+                <!-- Partner Logo -->
+                <div class="item">
+                    <a href="{{ $sponsor?->url }}"><img src="{{ asset($sponsor?->logo) }}" alt="{{ $sponsor?->name }}"></a>
+                </div>
+            @endforeach
 
-            <!-- Partner Logo -->
-            <div class="item">
-                <a href="#"><img src="images/companies/codecanyon.png" alt=""></a>
-            </div>
 
-            <!-- Partner Logo -->
-            <div class="item">
-                <a href="#"><img src="images/companies/graphicriver.png" alt=""></a>
-            </div>
-
-            <!-- Partner Logo -->
-            <div class="item">
-                <a href="#"><img src="images/companies/photodune.png" alt=""></a>
-            </div>
-
-            <!-- Partner Logo -->
-            <div class="item">
-                <a href="#"><img src="images/companies/audiojungle.png" alt=""></a>
-            </div>
         </div>
         <!-- End of Owl Slider -->
 
