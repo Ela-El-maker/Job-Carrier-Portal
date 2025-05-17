@@ -38,6 +38,7 @@ use App\Http\Controllers\Admin\OrganizationTypeController;
 use App\Http\Controllers\Admin\PaymentSettingController;
 use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Admin\ProfessionController;
+use App\Http\Controllers\Admin\ProfileUpdateController;
 use App\Http\Controllers\Admin\RolePermissionController;
 use App\Http\Controllers\Admin\RoleUserController;
 use App\Http\Controllers\Admin\SalaryTypeController;
@@ -74,6 +75,16 @@ Route::group(['middleware' => ['guest:admin'], 'prefix' => 'admin', 'as' => 'adm
 Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
+
+
+    /***
+     * Profile Update Routes
+     */
+    Route::get('profile', [ProfileUpdateController::class, 'index'])->name('profile.index');
+    Route::post('profile', [ProfileUpdateController::class, 'update'])->name('profile.update');
+    Route::post('profile-password', [ProfileUpdateController::class, 'passwordUpdate'])->name('profile.password');
+
+
 
     /**** Dashboard Route */
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');

@@ -47,34 +47,79 @@ class SiteSettingController extends Controller
     }
 
 
+    // function updateLogoSetting(Request $request): RedirectResponse
+    // {
+    //     $request->validate([
+    //         'logo' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:5000'],
+    //         'favicon' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:5000']
+    //     ]);
+
+    //     try {
+    //         $logoPath = $this->uploadFile($request, 'logo');
+    //         if ($logoPath === '') {
+    //             throw new \Exception('Logo upload failed');
+    //         }
+
+    //         $faviconPath = $this->uploadFile($request, 'favicon');
+    //         if ($faviconPath === '') {
+    //             throw new \Exception('Favicon upload failed');
+    //         }
+
+    //         // Update logo
+    //         if ($logoPath) {
+    //             SiteSetting::updateOrCreate(
+    //                 ['key' => 'site_logo'],
+    //                 ['value' => $logoPath]
+    //             );
+    //         }
+
+    //         // Update favicon
+    //         if ($faviconPath) {
+    //             SiteSetting::updateOrCreate(
+    //                 ['key' => 'site_favicon'],
+    //                 ['value' => $faviconPath]
+    //             );
+    //         }
+
+    //         $siteSetting = app()->make(SiteSettingService::class);
+    //         $siteSetting->clearCacheSettings();
+
+    //         Notify::updatedNotification();
+    //         return redirect()->back();
+    //     } catch (\Exception $e) {
+    //         Notify::errorNotification($e->getMessage());
+    //         return redirect()->back()->withInput();
+    //     }
+    // }
+
     function updateLogoSetting(Request $request): RedirectResponse
     {
         $request->validate([
-            'logo' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:5000'],
-            'favicon' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:5000']
+            'logo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:5000'],
+            'favicon' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:5000']
         ]);
 
         try {
-            $logoPath = $this->uploadFile($request, 'logo');
-            if ($logoPath === '') {
-                throw new \Exception('Logo upload failed');
-            }
+            // Handle logo update only if new logo is provided
+            if ($request->hasFile('logo')) {
+                $logoPath = $this->uploadFile($request, 'logo');
+                if ($logoPath === '') {
+                    throw new \Exception('Logo upload failed');
+                }
 
-            $faviconPath = $this->uploadFile($request, 'favicon');
-            if ($faviconPath === '') {
-                throw new \Exception('Favicon upload failed');
-            }
-
-            // Update logo
-            if ($logoPath) {
                 SiteSetting::updateOrCreate(
                     ['key' => 'site_logo'],
                     ['value' => $logoPath]
                 );
             }
 
-            // Update favicon
-            if ($faviconPath) {
+            // Handle favicon update only if new favicon is provided
+            if ($request->hasFile('favicon')) {
+                $faviconPath = $this->uploadFile($request, 'favicon');
+                if ($faviconPath === '') {
+                    throw new \Exception('Favicon upload failed');
+                }
+
                 SiteSetting::updateOrCreate(
                     ['key' => 'site_favicon'],
                     ['value' => $faviconPath]

@@ -17,8 +17,8 @@
 
     <!-- Website Title -->
     <title>Cariera - Job Board HTML Template</title>
-    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
-    <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png">
+    <link rel="shortcut icon" href="{{ config('settings.site_favicon') }}" type="image/x-icon">
+    {{-- <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png"> --}}
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,400i,700,800|Varela+Round" rel="stylesheet">

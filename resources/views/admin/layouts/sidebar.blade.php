@@ -6,16 +6,18 @@
                         class="fas fa-search"></i></a></li>
         </ul>
     </form>
-    <ul class="navbar-nav navbar-right">
+   <ul class="navbar-nav navbar-right">
         <li class="dropdown"><a href="#" data-toggle="dropdown"
                 class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                <img alt="image" src="{{ asset(auth()->guard('admin')->user()->image) }}"
-                    class="rounded-circle mr-1">
-                <div class="d-sm-none d-lg-inline-block">Hi, {{ auth()->user()->name }}</div>
+                <img alt="image" src="{{ asset(auth()->guard('admin')->user()->image) }}" class="rounded-circle mr-3"
+                    width="40" height="40" style="object-fit: cover; border: 2px solid #f5f5f5;">
+                <div class="d-sm-none d-lg-inline-block">Hi, {{ auth()->guard('admin')->user()->name }}</div>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <div class="dropdown-title">Logged in 5 min ago</div>
-                <a href="features-profile.html" class="dropdown-item has-icon">
+                <div class="dropdown-title" id="loginTimeDisplay">
+
+                </div>
+                <a href="{{ route('admin.profile.index') }}" class="dropdown-item has-icon">
                     <i class="far fa-user"></i> Profile
                 </a>
                 <a href="{{ route('admin.site-settings.index') }}" class="dropdown-item has-icon">
@@ -261,3 +263,37 @@
         </ul>
     </aside>
 </div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const display = document.getElementById('loginTimeDisplay');
+        const loginTime = localStorage.getItem('adminLoginTime');
+
+        if (!loginTime) {
+            const now = new Date();
+            localStorage.setItem('adminLoginTime', now.toISOString());
+            display.textContent = 'Logged in just now';
+        } else {
+            updateLoginTimeDisplay();
+            // Update every minute
+            setInterval(updateLoginTimeDisplay, 60000);
+        }
+
+        function updateLoginTimeDisplay() {
+            const loginTime = new Date(localStorage.getItem('adminLoginTime'));
+            const now = new Date();
+            const diffMs = now - loginTime;
+            const diffMins = Math.round(diffMs / 60000);
+
+            if (diffMins < 1) {
+                display.textContent = 'Logged in just now';
+            } else if (diffMins < 60) {
+                display.textContent = `Logged in ${diffMins} min${diffMins !== 1 ? 's' : ''} ago`;
+            } else {
+                const diffHours = Math.round(diffMins / 60);
+                display.textContent = `Logged in ${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
+            }
+        }
+    });
+</script>
