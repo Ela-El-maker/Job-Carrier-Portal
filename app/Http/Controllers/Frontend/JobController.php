@@ -35,17 +35,28 @@ class JobController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+
+
+    public function index(): View|RedirectResponse
     {
-        //
         storePlanInformation();
-        $query = Job::query();
-        $query->withCount('applications');
+
+        $company = auth()->user()?->company;
+
+        // Ensure company profile is complete and visible
+        if (!$company || !$company->profile_completion || !$company->visibility) {
+            return redirect()->route('company.profile')
+                ->with('error', 'Please complete and publish your company profile to access your job posts.');
+        }
+
+        $query = Job::query()->withCount('applications');
+
         $this->search($query, ['title', 'slug', 'deadline', 'status', 'created_at', 'updated_at']);
 
-        $jobs = $query->where('company_id', auth()->user()->company?->id)
+        $jobs = $query->where('company_id', $company->id)
             ->orderBy('created_at', 'DESC')
             ->paginate(10);
+
         return view('frontend.company-dashboard.jobs.index', compact('jobs'));
     }
 

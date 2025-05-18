@@ -7,7 +7,7 @@
             <!-- Start of Page Title -->
             <div class="row">
                 <div class="col-md-12">
-                    <h2>JOBS</h2>
+                    <h2>JOBS PAGE</h2>
                 </div>
             </div>
             <!-- End of Page Title -->
@@ -17,7 +17,7 @@
                 <div class="col-md-12">
                     <ul class="breadcrumb">
                         <li><a href="{{ url('/') }}">home</a></li>
-                        <li class="active">Company Jobs</li>
+                        <li class="active">Your Bookmarked Jobs</li>
                     </ul>
                 </div>
             </div>

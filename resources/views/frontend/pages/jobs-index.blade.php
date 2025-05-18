@@ -302,7 +302,7 @@
         }
     </style>
     <!-- =============== Start of Page Header 1 Section =============== -->
-    <section class="page-header">
+    <section class="page-header" style="padding-top: 200px;">
         <div class="container">
 
             <!-- Start of Page Title -->
@@ -347,186 +347,7 @@
 
                 </div>
 
-                <!-- ===== Start of Job Sidebar ===== -->
-                {{-- <div class="col-md-4 col-xs-12 job-post-sidebar">
 
-                    <!-- Search Location -->
-
-                    <!-- Job Types -->
-                    <form action="{{ route('jobs.index') }}" method="GET">
-                        <div class="job-categories mt30">
-                            <div class="input-with-icon">
-                                <input type="text" name="search" class="form-control" id="search-keywords"
-                                    value="{{ request()?->search }}" placeholder="Search">
-                                <i class="fas fa-search input-icon"></i> <!-- Font Awesome search icon -->
-                            </div>
-                        </div>
-
-                        <div class="job-categories mt30">
-                            <div class="select-wrapper">
-                                <select name="country" class="selectpicker country" id="search-categories"
-                                    data-live-search="true" title="Country" data-size="5" data-container="body">
-                                    <option value="">Country</option>
-                                    @foreach ($countries as $country)
-                                        <option @selected(request()?->country == $country?->id) value="{{ $country?->id }}">
-                                            {{ $country?->name }}</option>
-                                    @endforeach
-                                </select>
-                                <i class="fas fa-globe select-icon"></i>
-                            </div>
-                        </div>
-
-                        <div class="job-categories mt30">
-                            <div class="select-wrapper">
-                                <select name="state" class="form-control form-icons state" data-live-search="true"
-                                    data-size="5" title="States" data-container="body">
-                                    <option value="">All</option>
-                                    @if ($selectedStates)
-                                        @foreach ($selectedStates as $state)
-                                            <option @selected($state->id == request()?->state) value="{{ $state?->id }}">
-                                                {{ $state?->name }}</option>
-                                        @endforeach
-                                    @else
-                                        <option value="">States</option>
-                                    @endif
-                                </select>
-                                <i class="fas fa-map-marked-alt select-icon"></i>
-                            </div>
-                        </div>
-
-                        <div class="job-categories mt30">
-                            <div class="select-wrapper">
-                                <select name="city" class="form-control form-icons city" data-live-search="true"
-                                    data-size="5" title="Cities" data-container="body">
-
-                                    <option value="">All</option>
-                                    @if ($selectedCities)
-                                        @foreach ($selectedCities as $city)
-                                            <option @selected(request()?->city == $city?->id) value="{{ $city?->id }}">
-                                                {{ $city?->name }}</option>
-                                        @endforeach
-                                    @else
-                                        <option value="">Cities</option>
-                                    @endif
-                                </select>
-                                <i class="fas fa-city select-icon"></i>
-                            </div>
-                        </div>
-                        <div class="mt30 text-center">
-                            <button class="sweet-button">
-                                <i class="fas fa-search"></i> Search
-                            </button>
-                        </div>
-                    </form>
-
-
-
-                    <form action="{{ route('jobs.index') }}" method="GET" id="filterForm">
-                        <!-- Job Types -->
-                        <div class="job-categories mt30">
-                            <h4 class="pb20">Categories</h4>
-                            <hr style="border: 1px solid #e0e0e0; margin: 10px 0;"> <!-- Make the HR more visible -->
-
-                            <ul class="list-inline mt20">
-                                @foreach ($jobCategories as $jobCategory)
-                                    <li>
-                                        <input type="checkbox" id="category-{{ $jobCategory?->id }}" name="category[]"
-                                            value="{{ $jobCategory?->slug }}">
-                                        <label for="category-{{ $jobCategory?->id }}">
-                                            <span style="font-weight: 400;">{{ $jobCategory?->name }}</span>
-                                            <span class="job-count">({{ $jobCategory?->jobs_count }})</span>
-                                        </label>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-
-                        <!-- Job Types -->
-                        <div class="job-types mt30">
-                            <h4 style="font-weight: 600;">Job Type</h4> <!-- Reduce boldness of the heading -->
-                            <hr style="border: 1px solid #e0e0e0; margin: 10px 0;"> <!-- Make the HR more visible -->
-                            <ul class="list-inline mt20">
-                                @foreach ($jobTypes as $jobType)
-                                    <li>
-                                        <input type="checkbox" id="job-type-{{ $jobType?->id }}" name="jobtype[]"
-                                            value="{{ $jobType?->slug }}">
-                                        <label for="job-type-{{ $jobType?->id }}" style="font-weight: 400;">
-                                            <!-- Reduce boldness of the label -->
-                                            {{ $jobType?->name }}
-                                        </label>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-
-                        <!-- Job Types -->
-
-                        <br>
-
-                        <div class="job-filter">
-                            <!-- Hidden input with min_salary name -->
-                            <input type="hidden" name="min_salary" id="min_salary" value="">
-
-                            <div class="job-types mt30">
-                                <div class="filter-option">
-                                    <span class="filter-label">Filter by:</span>
-                                    <hr>
-                                    <div class="filter-toggle">
-                                        <button type="button" class="toggle-btn active"
-                                            id="salary-toggle">Salary</button>
-                                        <button type="button" class="toggle-btn" id="rate-toggle">Rate</button>
-                                    </div>
-                                </div>
-
-                                <!-- Salary Slider -->
-                                <div class="slider-container" id="salary-slider">
-                                    <div class="slider">
-                                        <div class="slider-track"></div>
-                                        <div class="slider-thumb"></div>
-                                    </div>
-
-                                    <div class="range-values">
-                                        <span>$0</span>
-                                        <span>$200,000</span>
-                                    </div>
-
-                                    <div class="salary-display">$3,000</div>
-                                </div>
-
-                                <!-- Rate Slider -->
-                                <div class="slider-container hidden" id="rate-slider">
-                                    <div class="slider">
-                                        <div class="slider-track"></div>
-                                        <div class="slider-thumb"></div>
-                                    </div>
-
-                                    <div class="range-values">
-                                        <span>$0/hr</span>
-                                        <span>$100/hr</span>
-                                    </div>
-
-                                    <div class="salary-display">$45/hr</div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="mt30 text-center">
-                            <button class="sweet-button">
-                                <i class="fas fa-search"></i> Search
-                            </button>
-                        </div>
-                    </form>
-
-                    <!-- Advertisment -->
-                    <div class="job-advert mt30">
-                        <a href="#">
-                            <img src="images/img/advert.jpg" class="img-responsive" alt="">
-                        </a>
-                    </div>
-
-                </div> --}}
-                <!-- ===== End of Job Sidebar ===== -->
 
                 <!-- ===== Start of Job Sidebar with Scrollable Feature ===== -->
                 <div class="col-md-4 col-xs-12 job-post-sidebar">
@@ -838,21 +659,17 @@
                         </div>
                         <!-- ===== End of Job Post Column 1 ===== -->
                     @empty
-                        <div class="container">
-                            <div class="row justify-content-center align-items-center" style="min-height: 70vh;">
-                                <div class="col-md-8 text-center">
-                                    <div class="mb-4">
-                                        <img src="{{ asset('frontend/default-uploads/employees-tired.svg') }}"
-                                            alt="No jobs found" class="img-responsive center-block"
-                                            style="max-width: 400px;">
-                                    </div>
-
-                                    <h3 class="mb-3 font-weight-bold">No Job Listings Found</h3>
-                                    <p class="text-muted mb-4">
-                                        We couldn't find any job openings matching your current filters.<br>
-                                        Try adjusting your search criteria or explore our popular categories below.
-                                    </p>
-                                    <hr>
+                        <div class="col-12">
+                            <div class="empty-jobs-container text-center py-5 my-4">
+                                <div class="empty-state-icon mb-4">
+                                    <img src="{{ asset('frontend/default-uploads/employees-tired.svg') }}"
+                                        alt="No jobs found" class="img-fluid" style="max-width: 450px;">
+                                </div>
+                                <h3 class="font-bold mb-3">No Job Listings Found</h3>
+                                <p class="text-muted mb-4">We couldn't find any job openings matching your current
+                                    filters. Try adjusting your search criteria or explore our popular categories below.</p>
+                                <!-- Action Buttons -->
+                                <div class="empty-state-actions row justify-content-center mt-4">
                                     <div class="mb-5">
                                         <a href="{{ route('jobs.index') }}" class="btn btn-outline">
                                             <i class="fas fa-filter me-2"></i> Clear All Filters
@@ -862,7 +679,10 @@
                                             <i class="fas fa-plus me-2"></i> Post a Job
                                         </a>
                                     </div>
-                                    <hr>
+                                </div>
+
+                                <!-- Popular Categories -->
+                                <div class="job-suggestions mt-5 text-center">
                                     <div class="mt-5">
                                         <h5 class="mb-3">Popular Categories</h5>
                                         <div class="text-center">
@@ -884,10 +704,11 @@
                                         </div>
                                     </div>
                                 </div>
+
+
                             </div>
                         </div>
                     @endforelse
-
 
 
                     <!-- Pagination -->

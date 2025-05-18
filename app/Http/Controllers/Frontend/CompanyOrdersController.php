@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Traits\Searchable;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
@@ -17,11 +18,21 @@ class CompanyOrdersController extends Controller
     //
 
     use Searchable;
-    function index(): View
+
+
+    public function index(): View|RedirectResponse
     {
+        $company = auth()->user()?->company;
+
+        // Ensure profile exists and is complete & visible
+        if (!$company || !$company->profile_completion || !$company->visibility) {
+            return redirect()->route('company.profile')
+                ->with('error', 'Please complete and publish your company profile to access orders.');
+        }
+
         $query = Order::query()
             ->with(['company', 'plan'])
-            ->where('company_id', auth()->user()->company?->id); // Ensures orders are filtered by company
+            ->where('company_id', $company->id);
 
         $this->search($query, [
             'package_name',
@@ -33,10 +44,11 @@ class CompanyOrdersController extends Controller
             'created_at'
         ]);
 
-        $orders = $query->orderBy('id', 'DESC')->paginate(20); // Apply sorting & pagination once
+        $orders = $query->orderBy('id', 'DESC')->paginate(20);
 
         return view("frontend.company-dashboard.order.index", compact("orders"));
     }
+
 
     function show(string $id): View
     {

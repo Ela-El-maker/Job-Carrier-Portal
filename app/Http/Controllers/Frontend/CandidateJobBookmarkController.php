@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\JobBookmark;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
@@ -23,23 +24,32 @@ class CandidateJobBookmarkController extends Controller
             throw ValidationException::withMessages(['Only candidates are allowed to bookmark']);
         }
 
-        $alreadyBookmarked = JobBookmark::where(['job_id' => $id, 'candidate_id' => auth()->user()->candidateProfile->id])->exists();
+        $alreadyBookmarked = JobBookmark::where(['job_id' => $id, 'candidate_id' => auth()->user()?->candidateProfile?->id])->exists();
         if ($alreadyBookmarked) {
             throw ValidationException::withMessages(['You have already bookmarked this job.']);
         }
 
         $bookmark = new JobBookmark();
         $bookmark->job_id = $id;
-        $bookmark->candidate_id = auth()->user()->candidateProfile->id;
+        $bookmark->candidate_id = auth()->user()?->candidateProfile?->id;
         $bookmark->save();
 
         return response(['message' => 'Bookmark saved successfully!', 'id' => $id], 200);
     }
 
 
-    function index(): View
+    public function index(): View|RedirectResponse
     {
-        $bookmarks = JobBookmark::where('candidate_id', auth()->user()->candidateProfile->id)->paginate(15);
+        $candidateId = auth()->user()?->candidateProfile?->id;
+
+        if (!$candidateId) {
+            return redirect()
+                ->route('candidate.profile.index') // or profile setup page
+                ->with('error', 'Please complete your candidate profile to view bookmarks.');
+        }
+
+        $bookmarks = JobBookmark::where('candidate_id', $candidateId)->paginate(15);
+
         return view('frontend.candidate-dashboard.bookmarks.index', compact('bookmarks'));
     }
 }

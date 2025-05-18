@@ -61,14 +61,7 @@
             <img src="{{ asset('frontend/assets/images/loading.gif') }}" alt="cariera">
         </div>
     </div>
-    {{-- <div id="preloader-active">
-        <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
-                <div class="text-center"><img src="{{ asset('frontend/assets/images/loading.gif') }}"
-                        alt="joblist"></div>
-            </div>
-        </div>
-    </div> --}}
+ 
 
     <!-- =============== Start of Header 1 Navigation =============== -->
     @include('frontend.layouts.header')

@@ -43,37 +43,15 @@ class HomeController extends Controller
             ->get();
 
 
-        // $popularCompanies = Company::query()
-        //     ->select('companies.*')
-        //     ->join('jobs', 'jobs.company_id', '=', 'companies.id')
-        //     ->join('applied_jobs', 'applied_jobs.job_id', '=', 'jobs.id')
-        //     ->where('jobs.status', 'active')
-        //     ->where('jobs.deadline', '>=', now())
-        //     ->groupBy('companies.id')
-        //     ->orderByRaw('COUNT(applied_jobs.id) DESC')
-        //     ->take(10)
-        //     ->get();
-        // $popularCompanies = Company::query()
-        //     ->select('companies.*')
-        //     ->join('jobs', 'jobs.company_id', '=', 'companies.id')
-        //     ->join('applied_jobs', 'applied_jobs.job_id', '=', 'jobs.id')
-        //     ->where('jobs.status', 'active')
-        //     ->where('jobs.deadline', '>=', now())
-        //     ->groupBy('companies.id')
-        //     ->havingRaw('COUNT(applied_jobs.id) > 2')  // Filter companies with more than 10 applications
-        //     ->orderByRaw('COUNT(applied_jobs.id) DESC')
-        //     ->take(10)
-        //     ->get();
-
         $popularCompanies = Company::query()
-            ->select('companies.*')
+            ->select('companies.id', 'companies.name', 'companies.logo') // Only select what you need
             ->join('jobs', 'jobs.company_id', '=', 'companies.id')
             ->join('applied_jobs', 'applied_jobs.job_id', '=', 'jobs.id')
             ->where('jobs.status', 'active')
             ->where('jobs.deadline', '>=', now())
-            ->groupBy('companies.id')
-            ->havingRaw('COUNT(DISTINCT jobs.id) > 10')  // Filter companies with more than 15 active jobs
-            ->havingRaw('COUNT(applied_jobs.id) > 10')   // Filter companies with more than 15 applications
+            ->groupBy('companies.id', 'companies.name', 'companies.logo') // Group by all selected columns
+            ->havingRaw('COUNT(DISTINCT jobs.id) > 10')
+            ->havingRaw('COUNT(applied_jobs.id) > 10')
             ->orderByRaw('COUNT(applied_jobs.id) DESC')
             ->take(10)
             ->get();
@@ -110,7 +88,7 @@ class HomeController extends Controller
         $totalApplications = AppliedJob::count();
         $totalJobs = Job::where('deadline', '>=', date('Y-m-d'))->where('status', 'active')->count();
 
-        $sponsors = Sponsor::where(['show'=>1])->inRandomOrder()->take(6)->get();
+        $sponsors = Sponsor::where(['show' => 1])->inRandomOrder()->take(6)->get();
         $reviews = ClientReview::where('is_approved', 1)->get();
         return view(
             'frontend.home.index',

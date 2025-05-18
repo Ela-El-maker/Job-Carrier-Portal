@@ -26,9 +26,12 @@ class CandidatePortfolioController extends Controller
     {
         $candidate = auth()->user()?->candidateProfile;
 
-        if (!$candidate) {
-            return redirect()->route('candidate.profile.basic-info.update')->with('error', 'Please complete your candidate profile.');
+        if (!$candidate || !$candidate->profile_complete || !$candidate->visibility) {
+            return redirect()
+                ->route('candidate.profile.index')
+                ->with('error', 'Please complete your candidate profile and ensure it is visible to access this page.');
         }
+
 
         $candidatePortfolio = $candidate->portfolio;
         $socialPlatforms = SocialPlatform::all()->pluck('name', 'type');
@@ -40,21 +43,6 @@ class CandidatePortfolioController extends Controller
         $portfolioClients = PortfolioClient::where('candidate_id', $candidate->id)
             ->orderBy('id', 'DESC')
             ->get();
-
-        // $socialLinks = CandidateSocial::where('candidate_id', $candidate->id)->get();
-        // $socialLinks = CandidateSocial::with('social') // <- this ensures you get type name
-        //     ->where('candidate_id', $candidate->id)
-        //     ->get();
-        // $socialLinks = CandidateSocial::with('social')
-        //     ->where('candidate_id', 2) // Use an ID you know exists in your DB
-        //     ->get();
-        // // dd($socialLinks);
-        // dd(\DB::table('candidate_socials')->get());
-
-        // $socialLinks = $candidate->socialLinks;
-
-
-
 
         return view('frontend.candidate-dashboard.portfolio.index', compact(
             'socialPlatforms',

@@ -14,8 +14,7 @@ use Illuminate\View\View;
 
 class FrontendCandidatePageController extends Controller
 {
-    //
-    //
+
     function index(Request $request): View
     {
         $skills = Skill::all();
@@ -25,11 +24,11 @@ class FrontendCandidatePageController extends Controller
         $selectedStates = null;
         $selectedCities = null;
 
-        // Base query for profile completion and visibility
-        $query->where(['profile_complete' => 1, 'visibility' => 1]);
-        // Total number of candidates (for the "All" option)
 
-        // Apply search filter if provided
+        $query->where(['profile_complete' => true, 'visibility' => true]);
+
+
+
         if ($request->has('search') && $request->filled('search')) {
             $query->where('full_name', 'like', '%' . $request->search . '%');
         }
@@ -48,7 +47,7 @@ class FrontendCandidatePageController extends Controller
         }
 
 
-        // Filter by skills
+
         if ($request->has('skills') && $request->filled('skills')) {
             $ids = Skill::whereIn('slug', $request->skills)->pluck('id')->toArray();
             $query->whereHas('skills', function ($subquery) use ($ids) {
@@ -56,13 +55,13 @@ class FrontendCandidatePageController extends Controller
             });
         }
 
-        // Filter by experience
+
         if ($request->has('experience') && $request->filled('experience')) {
             $query->where('experience_id', $request->experience);
         }
-        $totalCandidates = Candidate::where(['profile_complete' => 1, 'visibility' => 1])->count();
+        $totalCandidates = Candidate::where(['profile_complete' => true, 'visibility' => true])->count();
 
-        // Paginate results
+
         $candidates = $query->paginate(7);
 
         return view('frontend.pages.candidate-index', compact('candidates', 'skills', 'experience', 'totalCandidates', 'countries', 'selectedStates', 'selectedCities'));

@@ -11,19 +11,22 @@
         $footerOne = \Menu::getByName('Footer Menu One');
 
         $footer = \App\Models\Footer::first();
-        $footerSocials = \App\Models\SocialIcon::where(['show'=>1])->take(5)->get();
+        $footerSocials = \App\Models\SocialIcon::where(['show' => 1])
+            ->take(5)
+            ->get();
     @endphp
     <!-- ===== Start of Footer Information & Links Section ===== -->
-    <div class="footer-info ptb80" style="background: url({{ asset($footer?->background_footer) }}) no-repeat;position: relative; background-size: cover;">
+   <div class="footer-info ptb80" style="background: url({{ asset($footer?->background_footer) }}) center center / cover no-repeat; background-attachment: scroll; position: relative; overflow: hidden;">
+
         <div class="container">
 
             <!-- 1st Footer Column -->
             <div class="col-md-3 col-sm-6 col-xs-6 footer-about">
 
-                <!-- Your Logo Here -->
                 <a href="{{ url('/') }}">
-                    <img src="{{ asset($footer?->logo) }}" alt="">
+                    <img src="{{ asset($footer?->logo) }}" alt="" style="max-width: 180px; height: auto;">
                 </a>
+
 
                 <!-- Small Description -->
                 <p class="pt40">
@@ -47,7 +50,7 @@
                         @else
                             {{ config('settings.site_email') }}
                         @endif
-                       </li>
+                    </li>
                 </ul>
             </div>
 
@@ -58,7 +61,8 @@
                 <!-- Links -->
                 <ul class="nopadding">
                     @foreach ($footerOne as $menu)
-                    <li><a href="{{ $menu['link']}}"><i class="fa fa-angle-double-right"></i>{{ $menu['label'] }}</a>
+                        <li><a href="{{ $menu['link'] }}"><i
+                                    class="fa fa-angle-double-right"></i>{{ $menu['label'] }}</a>
                     @endforeach
                 </ul>
             </div>
@@ -167,13 +171,13 @@
                     <!-- Social Media -->
                     @foreach ($footerSocials as $link)
                         <li>
-                        <a href="{{ $link?->url }}" class="social-btn-roll facebook">
-                            <div class="social-btn-roll-icons">
-                                <i class="social-btn-roll-icon {{ $link?->icon }}"></i>
-                                <i class="social-btn-roll-icon {{ $link?->icon }}"></i>
-                            </div>
-                        </a>
-                    </li>
+                            <a href="{{ $link?->url }}" class="social-btn-roll facebook">
+                                <div class="social-btn-roll-icons">
+                                    <i class="social-btn-roll-icon {{ $link?->icon }}"></i>
+                                    <i class="social-btn-roll-icon {{ $link?->icon }}"></i>
+                                </div>
+                            </a>
+                        </li>
                     @endforeach
 
                 </ul>

@@ -33,7 +33,7 @@
         }
     </style>
     <!-- =============== Start of Page Header 1 Section =============== -->
-    <section class="page-header">
+    <section class="page-header" style="padding-top: 200px;">
         <div class="container">
 
             <!-- Start of Page Title -->

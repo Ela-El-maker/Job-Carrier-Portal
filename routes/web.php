@@ -126,7 +126,6 @@ Route::group(
 
         //Portfolio Information
         Route::get('/portfolio', [CandidatePortfolioController::class, 'index'])->name('portfolio.index');
-        Route::get('/portfolio', [CandidatePortfolioController::class, 'index'])->name('portfolio.index');
         Route::post('/portfolio/portfolio-hero-update', [CandidatePortfolioController::class, 'portfolioHeroUpdate'])->name('portfolio.hero.update');
         Route::post('/portfolio/portfolio-about-update', [CandidatePortfolioController::class, 'portfolioAboutUpdate'])->name('portfolio.about.update');
         Route::resource('/portfolio/service', PortfolioServiceController::class)->names([

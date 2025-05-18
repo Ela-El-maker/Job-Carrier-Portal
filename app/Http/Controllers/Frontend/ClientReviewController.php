@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ClientReview;
 use App\Services\Notify;
 use App\Traits\Searchable;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -15,10 +16,43 @@ class ClientReviewController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    // public function index(): View
+    // {
+    //     $user = auth()->user();
+    //     $userRole = $user?->role;
+
+    //     // Base query filtered by user
+    //     $query = ClientReview::where('user_id', $user?->id);
+
+    //     // Apply search
+    //     $this->search($query, ['review', 'rating', 'created_at']);
+
+    //     // Apply ordering and pagination
+    //     $reviews = $query->orderBy('created_at', 'desc')->paginate(10);
+
+    //     if ($userRole === 'candidate') {
+    //         return view('frontend.candidate-dashboard.reviews.index', compact('reviews'));
+    //     } elseif ($userRole === 'company') {
+    //         return view('frontend.company-dashboard.reviews.index', compact('reviews'));
+    //     }
+
+    //     // Optionally, handle unauthorized roles
+    //     abort(403, 'Unauthorized access.');
+    // }
+
+    public function index(): View | RedirectResponse
     {
         $user = auth()->user();
         $userRole = $user?->role;
+
+        // Check profile completeness depending on role
+        if ($userRole === 'candidate' && (!$user?->candidateProfile || !$user->candidateProfile->profile_complete)) {
+            return redirect()->route('candidate.profile.index')->with('error', 'Please complete your profile first.');
+        }
+
+        if ($userRole === 'company' && (!$user?->company || !$user->company->profile_completion)) {
+            return redirect()->route('company.profile')->with('error', 'Please complete your profile first.');
+        }
 
         // Base query filtered by user
         $query = ClientReview::where('user_id', $user?->id);
@@ -35,7 +69,6 @@ class ClientReviewController extends Controller
             return view('frontend.company-dashboard.reviews.index', compact('reviews'));
         }
 
-        // Optionally, handle unauthorized roles
         abort(403, 'Unauthorized access.');
     }
 

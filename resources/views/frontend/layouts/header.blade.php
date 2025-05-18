@@ -188,7 +188,7 @@
     }
 </style>
 
-<header class="header-nav">
+<header class="sticky">
     @php
         $navigationMenu = \Menu::getByName('Navigation Menu');
         $headerSocials = \App\Models\SocialIcon::where(['show' => 1])
@@ -227,18 +227,19 @@
         <div class="container">
             <div class="row">
                 <!-- Logo -->
-                <div class="col-md-3 col-sm-6 col-xs-8 d-flex align-items-center">
+                <div class="col-md-2 col-sm-6 col-xs-8 nopadding">
                     <a class="navbar-brand" href="{{ url('/') }}" style="padding: 5px 0;">
                         <img src="{{ config('settings.site_logo') }}" alt="Company Logo"
-                            style="height: 70px; width: auto; max-width: 200px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));">
+                            style="height: 50%;
+  width: 150px !important; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));">
                     </a>
                 </div>
 
                 <!-- Navigation Menu -->
-                <div class="col-md-9 col-sm-6 col-xs-4">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav"
-                            aria-expanded="false">
+                <div class="col-md-10 col-sm-6 col-xs-4 nopadding">
+                    <div class="navbar-header page-scroll">
+                        <button type="button" class="navbar-toggle toggle-menu menu-right push-body"
+                            data-toggle="collapse" data-target="#main-nav" aria-expanded="false">
                             <span class="sr-only">Toggle navigation</span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
@@ -247,17 +248,17 @@
                     </div>
 
                     <!-- Main Nav Items -->
-                    <div class="collapse navbar-collapse main-nav" id="main-nav">
-                        <ul class="nav navbar-nav navbar-right single-line-nav">
+                    <div class="collapse navbar-collapse cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right"
+                        id="main-nav">
+                        <ul class="nav navbar-nav pull-right">
                             @foreach ($navigationMenu as $menu)
                                 @if (!empty($menu['child']))
-                                    <li class="dropdown">
+                                    <li class="dropdown simple-menu">
                                         <a href="{{ $menu['link'] ?? '#' }}" class="dropdown-toggle"
-                                            data-toggle="dropdown" role="button" aria-haspopup="true"
-                                            aria-expanded="false">
+                                            data-toggle="dropdown" role="button">
                                             {{ $menu['label'] ?? '' }} <i class="fa fa-angle-down"></i>
                                         </a>
-                                        <ul class="dropdown-menu">
+                                        <ul class="dropdown-menu" role="menu">
                                             @foreach ($menu['child'] as $child)
                                                 <li><a
                                                         href="{{ $child['link'] ?? '#' }}">{{ $child['label'] ?? '' }}</a>
