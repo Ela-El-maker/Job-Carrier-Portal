@@ -490,11 +490,11 @@
                                         </div>
 
                                         <div class="range-values">
-                                            <span>$0</span>
-                                            <span>$200,000</span>
+                                            <span>{{ config('settings.site_currency_icon') }}0</span>
+                                            <span>{{ config('settings.site_currency_icon') }}200,000</span>
                                         </div>
 
-                                        <div class="salary-display">$3,000</div>
+                                        <div class="salary-display">{{ config('settings.site_currency_icon') }}3,000</div>
                                     </div>
 
                                     <!-- Rate Slider -->
@@ -505,11 +505,11 @@
                                         </div>
 
                                         <div class="range-values">
-                                            <span>$0/hr</span>
-                                            <span>$100/hr</span>
+                                            <span>{{ config('settings.site_currency_icon') }}0/hr</span>
+                                            <span>{{ config('settings.site_currency_icon') }}100/hr</span>
                                         </div>
 
-                                        <div class="salary-display">$45/hr</div>
+                                        <div class="salary-display">{{ config('settings.site_currency_icon') }}45/hr</div>
                                     </div>
                                 </div>
 

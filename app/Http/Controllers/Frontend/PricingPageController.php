@@ -15,12 +15,13 @@ class PricingPageController extends Controller
     {
         //
 
-        if(auth()->user()?->role == 'candidate')
-        {
-            abort(404);
+        if (auth()->user()?->role === 'candidate') {
+            return response()
+                ->view('errors.403', ['message' => 'This page is for companies only.'], 403);
         }
 
-        $plans = Plan::where(['frontend_show'=>1])->get();
-        return view('frontend.pages.pricing-index',compact('plans'));
+
+        $plans = Plan::where(['frontend_show' => 1])->get();
+        return view('frontend.pages.pricing-index', compact('plans'));
     }
 }
