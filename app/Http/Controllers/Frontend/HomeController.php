@@ -26,11 +26,11 @@ class HomeController extends Controller
     //
     function index(): View
     {
-        $plans = Plan::where(['frontend_show' => 1, 'show_at_home' => 1])->get();
+        $plans = Plan::where(['frontend_show' => 1, 'show_at_home' => 1])->select('id', 'name', 'price', 'recommended')->get();
         $heroes = Hero::where('show_at_home', 1)->inRandomOrder()->limit(3)->get();
-        $countries = Country::all();
+        $countries = Country::select('id', 'name')->get();
         $jobCount = Job::count(); // Get the total count of jobs
-        $jobCategories = JobCategory::all();
+        $jobCategories = JobCategory::select('id', 'name', 'slug')->get();
         $popularJobCategories = JobCategory::withCount(['jobs' => function ($query) {
             $query->where(['status' => 'active'])->where('deadline', '>=', now());
         }])->where('show_at_popular', 1)->inRandomOrder()->limit(8)->get();
@@ -58,7 +58,7 @@ class HomeController extends Controller
 
 
         $topJobs = Job::withCount('applications')  // Count applications for each job
-            ->with('company')  // Load the company associated with the job
+            ->with(['company:id,name,logo,slug', 'category:id,name,slug', 'jobType:id,name'])  // Load relationships with selective columns
             ->where('status', 'active')
             ->where('deadline', '>=', now())
             ->having('applications_count', '>', 10)  // Filter jobs with more than 15 applications
@@ -68,7 +68,7 @@ class HomeController extends Controller
             ->take(5)  // Limit to the top 5 jobs
             ->get();
 
-        $goldenJobs = Job::with('company')
+        $goldenJobs = Job::with(['company:id,name,logo,slug', 'category:id,name,slug', 'jobType:id,name'])
             ->where('status', 'active')
             ->where('deadline', '>=', now())
             ->where('is_golden', 1) // Assuming you have a 'is_golden' column to determine golden jobs

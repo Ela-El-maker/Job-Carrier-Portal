@@ -44,9 +44,9 @@ class FrontendCompanyPageController extends Controller
 
     function index(Request $request): View
     {
-        $industryTypes = IndustryType::withCount('companies')->get();
-        $organizations = OrganizationType::withCount('companies')->get();
-        $countries = Country::all();
+        $industryTypes = IndustryType::withCount('companies')->select('id', 'name', 'slug')->get();
+        $organizations = OrganizationType::withCount('companies')->select('id', 'name', 'slug')->get();
+        $countries = Country::select('id', 'name')->get();
         $selectedStates = null;
         $selectedCities = null;
 
@@ -64,12 +64,12 @@ class FrontendCompanyPageController extends Controller
         }
         if ($request->has('country') && $request->filled('country')) {
             $query->where('country', $request->country);
-            $selectedStates = State::where('country_id', $request->country)->get();
+            $selectedStates = State::where('country_id', $request->country)->select('id', 'name')->get();
         }
 
         if ($request->has('state') && $request->filled('state')) {
-            $query->where('state_id', $request->state);
-            $selectedCities = City::where('state_id', $request->state)->get();
+            $query->where('state', $request->state);
+            $selectedCities = City::where('state_id', $request->state)->select('id', 'name')->get();
         }
 
         if ($request->has('city') && $request->filled('city')) {
@@ -90,16 +90,21 @@ class FrontendCompanyPageController extends Controller
 
         $paginatedCompanies = $query->paginate(21);
 
-        // Companies grouped by first letter with job counts
-        $companiesByLetter = Company::where('profile_completion', 1)
-            ->where('visibility', 1)
-            ->withCount(['jobs' => function ($query) {
-                $query->where('status', 'active')->where('deadline', '>=', now());
-            }])
-            ->get()
-            ->groupBy(function ($company) {
-                return strtoupper(substr($company->name, 0, 1));
-            });
+        // Only fetch companies for letter grouping when not filtering
+        // This avoids loading all companies when we already have paginated results
+        $companiesByLetter = collect();
+        if (!$request->hasAny(['search', 'country', 'state', 'city', 'industry', 'organization'])) {
+            $companiesByLetter = Company::where('profile_completion', 1)
+                ->where('visibility', 1)
+                ->select('id', 'name', 'slug')
+                ->withCount(['jobs' => function ($query) {
+                    $query->where('status', 'active')->where('deadline', '>=', now());
+                }])
+                ->get()
+                ->groupBy(function ($company) {
+                    return strtoupper(substr($company->name, 0, 1));
+                });
+        }
 
         return view('frontend.pages.company-index', compact(
             'paginatedCompanies',
@@ -116,12 +121,21 @@ class FrontendCompanyPageController extends Controller
 
     function show(string $slug): View
     {
-        $company = Company::where(['profile_completion' => 1, 'visibility' => 1, 'slug' => $slug])->firstOrFail();
+        $company = Company::with([
+            'companyCountry:id,name',
+            'companyState:id,name', 
+            'companyCity:id,name',
+            'industryType:id,name',
+            'organizationType:id,name',
+            'teamSize:id,name'
+        ])->where(['profile_completion' => 1, 'visibility' => 1, 'slug' => $slug])->firstOrFail();
 
         // Fetch similar jobs for the same company (excluding the current job)
-        $companySimilarJobs = Job::where('company_id', $company->id)
+        $companySimilarJobs = Job::with(['jobType:id,name', 'category:id,name,slug'])
+            ->where('company_id', $company->id)
             ->where('deadline', '>=', date('Y-m-d'))
             ->where('status', 'active')
+            ->select('id', 'title', 'slug', 'company_id', 'job_type_id', 'job_category_id', 'min_salary', 'max_salary', 'deadline', 'created_at')
             ->paginate(5);
         return view('frontend.pages.company-details', compact('company', 'companySimilarJobs'));
     }

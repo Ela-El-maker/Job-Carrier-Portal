@@ -17,10 +17,11 @@ class FrontendCandidatePageController extends Controller
 
     function index(Request $request): View
     {
-        $skills = Skill::all();
-        $experience = Experience::all();
+        // Use select to only fetch needed columns for dropdowns
+        $skills = Skill::select('id', 'name', 'slug')->get();
+        $experience = Experience::select('id', 'name')->get();
         $query = Candidate::query();
-        $countries = Country::all();
+        $countries = Country::select('id', 'name')->get();
         $selectedStates = null;
         $selectedCities = null;
 
@@ -61,6 +62,8 @@ class FrontendCandidatePageController extends Controller
         }
         $totalCandidates = Candidate::where(['profile_complete' => true, 'visibility' => true])->count();
 
+        // Add eager loading for candidate relationships
+        $query->with(['profession:id,name', 'experience:id,name', 'candidateCountry:id,name', 'candidateState:id,name', 'candidateCity:id,name']);
 
         $candidates = $query->paginate(7);
 
@@ -69,7 +72,18 @@ class FrontendCandidatePageController extends Controller
 
     function show(string $slug): View
     {
-        $candidate = Candidate::where(['profile_complete' => 1, 'visibility' => 1, 'slug' => $slug])->firstOrFail();
+        $candidate = Candidate::with([
+            'candidateCountry:id,name',
+            'candidateState:id,name',
+            'candidateCity:id,name',
+            'profession:id,name',
+            'experience:id,name',
+            'skills.skill:id,name',
+            'languages.language:id,name',
+            'educations:id,candidate_id,level,degree,year',
+            'experiences:id,candidate_id,company,department,designation,start,end,currently_working',
+            'portfolio'
+        ])->where(['profile_complete' => 1, 'visibility' => 1, 'slug' => $slug])->firstOrFail();
 
         return view('frontend.pages.candidate-details', compact('candidate'));
     }
