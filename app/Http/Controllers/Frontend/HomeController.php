@@ -44,12 +44,12 @@ class HomeController extends Controller
 
 
         $popularCompanies = Company::query()
-            ->select('companies.id', 'companies.name', 'companies.logo') // Only select what you need
+            ->select('companies.id', 'companies.name', 'companies.logo', 'companies.slug') // Include slug for links
             ->join('jobs', 'jobs.company_id', '=', 'companies.id')
             ->join('applied_jobs', 'applied_jobs.job_id', '=', 'jobs.id')
             ->where('jobs.status', 'active')
             ->where('jobs.deadline', '>=', now())
-            ->groupBy('companies.id', 'companies.name', 'companies.logo') // Group by all selected columns
+            ->groupBy('companies.id', 'companies.name', 'companies.logo', 'companies.slug') // Include slug in groupBy
             ->havingRaw('COUNT(DISTINCT jobs.id) > 10')
             ->havingRaw('COUNT(applied_jobs.id) > 10')
             ->orderByRaw('COUNT(applied_jobs.id) DESC')
