@@ -25,18 +25,30 @@ class DashboardController extends Controller
     function index(): View
     {
         $allUsers = User::count();
-        $amounts = Order::pluck('default_amount')->toArray();
-        $totalEarnings = calculateEarnings($amounts);
+        
+        // Optimize earnings calculation - use sum directly instead of plucking all amounts
+        $totalEarnings = Order::sum('default_amount');
 
         $totalVisibleCandidates = Candidate::where(['profile_complete' => 1, 'visibility' => 1])->count();
         $totalVisibleCompanies = Company::where(['profile_completion' => 1, 'visibility' => 1])->count();
         $totalCandidates = Candidate::count();
         $totalCompanies = Company::count();
         $totalOrders = Order::count();
-        $totalJobs = Job::count();
-        $totalActiveJobs = Job::where('status', 'active')->where('deadline', '>=', now())->count();
-        $totalPendingJobs = Job::where('status', 'pending')->where('deadline', '>=', now())->count();
-        $totalExpiredJobs = Job::where('deadline', '<', now())->count();
+        
+        // Optimize job counts - single query with conditional aggregation
+        $jobStats = Job::selectRaw('
+            COUNT(*) as total_jobs,
+            SUM(CASE WHEN status = "active" AND deadline >= NOW() THEN 1 ELSE 0 END) as active_jobs,
+            SUM(CASE WHEN status = "pending" AND deadline >= NOW() THEN 1 ELSE 0 END) as pending_jobs,
+            SUM(CASE WHEN deadline < NOW() THEN 1 ELSE 0 END) as expired_jobs,
+            SUM(CASE WHEN status = "active" THEN 1 ELSE 0 END) as all_active_jobs,
+            SUM(CASE WHEN status = "pending" THEN 1 ELSE 0 END) as all_pending_jobs
+        ')->first();
+        
+        $totalJobs = $jobStats->total_jobs;
+        $totalActiveJobs = $jobStats->active_jobs;
+        $totalPendingJobs = $jobStats->pending_jobs;
+        $totalExpiredJobs = $jobStats->expired_jobs;
         $totalBlogs = Blog::count();
 
         // Get monthly earnings for the current year
@@ -70,12 +82,13 @@ class DashboardController extends Controller
         $this->search($query, ['title', 'slug', 'status', 'created_at', 'updated_at']);
         $jobs = $query->where('status', 'pending')->orderBy('created_at', 'DESC')->paginate(5);
 
+        // Reuse already calculated stats instead of re-querying
         $stats = [
-            'total_jobs' => Job::count(),
-            'active_jobs' => Job::where('status', 'active')->count(),
-            'pending_jobs' => Job::where('status', 'pending')->count(),
-            'expired_jobs' => Job::where('deadline', '<', now())->count(),
-            'total_blogs' => Blog::count(),
+            'total_jobs' => $totalJobs,
+            'active_jobs' => $jobStats->all_active_jobs,
+            'pending_jobs' => $jobStats->all_pending_jobs,
+            'expired_jobs' => $totalExpiredJobs,
+            'total_blogs' => $totalBlogs,
         ];
 
         // New dynamic data for charts

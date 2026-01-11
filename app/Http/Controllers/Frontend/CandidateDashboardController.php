@@ -14,9 +14,18 @@ class CandidateDashboardController extends Controller
     //
     function index(): View
     {
-       $jobApplied = AppliedJob::where('candidate_id',auth()->user()->id)->count();
-        $userBookmarkedJobs = JobBookmark::where('candidate_id',auth()->user()?->candidateProfile?->id)->count();
-        $appliedJobs = AppliedJob::with('job')->where('candidate_id', auth()->user()->id)->orderBy('id','desc')->paginate(5);
+        $candidate = auth()->user()->candidateProfile;
+        
+        if (!$candidate) {
+            abort(404, 'Candidate profile not found');
+        }
+        
+        $jobApplied = AppliedJob::where('candidate_id', $candidate->id)->count();
+        $userBookmarkedJobs = JobBookmark::where('candidate_id', $candidate->id)->count();
+        $appliedJobs = AppliedJob::with(['job:id,title,slug,company_id,status,deadline,job_type_id', 'job.company:id,name,logo,slug', 'job.jobType:id,name'])
+            ->where('candidate_id', $candidate->id)
+            ->orderBy('id','desc')
+            ->paginate(5);
 
         return view('frontend.candidate-dashboard.dashboard', compact('jobApplied', 'appliedJobs','userBookmarkedJobs'));
     }

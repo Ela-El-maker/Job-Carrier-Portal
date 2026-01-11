@@ -22,15 +22,15 @@ class FrontendJobPageController extends Controller
     public function index(Request $request): View
     {
 
-        $countries = Country::all();
-        $states = Country::where('id', 1)->exists() ? Country::find(1)->states : collect(); // Ensure ID 1 exists
+        $countries = Country::select('id', 'name')->get();
+        $states = Country::where('id', 1)->exists() ? Country::find(1)->states()->select('id', 'name', 'country_id')->get() : collect(); // Ensure ID 1 exists
 
         $jobCategories = JobCategory::withCount(['jobs' => function ($query) {
             $query->where('status', 'active') // Only fetch active jobs
                 ->where('deadline', '>=', now()); // Deadline is in the future
-        }])->get();
+        }])->select('id', 'name', 'slug')->get();
 
-        $jobTypes = JobType::all();
+        $jobTypes = JobType::select('id', 'name', 'slug')->get();
         $selectedStates = null;
         $selectedCities = null;
         $query = Job::query();
@@ -42,11 +42,11 @@ class FrontendJobPageController extends Controller
         }
         if ($request->has('country') && $request->filled('country')) {
             $query->where('country_id', $request->country);
-            $selectedStates = State::where('country_id', $request->country)->get();
+            $selectedStates = State::where('country_id', $request->country)->select('id', 'name')->get();
         }
         if ($request->has('state') && $request->filled('state')) {
             $query->where('state_id', $request->state);
-            $selectedStates = City::where('state_id', $request->state)->get();
+            $selectedCities = City::where('state_id', $request->state)->select('id', 'name')->get();
         }
 
         if ($request->has('city') && $request->filled('city')) {
@@ -144,7 +144,21 @@ class FrontendJobPageController extends Controller
 
     function show(string $slug, Request $request): View
     {
-        $job = Job::where('slug', $slug)->firstOrFail();
+        $job = Job::with([
+            'company:id,name,logo,slug,bio,website,email,phone',
+            'category:id,name,slug',
+            'jobType:id,name',
+            'jobRole:id,name',
+            'jobEducation:id,name',
+            'jobExperience:id,name',
+            'salaryType:id,name',
+            'country:id,name',
+            'state:id,name',
+            'city:id,name',
+            'tags.tag:id,name',
+            'skills.skill:id,name',
+            'benefits.benefit:id,name'
+        ])->where('slug', $slug)->firstOrFail();
 
         $openJobs = Job::where('company_id', $job->company->id)
             ->where('deadline', '>=', date('Y-m-d'))
@@ -161,7 +175,8 @@ class FrontendJobPageController extends Controller
             ])->exists();
         }
 
-        $similarJobs = Job::where('job_category_id', $job->job_category_id)
+        $similarJobs = Job::with(['company:id,name,logo,slug', 'category:id,name,slug', 'jobType:id,name', 'country:id,name', 'state:id,name', 'city:id,name'])
+            ->where('job_category_id', $job->job_category_id)
             ->where('id', '!=', $job->id)
             ->where('status', 'active')
             ->where('deadline', '>=', now())

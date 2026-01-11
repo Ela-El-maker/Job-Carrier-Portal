@@ -63,7 +63,8 @@ class JobController extends Controller
     function applications(string $id): View
     {
 
-        $query = AppliedJob::where('job_id', $id);
+        $query = AppliedJob::with(['candidate:id,full_name,image,email,phone_one,cv,slug'])
+            ->where('job_id', $id);
         $this->search($query, ['full_name', 'deadline', 'status', 'birth_date']);
         $applications = $query->paginate(15);
         $jobTitle = Job::select('title')->where('id', $id)->first();
@@ -87,24 +88,24 @@ class JobController extends Controller
             Notify::errorNotification('You have reached your job plan limit. Please upgrade your plan to post more jobs.');
             return to_route('company.jobs.index')->with('error', 'Unable to retrieve your plan information. Please try again.');
         }
-        $companies = Company::where(['profile_completion' => 1, 'visibility' => 1])->get();
-        $categories = JobCategory::all();
-        $countries = Country::all();
-        $salaryTypes = SalaryType::all();
-        $experiences = JobExperience::all();
-        $jobRoles = JobRole::all();
-        $educations = Education::all();
-        $jobTypes = JobType::all();
-        $tags = Tag::all();
-        $skills = Skill::all();
+        $companies = Company::where(['profile_completion' => 1, 'visibility' => 1])->select('id', 'name')->get();
+        $categories = JobCategory::select('id', 'name', 'slug')->get();
+        $countries = Country::select('id', 'name')->get();
+        $salaryTypes = SalaryType::select('id', 'name')->get();
+        $experiences = JobExperience::select('id', 'name')->get();
+        $jobRoles = JobRole::select('id', 'name')->get();
+        $educations = Education::select('id', 'name')->get();
+        $jobTypes = JobType::select('id', 'name')->get();
+        $tags = Tag::select('id', 'name', 'slug')->get();
+        $skills = Skill::select('id', 'name', 'slug')->get();
 
         // Set default country and state IDs (e.g., first country and state)
         $defaultCountryId = $countries->first()?->id ?? null;
         $defaultStateId = State::where('country_id', $defaultCountryId)->first()?->id ?? null;
 
         // Fetch states and cities based on default IDs
-        $states = State::where('country_id', $defaultCountryId)->get();
-        $cities = City::where('state_id', $defaultStateId)->get();
+        $states = State::where('country_id', $defaultCountryId)->select('id', 'name')->get();
+        $cities = City::where('state_id', $defaultStateId)->select('id', 'name')->get();
 
         return view('frontend.company-dashboard.jobs.create', compact(
             'companies',
@@ -286,18 +287,18 @@ class JobController extends Controller
         // Ensure the authenticated user's company owns the job
         abort_if($job->company_id !== auth()->user()->company?->id, 403, 'You are not authorized to edit this job.');
 
-        // Fetch necessary data for the form
-        $categories = JobCategory::all();
-        $countries = Country::all();
-        $states = $job->country_id ? State::where('country_id', $job->country_id)->get() : collect();
-        $cities = $job->state_id ? City::where('state_id', $job->state_id)->get() : collect();
-        $salaryTypes = SalaryType::all();
-        $experiences = JobExperience::all();
-        $jobRoles = JobRole::all();
-        $educations = Education::all();
-        $jobTypes = JobType::all();
-        $tags = Tag::all();
-        $skills = Skill::all();
+        // Fetch necessary data for the form with only required columns
+        $categories = JobCategory::select('id', 'name', 'slug')->get();
+        $countries = Country::select('id', 'name')->get();
+        $states = $job->country_id ? State::where('country_id', $job->country_id)->select('id', 'name')->get() : collect();
+        $cities = $job->state_id ? City::where('state_id', $job->state_id)->select('id', 'name')->get() : collect();
+        $salaryTypes = SalaryType::select('id', 'name')->get();
+        $experiences = JobExperience::select('id', 'name')->get();
+        $jobRoles = JobRole::select('id', 'name')->get();
+        $educations = Education::select('id', 'name')->get();
+        $jobTypes = JobType::select('id', 'name')->get();
+        $tags = Tag::select('id', 'name', 'slug')->get();
+        $skills = Skill::select('id', 'name', 'slug')->get();
 
         // Return the view with the data
         return view('frontend.company-dashboard.jobs.edit', compact(
